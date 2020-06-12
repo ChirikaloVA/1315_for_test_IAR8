@@ -1,0 +1,17 @@
+[Low Level]
+Pipeline mode=0
+Initialized=1
+[DisAssemblyWindow]
+NumStates=_ 1
+State 1=_ 1
+[Log file]
+LoggingEnabled=_ 0
+LogFile=_ ""
+Category=_ 0
+[TermIOLog]
+LoggingEnabled=_ 0
+LogFile=_ ""
+[Disassemble mode]
+mode=0
+[Breakpoints]
+Count=0

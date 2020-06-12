@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<project>
+  <fileVersion>2</fileVersion>
+  <configuration>
+    <name>Debug</name>
+    <outputs>
+      <file>$PROJ_DIR$\Debug\Obj\AnswerCOM.r79</file>
+      <file>$PROJ_DIR$\my_macros.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\I2CEEPROM.pbi</file>
+      <file>$TOOLKIT_DIR$\lib\dl4tpainl8n.h</file>
+      <file>$TOOLKIT_DIR$\inc\DLib_Product.h</file>
+      <file>$PROJ_DIR$\Debug\Exe\BDKGnoPLL.d79</file>
+      <file>$PROJ_DIR$\Debug\Obj\AnswerCOM.pbi</file>
+      <file>$PROJ_DIR$\Debug\List\InterUART0.lst</file>
+      <file>$PROJ_DIR$\Debug\Obj\I2C_EEPROM.r79</file>
+      <file>$PROJ_DIR$\Debug\Obj\InterTMR1.r79</file>
+      <file>$PROJ_DIR$\Debug\Obj\InterTMR0.r79</file>
+      <file>$TOOLKIT_DIR$\inc\iolpc2214.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\InterEINT0.pbi</file>
+      <file>$PROJ_DIR$\Debug\Exe\BDKGnoPLL.a79</file>
+      <file>$PROJ_DIR$\..\IAR_BDKG_noPLL\LPC2xxx_ROM.xcl</file>
+      <file>$PROJ_DIR$\Debug\Obj\I2CEEPROM.r79</file>
+      <file>$TOOLKIT_DIR$\inc\iolpc2294.h</file>
+      <file>$PROJ_DIR$\Debug\List\BDKGnoPLL.map</file>
+      <file>$TOOLKIT_DIR$\inc\stdarg.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\InterTMR1.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\BDKGnoPLL.pbd</file>
+      <file>$PROJ_DIR$\Debug\Obj\BDKGmain.r79</file>
+      <file>$TOOLKIT_DIR$\inc\inarm.h</file>
+      <file>$TOOLKIT_DIR$\inc\intrinsics.h</file>
+      <file>$TOOLKIT_DIR$\inc\yvals.h</file>
+      <file>$PROJ_DIR$\Debug\List\AnswerCOM.lst</file>
+      <file>$PROJ_DIR$\Debug\List\InterTMR0.lst</file>
+      <file>$PROJ_DIR$\BDKGmain.cpp</file>
+      <file>$PROJ_DIR$\I2C_EEPROM.c</file>
+      <file>$TOOLKIT_DIR$\inc\DLib_Threads.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\InterTMR0.pbi</file>
+      <file>$PROJ_DIR$\Debug\List\InterTMR1.lst</file>
+      <file>$PROJ_DIR$\Debug\Obj\InterUART0.pbi</file>
+      <file>$PROJ_DIR$\I2CEEPROM.cpp</file>
+      <file>$PROJ_DIR$\Debug\Obj\evba7_cstartup.r79</file>
+      <file>$TOOLKIT_DIR$\inc\intrinsic.h</file>
+      <file>$TOOLKIT_DIR$\inc\setjmp.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\BDKGmain.pbi</file>
+      <file>$TOOLKIT_DIR$\lib\dl4tpainl8n.r79</file>
+      <file>$PROJ_DIR$\Debug\Obj\InterUART0.r79</file>
+      <file>$TOOLKIT_DIR$\inc\DLib_Defaults.h</file>
+      <file>$TOOLKIT_DIR$\inc\ysizet.h</file>
+      <file>$TOOLKIT_DIR$\inc\io_macros.h</file>
+      <file>$TOOLKIT_DIR$\inc\xencoding_limits.h</file>
+      <file>$PROJ_DIR$\Debug\List\BDKGmain.lst</file>
+      <file>$PROJ_DIR$\Debug\Obj\InterEINT0.r79</file>
+      <file>$PROJ_DIR$\Debug\List\InterEINT0.lst</file>
+      <file>$TOOLKIT_DIR$\inc\string.h</file>
+      <file>$PROJ_DIR$\Debug\List\I2CEEPROM.lst</file>
+      <file>$PROJ_DIR$\InterTMR1.cpp</file>
+      <file>$PROJ_DIR$\InterUART0.cpp</file>
+      <file>$PROJ_DIR$\Debug\List\I2C_EEPROM.lst</file>
+      <file>$PROJ_DIR$\evba7_cstartup.s79</file>
+      <file>$PROJ_DIR$\AnswerCOM.cpp</file>
+      <file>$PROJ_DIR$\InterEINT0.cpp</file>
+      <file>$PROJ_DIR$\InterTMR0.cpp</file>
+    </outputs>
+    <file>
+      <name>[ROOT_NODE]</name>
+      <outputs>
+        <tool>
+          <name>XLINK</name>
+          <file> 5 17 13</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Debug\Exe\BDKGnoPLL.d79</name>
+      <outputs>
+        <tool>
+          <name>XLINK</name>
+          <file> 17 13</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>XLINK</name>
+          <file> 14 0 21 8 45 10 9 39 34 38</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Debug\Obj\BDKGnoPLL.pbd</name>
+      <inputs>
+        <tool>
+          <name>BILINK</name>
+          <file> 6 37 2 12 30 19 32</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\BDKGmain.cpp</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 21 44</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 37</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 22 23 11 42 47 24 40 3 4 43 29 41 36 1</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 22 35 16 42</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\I2C_EEPROM.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 8 51</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 11 42 1 47 24 40 3 4 43 29 41</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\I2CEEPROM.cpp</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 15 48</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 2</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 11 42 18 24 40 3 4 43 29 1</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 16 42 18 24 40 4 43</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\InterTMR1.cpp</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 9 31</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 19</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 16 42 22 23 1</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 16 42 22 35</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\InterUART0.cpp</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 39 7</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 32</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 16 42 1</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 16 42</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\evba7_cstartup.s79</name>
+      <outputs>
+        <tool>
+          <name>AARM</name>
+          <file> 34</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\AnswerCOM.cpp</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 0 25</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 6</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 16 42 1</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 16 42</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\InterEINT0.cpp</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 45 46</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 12</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 22 23 16 42 1</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 16 42</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\InterTMR0.cpp</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 10 26</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 30</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 16 42 22 23 1</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 16 42 22 35</file>
+        </tool>
+      </inputs>
+    </file>
+  </configuration>
+  <configuration>
+    <name>Release</name>
+    <outputs/>
+    <forcedrebuild>
+      <name>[MULTI_TOOL]</name>
+      <tool>XLINK</tool>
+    </forcedrebuild>
+  </configuration>
+</project>
+
+

@@ -1,0 +1,642 @@
+###############################################################################
+#
+# IAR ELF Linker V8.20.1.14183/W32 for ARM                12/Jun/2020  11:41:42
+# Copyright 2007-2017 IAR Systems AB.
+#
+#    Output file  =  
+#        D:\Users\Chirikalo\ARM_proj\AT1315_for_test\Debug\Exe\AT1315_for_test.out.tmp
+#    Map file     =  
+#        D:\Users\Chirikalo\ARM_proj\AT1315_for_test\Debug\List\AT1315_for_test.map
+#    Command line =  
+#        -f C:\Users\CHIRIK~1\AppData\Local\Temp\EW98E2.tmp
+#        (D:\Users\Chirikalo\ARM_proj\AT1315_for_test\Debug\Obj\AnswerCOM.o
+#        D:\Users\Chirikalo\ARM_proj\AT1315_for_test\Debug\Obj\BDKGmain.o
+#        D:\Users\Chirikalo\ARM_proj\AT1315_for_test\Debug\Obj\I2C_EEPROM.o
+#        D:\Users\Chirikalo\ARM_proj\AT1315_for_test\Debug\Obj\InterEINT0.o
+#        D:\Users\Chirikalo\ARM_proj\AT1315_for_test\Debug\Obj\InterTMR0.o
+#        D:\Users\Chirikalo\ARM_proj\AT1315_for_test\Debug\Obj\InterTMR1.o
+#        D:\Users\Chirikalo\ARM_proj\AT1315_for_test\Debug\Obj\InterUART0.o
+#        --redirect _Printf=_PrintfFullNoMb --redirect _Scanf=_ScanfFullNoMb -o
+#        D:\Users\Chirikalo\ARM_proj\AT1315_for_test\Debug\Exe\AT1315_for_test.out.tmp
+#        --map
+#        D:\Users\Chirikalo\ARM_proj\AT1315_for_test\Debug\List\AT1315_for_test.map
+#        --config "C:\Program Files (x86)\IAR Systems\Embedded Workbench
+#        8.0\arm\config\linker\NXP\LPC2214.icf" --semihosting --entry
+#        __iar_program_start --vfe --text_out locale)
+#
+###############################################################################
+
+*******************************************************************************
+*** RUNTIME MODEL ATTRIBUTES
+***
+
+CppFlavor                   = *
+__SystemLibrary             = DLib
+__dlib_jmp_buf_num_elements = 8
+__dlib_version              = 6
+
+
+*******************************************************************************
+*** HEAP SELECTION
+***
+
+The basic heap was selected because no calls to memory allocation
+functions were found in the application outside of system library
+functions, and there are calls to deallocation functions in the
+application.
+
+
+*******************************************************************************
+*** PLACEMENT SUMMARY
+***
+
+"A0":  place at 0x00000000 { ro section .intvec };
+"P1":  place in [from 0x00000000 to 0x000001fb] |
+                [from 0x00000200 to 0x0003ffff] { ro };
+define block CSTACK with size = 2K, alignment = 8 { };
+define block SVC_STACK with size = 16, alignment = 8 { };
+define block IRQ_STACK with size = 80, alignment = 8 { };
+define block FIQ_STACK with size = 16, alignment = 8 { };
+define block UND_STACK with size = 16, alignment = 8 { };
+define block ABT_STACK with size = 16, alignment = 8 { };
+define block HEAP with size = 4K, alignment = 8 { };
+"P2":  place in [from 0x40000000 to 0x4000003f] |
+                [from 0x40000120 to 0x40003fdf] {
+          rw, block CSTACK, block SVC_STACK, block IRQ_STACK, block FIQ_STACK,
+          block UND_STACK, block ABT_STACK, block HEAP };
+initialize by copy { rw };
+
+No sections matched the following patterns:
+
+  section .crp  in "P3"
+
+
+  Section            Kind        Address    Size  Object
+  -------            ----        -------    ----  ------
+"A0":                                       0x3c
+  .intvec            ro code  0x00000000    0x3c  cstartup.o [5]
+                            - 0x0000003c    0x3c
+
+"P1", part 1 of 2:                           0x0
+  .rodata            const    0x0000003c     0x0  zero_init3.o [5]
+  .rodata            const    0x0000003c     0x0  packbits_init.o [5]
+
+"P1", part 2 of 2:                        0x47bc
+  .text              ro code  0x00000200  0x1664  AnswerCOM.o [1]
+  .text              ro code  0x00001864    0x40  FltToS32.o [4]
+  .text              ro code  0x000018a4    0x2c  FltCmpGe.o [4]
+  .text              ro code  0x000018d0    0x68  FltToDbl.o [4]
+  .text              ro code  0x00001938   0x1f4  DblMul.o [4]
+  .text              ro code  0x00001b2c    0x54  DblToS32.o [4]
+  .text              ro code  0x00001b80    0x58  U32ToDbl.o [4]
+  .text              ro code  0x00001bd8   0x200  DblSub.o [4]
+  .text              ro code  0x00001dd8   0x780  BDKGmain.o [1]
+  .text              ro code  0x00002558   0x334  DblDiv.o [4]
+  .text              ro code  0x0000288c    0x84  DblToFlt.o [4]
+  .text              ro code  0x00002910   0x1d4  I32DivMod.o [5]
+  .text              ro code  0x00002ae4    0xb8  InterTMR1.o [1]
+  .text              ro code  0x00002b9c   0xabc  I2C_EEPROM.o [1]
+  .text              ro code  0x00003658   0x414  InterTMR0.o [1]
+  .text              ro code  0x00003a6c   0x224  InterEINT0.o [1]
+  .text              ro code  0x00003c90   0x308  InterUART0.o [1]
+  .text              ro code  0x00003f98   0x138  DblAdd.o [4]
+  .text              ro code  0x000040d0    0x48  ABImemset48.o [5]
+  .text              ro code  0x00004118     0x4  IntDivZer.o [5]
+  .text              ro code  0x0000411c    0x3c  DblToU32.o [4]
+  .text              ro code  0x00004158    0x64  S32ToFlt.o [4]
+  .text              ro code  0x000041bc   0x1c0  FltDiv.o [4]
+  .text              ro code  0x0000437c    0x2c  FltCmpLe.o [4]
+  .text              ro code  0x000043a8    0xa4  FltAdd.o [4]
+  .text              ro code  0x0000444c   0x120  FltSub.o [4]
+  .text              ro code  0x0000456c    0xc8  packbits_init.o [5]
+  Veneer             ro code  0x00004634     0x4  - Linker created -
+  .text              ro code  0x00004638     0x8  abort.o [3]
+  .text              ro code  0x00004640    0x20  exit.o [6]
+  .text              ro code  0x00004660    0x58  cstartup.o [5]
+  Veneer             ro code  0x000046b8     0xc  - Linker created -
+  .text              ro code  0x000046c4    0x30  cmain.o [5]
+  .text              ro code  0x000046f4     0x8  low_level_init.o [3]
+  .text              ro code  0x000046fc    0x32  data_init.o [5]
+  .text              ro code  0x00004730     0x4  exit.o [3]
+  .text              ro code  0x00004734    0x10  cexit.o [5]
+  .text              ro code  0x00004744    0x3c  zero_init3.o [5]
+  .iar.init_table    const    0x00004780    0x2c  - Linker created -
+  .text              ro code  0x000047ac     0x4  vectortrap.o [5]
+  .text              ro code  0x000047b0     0x4  xreturnswi.o [6]
+  Initializer bytes  const    0x000047b4   0x208  <for P2 s0>
+                            - 0x000049bc  0x47bc
+
+"P2", part 1 of 3:                         0x2f0
+  P2 s0                       0x40000120   0x2f0  <Init block>
+    .data            inited   0x40000120   0x2f0  AnswerCOM.o [1]
+                            - 0x40000410   0x2f0
+
+"P2", part 2 of 3:                         0xd74
+  .bss               zero     0x40000410   0xc04  InterEINT0.o [1]
+  .bss               zero     0x40001014    0x94  I2C_EEPROM.o [1]
+  .bss               zero     0x400010a8    0x74  InterTMR0.o [1]
+  .bss               zero     0x4000111c     0x4  InterTMR1.o [1]
+  .bss               zero     0x40001120    0x46  BDKGmain.o [1]
+  .bss               zero     0x40001166     0x2  BDKGmain.o [1]
+  .bss               zero     0x40001168     0x8  AnswerCOM.o [1]
+  .bss               zero     0x40001170     0x8  I2C_EEPROM.o [1]
+  .bss               zero     0x40001178     0x6  InterEINT0.o [1]
+  .bss               zero     0x4000117e     0x1  BDKGmain.o [1]
+  .bss               zero     0x40001180     0x4  InterUART0.o [1]
+                            - 0x40001184   0xd74
+
+"P2", part 3 of 3:                        0x186c
+  .noinit            uninit   0x40001184  0x1004  InterEINT0.o [1]
+  .noinit            uninit   0x40002188     0x4  BDKGmain.o [1]
+  CSTACK                      0x40002190   0x800  <Block>
+    CSTACK           uninit   0x40002190   0x800  <Block tail>
+  IRQ_STACK                   0x40002990    0x50  <Block>
+    IRQ_STACK        uninit   0x40002990    0x50  <Block tail>
+  FIQ_STACK                   0x400029e0    0x10  <Block>
+    FIQ_STACK        uninit   0x400029e0    0x10  <Block tail>
+                            - 0x400029f0  0x186c
+
+Absolute sections, part 1 of 23:             0xc
+  .noinit            uninit   0xe0000000     0x4  BDKGmain.o [1]
+  .noinit            uninit   0xe0000004     0x4  BDKGmain.o [1]
+  .noinit            uninit   0xe0000008     0x4  BDKGmain.o [1]
+                            - 0xe000000c     0xc
+
+Absolute sections, part 2 of 23:            0x1c
+  .noinit            uninit   0xe0004000     0x4  InterTMR0.o [1]
+  .noinit            uninit   0xe0004004     0x4  InterTMR0.o [1]
+  .noinit            uninit   0xe0004008     0x4  InterTMR0.o [1]
+  .noinit            uninit   0xe000400c     0x4  InterTMR0.o [1]
+  .noinit            uninit   0xe0004010     0x4  InterTMR0.o [1]
+  .noinit            uninit   0xe0004014     0x4  InterTMR0.o [1]
+  .noinit            uninit   0xe0004018     0x4  InterTMR0.o [1]
+                            - 0xe000401c    0x1c
+
+Absolute sections, part 3 of 23:            0x1c
+  .noinit            uninit   0xe0008000     0x4  InterTMR1.o [1]
+  .noinit            uninit   0xe0008004     0x4  InterTMR1.o [1]
+  .noinit            uninit   0xe0008008     0x4  InterTMR1.o [1]
+  .noinit            uninit   0xe000800c     0x4  InterTMR1.o [1]
+  .noinit            uninit   0xe0008010     0x4  InterTMR1.o [1]
+  .noinit            uninit   0xe0008014     0x4  InterTMR1.o [1]
+  .noinit            uninit   0xe0008018     0x4  InterTMR1.o [1]
+                            - 0xe000801c    0x1c
+
+Absolute sections, part 4 of 23:             0x1
+  .noinit            uninit   0xe000c000     0x1  InterUART0.o [1]
+                            - 0xe000c001     0x1
+
+Absolute sections, part 5 of 23:             0x9
+  .noinit            uninit   0xe000c004     0x4  InterUART0.o [1]
+  .noinit            uninit   0xe000c008     0x4  InterUART0.o [1]
+  .noinit            uninit   0xe000c00c     0x1  InterUART0.o [1]
+                            - 0xe000c00d     0x9
+
+Absolute sections, part 6 of 23:             0x1
+  .noinit            uninit   0xe000c014     0x1  InterUART0.o [1]
+                            - 0xe000c015     0x1
+
+Absolute sections, part 7 of 23:             0xc
+  .noinit            uninit   0xe001c000     0x4  I2C_EEPROM.o [1]
+  .noinit            uninit   0xe001c004     0x4  I2C_EEPROM.o [1]
+  .noinit            uninit   0xe001c008     0x4  I2C_EEPROM.o [1]
+                            - 0xe001c00c     0xc
+
+Absolute sections, part 8 of 23:             0xc
+  .noinit            uninit   0xe001c010     0x4  I2C_EEPROM.o [1]
+  .noinit            uninit   0xe001c014     0x4  I2C_EEPROM.o [1]
+  .noinit            uninit   0xe001c018     0x4  I2C_EEPROM.o [1]
+                            - 0xe001c01c     0xc
+
+Absolute sections, part 9 of 23:            0x10
+  .noinit            uninit   0xe0028000     0x4  InterTMR0.o [1]
+  .noinit            uninit   0xe0028004     0x4  InterEINT0.o [1]
+  .noinit            uninit   0xe0028008     0x4  InterEINT0.o [1]
+  .noinit            uninit   0xe002800c     0x4  InterEINT0.o [1]
+                            - 0xe0028010    0x10
+
+Absolute sections, part 10 of 23:           0x10
+  .noinit            uninit   0xe0028020     0x4  InterEINT0.o [1]
+  .noinit            uninit   0xe0028024     0x4  InterEINT0.o [1]
+  .noinit            uninit   0xe0028028     0x4  BDKGmain.o [1]
+  .noinit            uninit   0xe002802c     0x4  InterEINT0.o [1]
+                            - 0xe0028030    0x10
+
+Absolute sections, part 11 of 23:            0x8
+  .noinit            uninit   0xe0028034     0x4  BDKGmain.o [1]
+  .noinit            uninit   0xe0028038     0x4  BDKGmain.o [1]
+                            - 0xe002803c     0x8
+
+Absolute sections, part 12 of 23:            0x8
+  .noinit            uninit   0xe002c000     0x4  InterUART0.o [1]
+  .noinit            uninit   0xe002c004     0x4  InterEINT0.o [1]
+                            - 0xe002c008     0x8
+
+Absolute sections, part 13 of 23:            0x4
+  .noinit            uninit   0xe002c014     0x4  BDKGmain.o [1]
+                            - 0xe002c018     0x4
+
+Absolute sections, part 14 of 23:            0x8
+  .noinit            uninit   0xe01fc000     0x4  BDKGmain.o [1]
+  .noinit            uninit   0xe01fc004     0x4  BDKGmain.o [1]
+                            - 0xe01fc008     0x8
+
+Absolute sections, part 15 of 23:            0x4
+  .noinit            uninit   0xe01fc040     0x4  BDKGmain.o [1]
+                            - 0xe01fc044     0x4
+
+Absolute sections, part 16 of 23:            0x4
+  .noinit            uninit   0xe01fc0c4     0x4  I2C_EEPROM.o [1]
+                            - 0xe01fc0c8     0x4
+
+Absolute sections, part 17 of 23:            0x4
+  .noinit            uninit   0xe01fc100     0x4  BDKGmain.o [1]
+                            - 0xe01fc104     0x4
+
+Absolute sections, part 18 of 23:            0x4
+  .noinit            uninit   0xe01fc140     0x4  InterEINT0.o [1]
+                            - 0xe01fc144     0x4
+
+Absolute sections, part 19 of 23:            0x4
+  .noinit            uninit   0xe01fc148     0x4  InterEINT0.o [1]
+                            - 0xe01fc14c     0x4
+
+Absolute sections, part 20 of 23:            0x8
+  .noinit            uninit   0xffe00008     0x4  BDKGmain.o [1]
+  .noinit            uninit   0xffe0000c     0x4  BDKGmain.o [1]
+                            - 0xffe00010     0x8
+
+Absolute sections, part 21 of 23:            0xc
+  .noinit            uninit   0xfffff00c     0x4  InterEINT0.o [1]
+  .noinit            uninit   0xfffff010     0x4  BDKGmain.o [1]
+  .noinit            uninit   0xfffff014     0x4  BDKGmain.o [1]
+                            - 0xfffff018     0xc
+
+Absolute sections, part 22 of 23:           0x10
+  .noinit            uninit   0xfffff100     0x4  InterUART0.o [1]
+  .noinit            uninit   0xfffff104     0x4  InterTMR0.o [1]
+  .noinit            uninit   0xfffff108     0x4  InterTMR1.o [1]
+  .noinit            uninit   0xfffff10c     0x4  BDKGmain.o [1]
+                            - 0xfffff110    0x10
+
+Absolute sections, part 23 of 23:           0x10
+  .noinit            uninit   0xfffff200     0x4  InterUART0.o [1]
+  .noinit            uninit   0xfffff204     0x4  InterTMR0.o [1]
+  .noinit            uninit   0xfffff208     0x4  InterTMR1.o [1]
+  .noinit            uninit   0xfffff20c     0x4  BDKGmain.o [1]
+                            - 0xfffff210    0x10
+
+
+*******************************************************************************
+*** INIT TABLE
+***
+
+          Address     Size
+          -------     ----
+Zero (__iar_zero_init3)
+    1 destination range, total size 0xd74:
+          0x40000410  0xd74
+
+Copy/packbits (__iar_packbits_init3)
+    1 source range, total size 0x208 (69% of destination):
+          0x000047b4  0x208
+    1 destination range, total size 0x2f0:
+          0x40000120  0x2f0
+
+
+
+*******************************************************************************
+*** MODULE SUMMARY
+***
+
+    Module            ro code  ro data  rw data  rw data
+                                                  (abs)
+    ------            -------  -------  -------  -------
+D:\Users\Chirikalo\ARM_proj\AT1315_for_test\Debug\Obj: [1]
+    AnswerCOM.o         5 732      520      760
+    BDKGmain.o          1 920                77       68
+    I2C_EEPROM.o        2 748               156       28
+    InterEINT0.o          548             7 182       40
+    InterTMR0.o         1 044               116       40
+    InterTMR1.o           184                 4       36
+    InterUART0.o          776                 4       23
+    ----------------------------------------------------
+    Total:             12 952      520    8 299      235
+
+command line: [2]
+    ----------------------------------------------------
+    Total:
+
+dl4t_aln.a: [3]
+    abort.o                 8
+    exit.o                  4
+    low_level_init.o        8
+    ----------------------------------------------------
+    Total:                 20
+
+m4t_al.a: [4]
+    DblAdd.o              312
+    DblDiv.o              820
+    DblMul.o              500
+    DblSub.o              512
+    DblToFlt.o            132
+    DblToS32.o             84
+    DblToU32.o             60
+    FltAdd.o              164
+    FltCmpGe.o             44
+    FltCmpLe.o             44
+    FltDiv.o              448
+    FltSub.o              288
+    FltToDbl.o            104
+    FltToS32.o             64
+    S32ToFlt.o            100
+    U32ToDbl.o             88
+    ----------------------------------------------------
+    Total:              3 764
+
+rt4t_al.a: [5]
+    ABImemset48.o          72
+    I32DivMod.o           468
+    IntDivZer.o             4
+    cexit.o                16
+    cmain.o                48
+    cstartup.o            148
+    data_init.o            50
+    packbits_init.o       200
+    vectortrap.o            4
+    zero_init3.o           60
+    ----------------------------------------------------
+    Total:              1 070
+
+shs_l.a: [6]
+    exit.o                 32
+    xreturnswi.o            4
+    ----------------------------------------------------
+    Total:                 36
+
+    Gaps                    2                 1
+    Linker created         16       44    2 144
+--------------------------------------------------------
+    Grand Total:       17 860      564   10 444      235
+
+
+*******************************************************************************
+*** ENTRY LIST
+***
+
+Entry                      Address    Size  Type      Object
+-----                      -------    ----  ----      ------
+.iar.init_table$$Base   0x00004780           --   Gb  - Linker created -
+.iar.init_table$$Limit  0x000047ac           --   Gb  - Linker created -
+?main                   0x000046c4          Code  Gb  cmain.o [5]
+Abort_Handler           0x000047ac          Code  Wk  vectortrap.o [5]
+BUFFSPECTR              0x40000410   0xc04  Data  Gb  InterEINT0.o [1]
+BYTEtoUART              0x0000050c    0x1c  Code  Gb  AnswerCOM.o [1]
+ByteCOMMAND             0x40001144     0x4  Data  Gb  BDKGmain.o [1]
+ByteCurrentIzm          0x40000124     0x4  Data  Gb  AnswerCOM.o [1]
+COM10                   0x0000113c   0x120  Code  Gb  AnswerCOM.o [1]
+COM11                   0x0000125c    0x8c  Code  Gb  AnswerCOM.o [1]
+COM12                   0x000012e8    0xe8  Code  Gb  AnswerCOM.o [1]
+COM13                   0x000013d0   0x100  Code  Gb  AnswerCOM.o [1]
+COM15                   0x000014ec   0x1e4  Code  Gb  AnswerCOM.o [1]
+COM16                   0x00001724    0x98  Code  Gb  AnswerCOM.o [1]
+COM17                   0x000017bc    0x3c  Code  Gb  AnswerCOM.o [1]
+COM20                   0x000017f8    0x30  Code  Gb  AnswerCOM.o [1]
+COM3                    0x00000674   0x200  Code  Gb  AnswerCOM.o [1]
+COM4                    0x00000874   0x1dc  Code  Gb  AnswerCOM.o [1]
+COM5                    0x00000a50   0x158  Code  Gb  AnswerCOM.o [1]
+COM6                    0x00000ba8   0x1e8  Code  Gb  AnswerCOM.o [1]
+COM7                    0x00000d90    0x90  Code  Gb  AnswerCOM.o [1]
+COM8                    0x00000e24   0x208  Code  Gb  AnswerCOM.o [1]
+COMB                    0x00001038    0xf8  Code  Gb  AnswerCOM.o [1]
+COMMAND                 0x40001128    0x10  Data  Gb  BDKGmain.o [1]
+COMMAND_temp            0x40001168     0x8  Data  Gb  AnswerCOM.o [1]
+COMMANDtoUART           0x00000528    0x30  Code  Gb  AnswerCOM.o [1]
+COMerr                  0x000005a4    0x3c  Code  Gb  AnswerCOM.o [1]
+COMerr02                0x00000580    0x24  Code  Gb  AnswerCOM.o [1]
+CRC16                   0x00000200    0x8c  Code  Gb  AnswerCOM.o [1]
+CRChi                   0x40000120     0x2  Data  Gb  AnswerCOM.o [1]
+CRClo                   0x40000122     0x2  Data  Gb  AnswerCOM.o [1]
+CSTACK$$Base            0x40002190           --   Gb  - Linker created -
+CSTACK$$Limit           0x40002990           --   Gb  - Linker created -
+ClearCOMMAND            0x00001dd8    0x1c  Code  Gb  BDKGmain.o [1]
+ClearSPECTR             0x00001df4    0x14  Code  Gb  BDKGmain.o [1]
+CurrentDIzm             0x4000012c    0xe4  Data  Gb  AnswerCOM.o [1]
+DAC                     0x40001178     0x4  Data  Gb  InterEINT0.o [1]
+FIQ_Handler             0x000047ac          Code  Wk  vectortrap.o [5]
+FIQ_STACK$$Base         0x400029e0           --   Gb  - Linker created -
+FIQ_STACK$$Limit        0x400029f0           --   Gb  - Linker created -
+FLAG                    0x40001140     0x4  Data  Gb  BDKGmain.o [1]
+FLAGOver3byte           0x4000117d     0x1  Data  Gb  InterEINT0.o [1]
+FLAGdac128              0x4000117c     0x1  Data  Gb  InterEINT0.o [1]
+FLAGrez                 0x400010a8     0x4  Data  Gb  InterTMR0.o [1]
+FL_test                 0x40001164     0x1  Data  Gb  BDKGmain.o [1]
+I2CIntevarTemperW       0x000034bc    0x48  Code  Gb  I2C_EEPROM.o [1]
+I2CKOEFF                0x000031e4   0x134  Code  Gb  I2C_EEPROM.o [1]
+I2CMasKoefR             0x0000354c    0x10  Code  Gb  I2C_EEPROM.o [1]
+I2CMasKoefW             0x00003504    0x48  Code  Gb  I2C_EEPROM.o [1]
+I2CTABLTempFlagW        0x000035a4    0x74  Code  Gb  I2C_EEPROM.o [1]
+I2CTABLTempW            0x0000355c    0x48  Code  Gb  I2C_EEPROM.o [1]
+I2C_EEPROM_wr           0x00002dec    0x74  Code  Gb  I2C_EEPROM.o [1]
+I2C_m24xx_rd            0x00002f88    0xc4  Code  Gb  I2C_EEPROM.o [1]
+I2C_m24xx_wr            0x00002e60   0x128  Code  Gb  I2C_EEPROM.o [1]
+IRQ_Handler             0x000047ac          Code  Wk  vectortrap.o [5]
+IRQ_STACK$$Base         0x40002990           --   Gb  - Linker created -
+IRQ_STACK$$Limit        0x400029e0           --   Gb  - Linker created -
+IndMasTemper            0x40001114     0x4  Data  Gb  InterTMR0.o [1]
+InitialiseEINT0         0x00003a6c    0x48  Code  Gb  InterEINT0.o [1]
+InitialiseEMC           0x00001e08    0x9c  Code  Gb  BDKGmain.o [1]
+InitialiseTimer0        0x00003658    0x7c  Code  Gb  InterTMR0.o [1]
+InitialiseTimer1        0x00002ae4    0x6c  Code  Gb  InterTMR1.o [1]
+InitialiseUART0         0x00003c90    0xa4  Code  Gb  InterUART0.o [1]
+KODADC                  0x40001120     0x2  Data  Gb  BDKGmain.o [1]
+KODADCEEPROM            0x40001166     0x2  Data  Gb  BDKGmain.o [1]
+LiveTime                0x40001180     0x4  Data  Gb  InterUART0.o [1]
+MAXPOROG                0x40001124     0x2  Data  Gb  BDKGmain.o [1]
+MIDTEMPER               0x0000390c    0x40  Code  Gb  InterTMR0.o [1]
+MINPOROG                0x40001122     0x2  Data  Gb  BDKGmain.o [1]
+MOVSPECTR_B_S           0x0000028c    0x4c  Code  Gb  AnswerCOM.o [1]
+MOVSPECTR_S_B           0x000002d8    0x4c  Code  Gb  AnswerCOM.o [1]
+MasEEPROMKoef           0x40001094    0x14  Data  Gb  I2C_EEPROM.o [1]
+MasInt                  0x40001170     0x8  Data  Gb  I2C_EEPROM.o [1]
+MasTemper               0x400010c4    0x50  Data  Gb  InterTMR0.o [1]
+PCLK_VPB                0x4000114c     0x4  Data  Gb  BDKGmain.o [1]
+PINSEL2                 0xe002c014     0x4  Data  Gb  BDKGmain.o [1]
+Prefetch_Handler        0x000047ac          Code  Wk  vectortrap.o [5]
+RESETTMR0               0x000036d4    0x24  Code  Gb  InterTMR0.o [1]
+ReadEEPROMIntervalTemper
+                        0x000033cc    0xf0  Code  Gb  I2C_EEPROM.o [1]
+ReadEEPROMkoef          0x0000304c   0x198  Code  Gb  I2C_EEPROM.o [1]
+ReadTABLtemper          0x00003318    0xb4  Code  Gb  I2C_EEPROM.o [1]
+Region$$Table$$Base     0x00004780           --   Gb  - Linker created -
+Region$$Table$$Limit    0x000047ac           --   Gb  - Linker created -
+SETKOEFF                0x0000394c    0xbc  Code  Gb  InterTMR0.o [1]
+SPECTR                  0x40001184  0x1004  Data  Gb  InterEINT0.o [1]
+STARTEINT0              0x00000638    0x3c  Code  Gb  AnswerCOM.o [1]
+STOPEINT0               0x000005e0    0x58  Code  Gb  AnswerCOM.o [1]
+SWI_Handler             0x000047ac          Code  Wk  vectortrap.o [5]
+SoftTimerCT             0x40001150     0x4  Data  Gb  BDKGmain.o [1]
+SoftTimerCT_save        0x40001154     0x4  Data  Gb  BDKGmain.o [1]
+SoftTimerCT_save1       0x40001158     0x4  Data  Gb  BDKGmain.o [1]
+SoftTimerVal            0x4000115c     0x4  Data  Gb  BDKGmain.o [1]
+T0MR0                   0xe0004018     0x4  Data  Gb  InterTMR0.o [1]
+T0PC                    0xe0004010     0x4  Data  Gb  InterTMR0.o [1]
+T0PR                    0xe000400c     0x4  Data  Gb  InterTMR0.o [1]
+T0TC                    0xe0004008     0x4  Data  Gb  InterTMR0.o [1]
+T1MR0                   0xe0008018     0x4  Data  Gb  InterTMR1.o [1]
+T1PC                    0xe0008010     0x4  Data  Gb  InterTMR1.o [1]
+T1PR                    0xe000800c     0x4  Data  Gb  InterTMR1.o [1]
+T1TC                    0xe0008008     0x4  Data  Gb  InterTMR1.o [1]
+T1TC_stop               0x4000111c     0x4  Data  Gb  InterTMR1.o [1]
+T1TC_temp               0x40002188     0x4  Data  Gb  BDKGmain.o [1]
+TABLTempUART            0x000016d0    0x4c  Code  Gb  AnswerCOM.o [1]
+TABLTemperCORR          0x40001014    0x80  Data  Gb  I2C_EEPROM.o [1]
+TEMPERATURA             0x0000374c   0x1c0  Code  Gb  InterTMR0.o [1]
+TEMPERATURA1            0x00003a08    0x3c  Code  Gb  InterTMR0.o [1]
+TEMPERATURE             0x40000128     0x2  Data  Gb  AnswerCOM.o [1]
+TEMPERFLOAT             0x400010bc     0x4  Data  Gb  InterTMR0.o [1]
+TEMPERFLOATtek          0x400010c0     0x4  Data  Gb  InterTMR0.o [1]
+TH                      0x400010b0     0x4  Data  Gb  InterTMR0.o [1]
+TIMEIZMsek              0x40001148     0x4  Data  Gb  BDKGmain.o [1]
+TIMER0_INTERVAL         0x40001118     0x4  Data  Gb  InterTMR0.o [1]
+TL                      0x400010b4     0x4  Data  Gb  InterTMR0.o [1]
+TURNSPECTR_B_S          0x00000324    0x4c  Code  Gb  AnswerCOM.o [1]
+TURNSPECTR_S_B          0x00000370    0x4c  Code  Gb  AnswerCOM.o [1]
+TakingTemperature       0x000003bc   0x150  Code  Gb  AnswerCOM.o [1]
+Temp_i                  0x400010b8     0x4  Data  Gb  InterTMR0.o [1]
+Test_WDT_cnt            0x4000117e     0x1  Data  Gb  BDKGmain.o [1]
+TimeByte                0x4000012b     0x1  Data  Gb  AnswerCOM.o [1]
+TimerInterrupt0         0x000036f8    0x54  Code  Gb  InterTMR0.o [1]
+TimerInterrupt1         0x00002b50    0x3c  Code  Lc  InterTMR1.o [1]
+U0RBRTHR                0xe000c000     0x1  Data  Gb  InterUART0.o [1]
+UART0Interrupt          0x00003d34   0x238  Code  Lc  InterUART0.o [1]
+Undefined_Handler       0x000047ac          Code  Wk  vectortrap.o [5]
+VICVectAddr0            0xfffff100     0x4  Data  Gb  InterUART0.o [1]
+VICVectAddr1            0xfffff104     0x4  Data  Gb  InterTMR0.o [1]
+VICVectAddr2            0xfffff108     0x4  Data  Gb  InterTMR1.o [1]
+VICVectAddr3            0xfffff10c     0x4  Data  Gb  BDKGmain.o [1]
+WDMOD_temp              0x40001165     0x1  Data  Gb  BDKGmain.o [1]
+WDTC                    0xe0000004     0x4  Data  Gb  BDKGmain.o [1]
+WDT_Interupt            0x00001ea4    0x14  Code  Gb  BDKGmain.o [1]
+ZAPFACTOR               0x00003ab4   0x1d4  Code  Gb  InterEINT0.o [1]
+_A_APBDIV               0xe01fc100     0x4  Data  Gb  BDKGmain.o [1]
+_A_BCFG2                0xffe00008     0x4  Data  Gb  BDKGmain.o [1]
+_A_BCFG3                0xffe0000c     0x4  Data  Gb  BDKGmain.o [1]
+_A_EXTINT               0xe01fc140     0x4  Data  Gb  InterEINT0.o [1]
+_A_EXTMODE              0xe01fc148     0x4  Data  Gb  InterEINT0.o [1]
+_A_I2CONCLR             0xe001c018     0x4  Data  Gb  I2C_EEPROM.o [1]
+_A_I2CONSET             0xe001c000     0x4  Data  Gb  I2C_EEPROM.o [1]
+_A_I2DAT                0xe001c008     0x4  Data  Gb  I2C_EEPROM.o [1]
+_A_I2SCLH               0xe001c010     0x4  Data  Gb  I2C_EEPROM.o [1]
+_A_I2SCLL               0xe001c014     0x4  Data  Gb  I2C_EEPROM.o [1]
+_A_I2STAT               0xe001c004     0x4  Data  Gb  I2C_EEPROM.o [1]
+_A_IO0CLR               0xe002800c     0x4  Data  Gb  InterEINT0.o [1]
+_A_IO0DIR               0xe0028008     0x4  Data  Gb  InterEINT0.o [1]
+_A_IO0PIN               0xe0028000     0x4  Data  Gb  InterTMR0.o [1]
+_A_IO0SET               0xe0028004     0x4  Data  Gb  InterEINT0.o [1]
+_A_IO2CLR               0xe002802c     0x4  Data  Gb  InterEINT0.o [1]
+_A_IO2DIR               0xe0028028     0x4  Data  Gb  BDKGmain.o [1]
+_A_IO2PIN               0xe0028020     0x4  Data  Gb  InterEINT0.o [1]
+_A_IO2SET               0xe0028024     0x4  Data  Gb  InterEINT0.o [1]
+_A_IO3DIR               0xe0028038     0x4  Data  Gb  BDKGmain.o [1]
+_A_IO3SET               0xe0028034     0x4  Data  Gb  BDKGmain.o [1]
+_A_MAMCR                0xe01fc000     0x4  Data  Gb  BDKGmain.o [1]
+_A_MAMTIM               0xe01fc004     0x4  Data  Gb  BDKGmain.o [1]
+_A_MEMMAP               0xe01fc040     0x4  Data  Gb  BDKGmain.o [1]
+_A_PCONP                0xe01fc0c4     0x4  Data  Gb  I2C_EEPROM.o [1]
+_A_PINSEL0              0xe002c000     0x4  Data  Gb  InterUART0.o [1]
+_A_PINSEL1              0xe002c004     0x4  Data  Gb  InterEINT0.o [1]
+_A_T0IR                 0xe0004000     0x4  Data  Gb  InterTMR0.o [1]
+_A_T0MCR                0xe0004014     0x4  Data  Gb  InterTMR0.o [1]
+_A_T0TCR                0xe0004004     0x4  Data  Gb  InterTMR0.o [1]
+_A_T1IR                 0xe0008000     0x4  Data  Gb  InterTMR1.o [1]
+_A_T1MCR                0xe0008014     0x4  Data  Gb  InterTMR1.o [1]
+_A_T1TCR                0xe0008004     0x4  Data  Gb  InterTMR1.o [1]
+_A_U0FCR                0xe000c008     0x4  Data  Gb  InterUART0.o [1]
+_A_U0IER                0xe000c004     0x4  Data  Gb  InterUART0.o [1]
+_A_U0LCR                0xe000c00c     0x1  Data  Gb  InterUART0.o [1]
+_A_U0LSR                0xe000c014     0x1  Data  Gb  InterUART0.o [1]
+_A_VICIntEnClear        0xfffff014     0x4  Data  Gb  BDKGmain.o [1]
+_A_VICIntEnable         0xfffff010     0x4  Data  Gb  BDKGmain.o [1]
+_A_VICIntSelect         0xfffff00c     0x4  Data  Gb  InterEINT0.o [1]
+_A_VICVectCntl0         0xfffff200     0x4  Data  Gb  InterUART0.o [1]
+_A_VICVectCntl1         0xfffff204     0x4  Data  Gb  InterTMR0.o [1]
+_A_VICVectCntl2         0xfffff208     0x4  Data  Gb  InterTMR1.o [1]
+_A_VICVectCntl3         0xfffff20c     0x4  Data  Gb  BDKGmain.o [1]
+_A_WDFEED               0xe0000008     0x4  Data  Gb  BDKGmain.o [1]
+_A_WDMOD                0xe0000000     0x4  Data  Gb  BDKGmain.o [1]
+__aeabi_cfcmple         0x0000437c          Code  Gb  FltCmpLe.o [4]
+__aeabi_cfrcmple        0x000018a4          Code  Gb  FltCmpGe.o [4]
+__aeabi_d2f             0x0000288c          Code  Gb  DblToFlt.o [4]
+__aeabi_d2iz            0x00001b2c          Code  Gb  DblToS32.o [4]
+__aeabi_d2uiz           0x0000411c          Code  Gb  DblToU32.o [4]
+__aeabi_dadd            0x00003f98          Code  Gb  DblAdd.o [4]
+__aeabi_ddiv            0x00002558          Code  Gb  DblDiv.o [4]
+__aeabi_dmul            0x00001938          Code  Gb  DblMul.o [4]
+__aeabi_dsub            0x00001bd8          Code  Gb  DblSub.o [4]
+__aeabi_f2d             0x000018d0          Code  Gb  FltToDbl.o [4]
+__aeabi_f2iz            0x00001864          Code  Gb  FltToS32.o [4]
+__aeabi_fadd            0x000043a8          Code  Gb  FltAdd.o [4]
+__aeabi_fdiv            0x000041bc          Code  Gb  FltDiv.o [4]
+__aeabi_i2f             0x00004158          Code  Gb  S32ToFlt.o [4]
+__aeabi_idiv            0x00002910          Code  Gb  I32DivMod.o [5]
+__aeabi_idiv0           0x00004118          Code  Gb  IntDivZer.o [5]
+__aeabi_idivmod         0x00002910          Code  Gb  I32DivMod.o [5]
+__aeabi_memset4         0x000040d0          Code  Gb  ABImemset48.o [5]
+__aeabi_memset8         0x000040d0          Code  Gb  ABImemset48.o [5]
+__aeabi_ui2d            0x00001b80          Code  Gb  U32ToDbl.o [4]
+__aeabi_uidiv           0x00002940          Code  Gb  I32DivMod.o [5]
+__aeabi_uidivmod        0x00002940          Code  Gb  I32DivMod.o [5]
+__cmain                 0x000046c4          Code  Gb  cmain.o [5]
+__exit                  0x00004640    0x20  Code  Gb  exit.o [6]
+__iar_Memset4_word      0x000040dc          Code  Gb  ABImemset48.o [5]
+__iar_Memset8_word      0x000040dc          Code  Gb  ABImemset48.o [5]
+__iar_dadd              0x00003fa8          Code  Gb  DblAdd.o [4]
+__iar_data_init3        0x000046fd    0x30  Code  Gb  data_init.o [5]
+__iar_dsub              0x00001be8          Code  Gb  DblSub.o [4]
+__iar_dsubStart         0x00001c08          Code  Gb  DblSub.o [4]
+__iar_fadd              0x000043b4          Code  Gb  FltAdd.o [4]
+__iar_fsub              0x0000444c          Code  Gb  FltSub.o [4]
+__iar_fsubStart         0x0000445c          Code  Gb  FltSub.o [4]
+__iar_packbits_init3    0x0000456d    0xc8  Code  Gb  packbits_init.o [5]
+__iar_program_start     0x00004660          Code  Gb  cstartup.o [5]
+__iar_return_from_swi   0x000047b0     0x4  Code  Gb  xreturnswi.o [6]
+__iar_systems$$module {Abs}
+                        0x00000001          Data  Gb  command line/config [2]
+__iar_zero_init3        0x00004745    0x3c  Code  Gb  zero_init3.o [5]
+__low_level_init        0x000046f4     0x8  Code  Gb  low_level_init.o [3]
+__vector                0x00000000          Data  Gb  cstartup.o [5]
+_call_main              0x000046dc          Code  Gb  cmain.o [5]
+_exit                   0x00004734          Code  Gb  cexit.o [5]
+_main                   0x000046e4          Code  Gb  cmain.o [5]
+abort                   0x00004638     0x8  Code  Gb  abort.o [3]
+auchCRCHi               0x40000210   0x100  Data  Lc  AnswerCOM.o [1]
+auchCRCLo               0x40000310   0x100  Data  Lc  AnswerCOM.o [1]
+dPeriod                 0x40001138     0x8  Data  Gb  BDKGmain.o [1]
+exit                    0x00004730     0x4  Code  Gb  exit.o [3]
+flagTIME2               0x4000012a     0x1  Data  Gb  AnswerCOM.o [1]
+i2c_lpc_ask_polling_op  0x00002d68    0x84  Code  Gb  I2C_EEPROM.o [1]
+i2c_lpc_ctrl            0x00002c34    0x88  Code  Gb  I2C_EEPROM.o [1]
+i2c_lpc_init            0x00002b9c    0x54  Code  Gb  I2C_EEPROM.o [1]
+i2c_lpc_rx_to_buf       0x00002cbc    0xac  Code  Gb  I2C_EEPROM.o [1]
+i2c_lpc_stop            0x00002c14    0x20  Code  Gb  I2C_EEPROM.o [1]
+i2c_lpc_wr_byte         0x00002bf0    0x24  Code  Gb  I2C_EEPROM.o [1]
+icikl_n                 0x40001160     0x4  Data  Gb  BDKGmain.o [1]
+main                    0x00001eb8   0x62c  Code  Gb  BDKGmain.o [1]
+toCOMMAND2byte          0x00000558    0x28  Code  Gb  AnswerCOM.o [1]
+ulGlobalMaxTimer0Value  0x400010ac     0x4  Data  Gb  InterTMR0.o [1]
+
+
+[1] = D:\Users\Chirikalo\ARM_proj\AT1315_for_test\Debug\Obj
+[2] = command line
+[3] = dl4t_aln.a
+[4] = m4t_al.a
+[5] = rt4t_al.a
+[6] = shs_l.a
+
+  17 860 bytes of readonly  code memory
+     564 bytes of readonly  data memory
+  10 444 bytes of readwrite data memory (+ 235 absolute)
+
+Errors: none
+Warnings: none

@@ -1,0 +1,282 @@
+###############################################################################
+#                                                                             #
+#     IAR Systems ARM Assembler V4.20A/W32 21/Sep/2006  11:13:42              #
+#     Copyright 1999-2005 IAR Systems. All rights reserved.                   #
+#                                                                             #
+#           Source file   =  D:\Iar\IAR_BDKG\evba7_cstartup.s79               #
+#           List file     =  D:\Iar\IAR_BDKG\Debug\List\evba7_cstartup.lst    #
+#           Object file   =  D:\Iar\IAR_BDKG\Debug\Obj\evba7_cstartup.r79     #
+#           Command line  =  -OD:\Iar\IAR_BDKG\Debug\Obj\ -s+ -M<> -w+ -r     #
+#                            -LD:\Iar\IAR_BDKG\Debug\List\ -t8                #
+#                            -ID:\Program Files\IAR Systems\Embedded Workbench 4.0 Evaluation\arm\INC\ #
+#                            --cpu ARM7TDMI-S --fpu None                      #
+#                            D:\Iar\IAR_BDKG\evba7_cstartup.s79               #
+#                                                                             #
+###############################################################################
+
+    1    00000000              ;-----------------------------------------------
+                               ------------------------------
+    2    00000000              ; This file contains the startup code used by
+                                the ICCARM C compiler.
+    3    00000000              ;
+    4    00000000              ; The modules in this file are included in the
+                                libraries, and may be replaced
+    5    00000000              ; by any user-defined modules that define the
+                                PUBLIC symbol _program_start or
+    6    00000000              ; a user defined start symbol.
+    7    00000000              ; To override the cstartup defined in the
+                                library, simply add your modified
+    8    00000000              ; version to the workbench project.
+    9    00000000              ;
+   10    00000000              ; All code in the modules (except ?RESET) will
+                                be placed in the ICODE segment.
+   11    00000000              ;
+   12    00000000              ; $Revision: 1.3 $
+   13    00000000              ;
+   14    00000000              ;-----------------------------------------------
+                               ------------------------------
+   15    00000000                      
+   16    00000000              ;
+   17    00000000              ; Naming covention of labels in this file:
+   18    00000000              ;
+   19    00000000              ;  ?xxx   - External labels only accessed from
+                                assembler.
+   20    00000000              ;  __xxx  - External labels accessed from or
+                                defined in C.
+   21    00000000              ;  xxx    - Labels local to one module (note:
+                                this file contains
+   22    00000000              ;           several modules).
+   23    00000000              ;  main   - The starting point of the user
+                                program.
+   24    00000000              ;
+   25    00000000              
+   26    00000000              ;-----------------------------------------------
+                               ----------------
+   27    00000000              ; Macros and definitions for the whole
+                                file
+   28    00000000              ;-----------------------------------------------
+                               ----------------
+   29    00000000              
+   30    00000000              ; Mode, correspords to bits 0-5 in CPSR
+   31    0000001F              MODE_BITS       DEFINE  0x1F            ; Bit
+                                mask for mode bits in CPSR
+   32    00000010              USR_MODE        DEFINE  0x10            ; User
+                                mode
+   33    00000011              FIQ_MODE        DEFINE  0x11            ; Fast
+                                Interrupt Request mode
+   34    00000012              IRQ_MODE        DEFINE  0x12            ;
+                                Interrupt Request mode
+   35    00000013              SVC_MODE        DEFINE  0x13            ;
+                                Supervisor mode
+   36    00000017              ABT_MODE        DEFINE  0x17            ; Abort
+                                mode
+   37    0000001B              UND_MODE        DEFINE  0x1B            ;
+                                Undefined Instruction mode
+   38    0000001F              SYS_MODE        DEFINE  0x1F            ; System
+                                mode
+   39    00000000                      
+   40    00000000              
+   41    00000000              ;-----------------------------------------------
+                               ----------------
+   42    00000000              ; ?RESET
+   43    00000000              ; Reset Vector.
+   44    00000000              ; Normally, segment INTVEC is linked at address
+                                0.
+   45    00000000              ; For debugging purposes, INTVEC may be placed
+                                at other
+   46    00000000              ; addresses.
+   47    00000000              ; A debugger that honors the entry point will
+                                start the
+   48    00000000              ; program in a normal way even if INTVEC is not
+                                at address 0.
+   49    00000000              ;-----------------------------------------------
+                               ----------------
+   50    00000000              
+   51    00000000                              MODULE  ?RESET
+   52    00000000                              COMMON  INTVEC:CODE:NOROOT(2)
+   52.1  00000000                       ALIGNROM 1 
+   53    00000000                              PUBLIC  __program_start
+   54    00000000                              EXTERN  ?cstartup
+   55    00000000              ;               EXTERN  undef_handler,
+                                swi_handler, prefetch_handler
+   56    00000000              ;               EXTERN  data_handler, fiq_handle
+                               r
+   57    00000000                              EXTERN  Pirq
+   58    00000000                              CODE32  ; Always ARM mode after
+                                reset   
+   58.1  00000000                       ALIGNROM 2 
+   58    00000000                              CODE32  ; Always ARM mode after
+                                reset   
+   59    00000000                              org     0x00
+   60    00000000              __program_start
+   61    00000000 18F09FE5                     ldr     pc,=?cstartup  ;
+                                                           Absolute jump can
+                                                           reach 4 GByte
+   62    00000004              ;               ldr     b,?cstartup    ;
+                                Relative branch allows remap, limited to 32
+                                MByte
+   63    00000004                              org     0x04
+   64    00000004 18F09FE5     undef_handler   ldr     pc,=undef_handler
+   65    00000008                              org     0x08
+   66    00000008 18F09FE5     swi_handler     ldr     pc,=swi_handler
+   67    0000000C                              org     0x0c
+   68    0000000C 18F09FE5     prefetch_handler ldr    pc,=prefetch_handler
+   69    00000010                              org     0x10
+   70    00000010 18F09FE5     data_handler    ldr     pc,=data_handler
+   71    00000014                              org     0x14
+   72    00000014 606FA0B8                     DC32    0xB8A06F60
+   73    00000018                              org     0x18
+   74    00000018 14F09FE5                     ldr     pc,=Pirq
+   75    0000001C                              org     0x1c
+   76    0000001C 14F09FE5     fiq_handler     ldr     pc,=fiq_handler
+   77    00000020              
+   78    00000020                              ; Constant table entries (for
+                                ldr pc) will be placed at 0x20
+   79    00000020                              org     0x20
+   80    00000020                              LTORG
+   80.1  00000020                       TABLE
+   80.2  00000020 ........             Reference on line 61 
+   80.3  00000024 ........             Reference on line 64 
+   80.4  00000028 ........             Reference on line 66 
+   80.5  0000002C ........             Reference on line 68 
+   80.6  00000030 ........             Reference on line 70 
+   80.7  00000034 ........             Reference on line 74 
+   80.8  00000038 ........             Reference on line 76 
+   81    0000003C              ;               ENDMOD  __program_start
+   82    0000003C                              ENDMOD
+##############################
+#          CRC:D60F          #
+#        Errors:   0         #
+#        Warnings: 0         #
+#         Bytes: 60          #
+##############################
+
+
+
+###############################################################################
+#                                                                             #
+#     IAR Systems ARM Assembler V4.20A/W32 21/Sep/2006  11:13:42              #
+#     Copyright 1999-2005 IAR Systems. All rights reserved.                   #
+#                                                                             #
+#           Source file   =  D:\Iar\IAR_BDKG\evba7_cstartup.s79               #
+#           List file     =  D:\Iar\IAR_BDKG\Debug\List\evba7_cstartup.lst    #
+#           Object file   =  D:\Iar\IAR_BDKG\Debug\Obj\evba7_cstartup.r79     #
+#           Command line  =  -OD:\Iar\IAR_BDKG\Debug\Obj\ -s+ -M<> -w+ -r     #
+#                            -LD:\Iar\IAR_BDKG\Debug\List\ -t8                #
+#                            -ID:\Program Files\IAR Systems\Embedded Workbench 4.0 Evaluation\arm\INC\ #
+#                            --cpu ARM7TDMI-S --fpu None                      #
+#                            D:\Iar\IAR_BDKG\evba7_cstartup.s79               #
+#                                                                             #
+###############################################################################
+
+   83    00000000              
+   84    00000000              
+   85    00000000              ;-----------------------------------------------
+                               ----------------
+   86    00000000              ; ?CSTARTUP
+   87    00000000              ;-----------------------------------------------
+                               ----------------
+   88    00000000                              MODULE  ?CSTARTUP
+   89    00000000              
+   90    00000000                              RSEG    IRQ_STACK:DATA(2)
+   91    00000000                              RSEG    SVC_STACK:DATA:NOROOT(2)
+   92    00000000                              RSEG    CSTACK:DATA(2)
+   93    00000000                              RSEG    ICODE:CODE:NOROOT(2)
+   94    00000000                              PUBLIC  ?cstartup
+   95    00000000                              EXTERN  ?main
+   96    00000000              
+   97    00000000              ; Execution starts here.
+   98    00000000              ; After a reset, the mode is ARM, Supervisor,
+                                interrupts disabled.
+   99    00000000              
+  100    00000000              
+  101    00000000                              CODE32
+  101.1  00000000                       ALIGNROM 2 
+  102    00000000              ?cstartup
+  103    00000000              
+  104    00000000              ; Add initialization nedded before setup of
+                                stackpointers here
+  105    00000000              
+  106    00000000              
+  107    00000000              ; Initialize the stack pointers.
+  108    00000000              ; The pattern below can be used for any of the
+                                exception stacks:
+  109    00000000              ; FIQ, IRQ, SVC, ABT, UND, SYS.
+  110    00000000              ; The USR mode uses the same stack as SYS.
+  111    00000000              ; The stack segments must be defined in the
+                                linker command file,
+  112    00000000              ; and be declared above.
+  113    00000000 00000FE1                     mrs     r0,cpsr                 
+                                                                      ;
+                                                           Original PSR
+                                                           value
+  114    00000004 1F00C0E3                     bic     r0,r0,#MODE_BITS        
+                                                                      ; Clear
+                                                           the mode bits
+  115    00000008 120080E3                     orr     r0,r0,#IRQ_MODE         
+                                                                      ; Set IRQ
+                                                           mode bits
+  116    0000000C 00F021E1                     msr     cpsr_c,r0               
+                                                                          ;
+                                                               Change the
+                                                               mode
+  117    00000010 14D09FE5                     ldr     sp,=SFE(IRQ_STACK) &
+                                                           0xFFFFFFF8     ; End
+                                                           of IRQ_STACK
+  118    00000014              
+  119    00000014 1F00C0E3                     bic     r0,r0,#MODE_BITS        
+                                                                      ; Clear
+                                                           the mode bits
+  120    00000018 1F0080E3                     orr     r0,r0,#SYS_MODE         
+                                                                      ; Set
+                                                           System mode
+                                                           bits
+  121    0000001C 00F021E1                     msr     cpsr_c,r0               
+                                                                          ;
+                                                               Change the
+                                                               mode
+  122    00000020 08D09FE5                     ldr     sp,=SFE(CSTACK) &
+                                                           0xFFFFFFF8        ;
+                                                           End of CSTACK
+  123    00000024              
+  124    00000024              #ifdef __ARMVFP__
+  134    00000024              #endif
+  135    00000024              
+  136    00000024              ; Add more initialization here
+  137    00000024              
+  138    00000024              
+  139    00000024              ; Continue to ?main for more IAR specific system
+                                startup
+  140    00000024              
+  141    00000024 08009FE5                     ldr     r0,=?main
+  142    00000028 10FF2FE1                     bx      r0
+  143    0000002C              
+  144    0000002C                              LTORG
+  144.1  0000002C                       TABLE
+  144.2  0000002C ........             Reference on line 117 
+  144.3  00000030 ........             Reference on line 122 
+  144.4  00000034 ........             Reference on line 141 
+  145    00000038              
+  146    00000038                              ENDMOD
+##############################
+#          CRC:76E5          #
+#        Errors:   0         #
+#        Warnings: 0         #
+#         Bytes: 56          #
+##############################
+
+
+
+##############################
+#          CRC:76E5          #
+#        Errors:   0         #
+#        Warnings: 0         #
+#         Bytes: 56          #
+#     Modules:        2      #
+#     Total errors:   0      #
+#     Total warnings: 0      #
+##############################
+
+
+
+

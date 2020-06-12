@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<Project>
+  <Desktop>
+    <Static>
+      <Workspace>
+        <ColumnWidths>
+          
+          
+          
+          
+        <Column0>124</Column0><Column1>27</Column1><Column2>27</Column2><Column3>27</Column3></ColumnWidths>
+      <PreferedWindows><Position>1</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows/></PreferedWindows></Workspace>
+      <Disassembly>
+        
+        
+        
+      <MixedMode>1</MixedMode><CodeCovEnabled>0</CodeCovEnabled><CodeCovShow>0</CodeCovShow></Disassembly>
+      <Debug-Log><PreferedWindows><Position>3</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows><Window><Factory>Breakpoints</Factory></Window></Windows></PreferedWindows></Debug-Log>
+      <Build>
+        
+        
+        
+        
+      <PreferedWindows><Position>3</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows><Window><Factory>Debug-Log</Factory></Window><Window><Factory>Breakpoints</Factory></Window></Windows></PreferedWindows><ColumnWidth0>20</ColumnWidth0><ColumnWidth1>660</ColumnWidth1><ColumnWidth2>176</ColumnWidth2><ColumnWidth3>44</ColumnWidth3></Build>
+      <Register><PreferedWindows><Position>2</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows><Window><Factory>Disassembly</Factory></Window></Windows></PreferedWindows></Register>
+    <CallStack><PreferedWindows><Position>1</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows/></PreferedWindows><ViewArgs>1</ViewArgs></CallStack><Watch><Format><struct_types><Fmt><Key>__BITFLAG-dac128</Key><Value>4</Value></Fmt><Fmt><Key>__BITFLAG-temperature</Key><Value>4</Value></Fmt></struct_types><watch_formats><Fmt><Key>{W}Watch-1:ADRCANAL</Key><Value>4</Value></Fmt><Fmt><Key>{W}Watch-1:ByteCOMMAND</Key><Value>4</Value></Fmt><Fmt><Key>{W}Watch-1:ByteCurrentIzm</Key><Value>4</Value></Fmt><Fmt><Key>{W}Watch-1:CRChi</Key><Value>4</Value></Fmt><Fmt><Key>{W}Watch-1:CRClo</Key><Value>4</Value></Fmt><Fmt><Key>{W}Watch-1:DAC</Key><Value>4</Value></Fmt><Fmt><Key>{W}Watch-1:PCONP</Key><Value>4</Value></Fmt><Fmt><Key>{W}Watch-1:VICIntEnable</Key><Value>4</Value></Fmt><Fmt><Key>{W}Watch-2:ADRCANAL</Key><Value>4</Value></Fmt><Fmt><Key>{W}Watch-7:ADRCANAL</Key><Value>4</Value></Fmt><Fmt><Key>{W}Watch-7:CRChi</Key><Value>4</Value></Fmt><Fmt><Key>{W}Watch-7:CRClo</Key><Value>4</Value></Fmt></watch_formats></Format><PreferedWindows><Position>2</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows><Window><Factory>Auto</Factory></Window><Window><Factory>Watch</Factory></Window><Window><Factory>Register</Factory></Window></Windows></PreferedWindows><Column0>100</Column0><Column1>106</Column1><Column2>100</Column2><Column3>100</Column3></Watch><Auto><PreferedWindows><Position>2</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows><Window><Factory>Watch</Factory></Window><Window><Factory>Register</Factory></Window><Window><Factory>Watch</Factory></Window></Windows></PreferedWindows><Column0>90</Column0><Column1>107</Column1><Column2>78</Column2><Column3>100</Column3></Auto><Breakpoints/><StaticWatch><PreferedWindows><Position>2</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows><Window><Factory>Watch</Factory></Window><Window><Factory>Auto</Factory></Window></Windows></PreferedWindows><Column0>100</Column0><Column1>100</Column1><Column2>100</Column2><Column3>100</Column3></StaticWatch><QuickWatch><PreferedWindows><Position>2</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows/></PreferedWindows><Column0>100</Column0><Column1>100</Column1><Column2>100</Column2><Column3>100</Column3></QuickWatch><TerminalIO><PreferedWindows><Position>2</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows/></PreferedWindows><InputSource>1</InputSource><InputMode>10</InputMode><Filename>$PROJ_DIR$\TermIOInput.txt</Filename><InputEcho>1</InputEcho><ShowReset>0</ShowReset></TerminalIO><SourceBrowser><PreferedWindows><Position>1</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows><Window><Factory>Workspace</Factory></Window></Windows></PreferedWindows></SourceBrowser><Locals><PreferedWindows><Position>2</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows><Window><Factory>Watch</Factory></Window><Window><Factory>Auto</Factory></Window></Windows></PreferedWindows><Column0>100</Column0><Column1>100</Column1><Column2>100</Column2><Column3>100</Column3></Locals><Profiling><ColumnWidths><Column0>125</Column0><Column1>125</Column1><Column2>125</Column2><Column3>125</Column3><Column4>125</Column4><Column5>125</Column5></ColumnWidths><PreferedWindows><Position>3</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows/></PreferedWindows><Graph>0</Graph><AutoRefresh>0</AutoRefresh><Enabled>0</Enabled></Profiling></Static>
+    <Windows>
+      
+      
+      
+      
+    <Wnd0>
+        <Tabs>
+          <Tab>
+            <Identity>TabID-11949-2039</Identity>
+            <TabName>Disassembly</TabName>
+            <Factory>Disassembly</Factory>
+            <Session/>
+          </Tab>
+        <Tab><Identity>TabID-17163-19452</Identity><TabName>Register</TabName><Factory>Register</Factory><Session><REG1>0</REG1><REG2>0</REG2><Group>6</Group><States>2</States><State0>PLLCFG</State0><State1>VPBDIV</State1></Session></Tab></Tabs>
+        
+      <SelectedTab>1</SelectedTab></Wnd0><Wnd3>
+        <Tabs>
+          
+          
+        <Tab><Identity>TabID-10106-1055</Identity><TabName>Breakpoints</TabName><Factory>Breakpoints</Factory><Session/></Tab></Tabs>
+        
+      <SelectedTab>0</SelectedTab></Wnd3><Wnd4><Tabs><Tab><Identity>TabID-20968-32355</Identity><TabName>Watch</TabName><Factory>Watch</Factory><Session><Expressions><Expression><Expression>ADRCANAL</Expression></Expression><Expression><Expression>DACtek</Expression></Expression><Expression><Expression>MasEEPROMKoef</Expression></Expression><Expression><Expression>MemAddress</Expression></Expression><Expression><Expression>CRClo</Expression></Expression><Expression><Expression>CRChi</Expression></Expression><Expression><Expression>COMMAND</Expression></Expression><Expression><Expression>BUFFSPECTR</Expression></Expression><Expression><Expression>LiveTime</Expression></Expression><Expression><Expression>adrcom15</Expression></Expression><Expression><Expression>SPECTR</Expression></Expression></Expressions><TabId>7</TabId><Column0>100</Column0><Column1>106</Column1><Column2>100</Column2><Column3>100</Column3></Session></Tab><Tab><Identity>TabID-13021-28410</Identity><TabName>Auto</TabName><Factory>Auto</Factory><Session><Column0>90</Column0><Column1>107</Column1><Column2>78</Column2><Column3>100</Column3></Session></Tab><Tab><Identity>TabID-20621-7070</Identity><TabName>Live Watch</TabName><Factory>StaticWatch</Factory><Session><Expressions/><TabId>0</TabId><Column0>100</Column0><Column1>100</Column1><Column2>100</Column2><Column3>100</Column3></Session></Tab></Tabs><SelectedTab>0</SelectedTab></Wnd4></Windows>
+    <Editor>
+      
+      
+      
+      
+    <Pane><Tab><Factory>TextEditor</Factory><Filename>D:\Iar\IAR_BDKG\InterTMR1.cpp</Filename><XPos>0</XPos><YPos>20</YPos><SelStart>1909</SelStart><SelEnd>1930</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Program Files\IAR Systems\Embedded Workbench 4.0 Evaluation\arm\inc\io_macros.h</Filename><XPos>0</XPos><YPos>12</YPos><SelStart>988</SelStart><SelEnd>988</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Iar\IAR_BDKG\InterUART0.cpp</Filename><XPos>0</XPos><YPos>18</YPos><SelStart>1223</SelStart><SelEnd>1223</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Iar\IAR_BDKG\InterTMR0.cpp</Filename><XPos>0</XPos><YPos>21</YPos><SelStart>2074</SelStart><SelEnd>2081</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Iar\IAR_BDKG\AnswerCOM.cpp</Filename><XPos>0</XPos><YPos>156</YPos><SelStart>7385</SelStart><SelEnd>7385</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Iar\IAR_BDKG\BDKGmain.cpp</Filename><XPos>0</XPos><YPos>199</YPos><SelStart>6717</SelStart><SelEnd>6717</SelEnd></Tab><ActiveTab>5</ActiveTab><Tab><Factory>TextEditor</Factory><Filename>D:\Iar\IAR_BDKG\InterEINT0.cpp</Filename><XPos>0</XPos><YPos>100</YPos><SelStart>4050</SelStart><SelEnd>4050</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Iar\IAR_BDKG\I2CEEPROM.cpp</Filename><XPos>0</XPos><YPos>30</YPos><SelStart>2101</SelStart><SelEnd>2101</SelEnd></Tab></Pane><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
+    <Positions>
+      
+      
+      
+      
+      
+    <Top><Row0><Sizes><Toolbar-0084bad0><key>iaridepm1</key></Toolbar-0084bad0></Sizes></Row0><Row1><Sizes><Toolbar-03129f00><key>debuggergui1</key></Toolbar-03129f00></Sizes></Row1></Top><Left><Row0><Sizes/></Row0></Left><Right><Row0><Sizes><Wnd4><Rect><Top>-2</Top><Left>-2</Left><Bottom>604</Bottom><Right>179</Right><x>-2</x><y>-2</y><xscreen>82</xscreen><yscreen>82</yscreen><sizeHorzCX>80078</sizeHorzCX><sizeHorzCY>116809</sizeHorzCY><sizeVertCX>176757</sizeVertCX><sizeVertCY>863247</sizeVertCY></Rect></Wnd4></Sizes></Row0><Row1><Sizes><Wnd0><Rect><Top>-2</Top><Left>177</Left><Bottom>604</Bottom><Right>533</Right><x>177</x><y>-2</y><xscreen>0</xscreen><yscreen>0</yscreen><sizeHorzCX>0</sizeHorzCX><sizeHorzCY>0</sizeHorzCY><sizeVertCX>347656</sizeVertCX><sizeVertCY>863247</sizeVertCY></Rect></Wnd0></Sizes></Row1></Right><Bottom><Row0><Sizes><Wnd3><Rect><Top>-2</Top><Left>-2</Left><Bottom>30</Bottom><Right>1026</Right><x>-2</x><y>-2</y><xscreen>1028</xscreen><yscreen>0</yscreen><sizeHorzCX>1003906</sizeHorzCX><sizeHorzCY>0</sizeHorzCY><sizeVertCX>0</sizeVertCX><sizeVertCY>0</sizeVertCY></Rect></Wnd3></Sizes></Row0></Bottom><Float><Sizes/></Float></Positions>
+  </Desktop>
+</Project>
+
+

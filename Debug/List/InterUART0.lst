@@ -1,0 +1,537 @@
+###############################################################################
+#
+# IAR ANSI C/C++ Compiler V8.20.1.14183/W32 for ARM       12/Jun/2020  11:30:59
+# Copyright 1999-2017 IAR Systems AB.
+#
+#    Cpu mode     =  arm
+#    Endian       =  little
+#    Source file  =  D:\Users\Chirikalo\ARM_proj\AT1315_for_test\InterUART0.cpp
+#    Command line =  
+#        -f C:\Users\CHIRIK~1\AppData\Local\Temp\EWCB36.tmp
+#        (D:\Users\Chirikalo\ARM_proj\AT1315_for_test\InterUART0.cpp -lCN
+#        D:\Users\Chirikalo\ARM_proj\AT1315_for_test\Debug\List -o
+#        D:\Users\Chirikalo\ARM_proj\AT1315_for_test\Debug\Obj --no_unroll
+#        --no_inline --no_tbaa --no_scheduling --debug --endian=little
+#        --cpu=ARM7TDMI-S -e --fpu=None --dlib_config "C:\Program Files
+#        (x86)\IAR Systems\Embedded Workbench
+#        8.0\arm\INC\c\DLib_Config_Normal.h" --cpu_mode arm -Om
+#        --use_c++_inline)
+#    Locale       =  C
+#    List file    =  
+#        D:\Users\Chirikalo\ARM_proj\AT1315_for_test\Debug\List\InterUART0.lst
+#    Object file  =  
+#        D:\Users\Chirikalo\ARM_proj\AT1315_for_test\Debug\Obj\InterUART0.o
+#
+###############################################################################
+
+D:\Users\Chirikalo\ARM_proj\AT1315_for_test\InterUART0.cpp
+      1          /******************************************************/
+      2          /*        пп обработки  UART0 (IRQ) прерывания       */
+      3          /****************************************************/
+      4          #include <intrinsics.h>
+      5          #include <NXP/iolpc2294.h>
+
+   \                                 In section .noinit, at 0xfffff100
+   \   __absolute unsigned long volatile VICVectAddr0
+   \                     VICVectAddr0:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xfffff200
+   \   __absolute union <unnamed>#184 volatile _A_VICVectCntl0
+   \                     _A_VICVectCntl0:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe002c000
+   \   __absolute union <unnamed>#200 volatile _A_PINSEL0
+   \                     _A_PINSEL0:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe000c000
+   \   __absolute unsigned char volatile U0RBRTHR
+   \                     U0RBRTHR:
+   \   00000000                      DS8 1
+
+   \                                 In section .noinit, at 0xe000c004
+   \   __absolute union <unnamed>#228 volatile _A_U0IER
+   \                     _A_U0IER:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe000c008
+   \   __absolute union <unnamed>#229 volatile _A_U0FCR
+   \                     _A_U0FCR:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe000c00c
+   \   __absolute union <unnamed>#230 volatile _A_U0LCR
+   \                     _A_U0LCR:
+   \   00000000                      DS8 1
+
+   \                                 In section .noinit, at 0xe000c014
+   \   __absolute union <unnamed>#231 const volatile _A_U0LSR
+   \                     _A_U0LSR:
+   \   00000000                      DS8 1
+      6          #include "my_macros.h"
+      7          
+      8          #define INTERUART0	  0x40    /* bit 6 int*/
+      9          
+     10          extern unsigned char COMMAND[16];
+     11          extern unsigned int ByteCOMMAND;
+     12          extern __BITFLAG FLAG;   //@@@ @ macros
+     13          extern unsigned int PCLK_VPB;
+     14          
+     15          extern unsigned char CurrentDIzm [226]; //@@@@@@@ @@@@@@ @@@@@@@@@ 223 + CRC 2 @@@@@
+     16          extern int ByteCurrentIzm,counter;
+     17          extern unsigned char BUFFSPECTR[3075];
+     18          extern unsigned char TABLTemperCORR[126]; //@@@@@@@ @@@@@@ @@@@@@@@@ 61 @@@@ @@ 2 @@@@@ +CRC 2@+ 1@ @@@@
+     19          extern unsigned char TimeByte;    //@@@-@@ @@@@ @ @@@@@@@@@@@@@ @@@@@@@ 4 @@@ 2
+     20          extern unsigned int SoftTimerVal; //@@@@@@@ @@@@@@ @@@@@@@@
+     21          
+     22          static void UART0Interrupt(void);
+
+   \                                 In section .bss, align 4
+     23          unsigned char LiveTime[4];
+   \                     LiveTime:
+   \   00000000                      DS8 4
+     24          
+     25          /****************************************************************************/
+
+   \                                 In section .text, align 4, keep-with-next
+     26          void InitialiseUART0(unsigned char speed)
+     27          {
+   \                     InitialiseUART0:
+   \   00000000   0xE92D4010         PUSH     {R4,LR}
+     28            int SpeedRS232;
+     29            if (speed == 1)
+   \   00000004   0xE3500001         CMP      R0,#+1
+   \   00000008   0x1A000002         BNE      ??InitialiseUART0_0
+     30              SpeedRS232 = 115200;   //@@@@@@@@ @@@@@@
+   \   0000000C   0xE3A01B40         MOV      R1,#+65536
+   \   00000010   0xE3811CC2         ORR      R1,R1,#0xC200
+   \   00000014   0xEA000000         B        ??InitialiseUART0_1
+     31            else //2
+     32              SpeedRS232 = 19200;    //@@@@@@@@ @@@@@@
+   \                     ??InitialiseUART0_0:
+   \   00000018   0xE3A01C4B         MOV      R1,#+19200
+     33          
+     34          
+     35          //   char urLSR;
+     36          //   extern void handle_uart0(void);
+     37          
+     38             PINSEL0 = (PINSEL0 & 0xFFFFFFF0) |0x05; //UART0_PCB_PINSEL_CFG;
+   \                     ??InitialiseUART0_1:
+   \   0000001C   0xE3A004E0         MOV      R0,#-536870912
+   \   00000020   0xE3800BB0         ORR      R0,R0,#0x2C000
+   \   00000024   0xE5902000         LDR      R2,[R0, #+0]
+   \   00000028   0xE3C2200F         BIC      R2,R2,#0xF
+   \   0000002C   0xE3822005         ORR      R2,R2,#0x5
+   \   00000030   0xE5802000         STR      R2,[R0, #+0]
+     39             VICVectCntl0  = 0x26;    			   	  /* vector UART0 as 2nd highest priority and enabled */
+   \   00000034   0xE3E000FF         MVN      R0,#+255
+   \   00000038   0xE3C00EE0         BIC      R0,R0,#0xE00
+   \   0000003C   0xE3A02026         MOV      R2,#+38
+   \   00000040   0xE5802100         STR      R2,[R0, #+256]
+     40             VICVectAddr0  = (int) UART0Interrupt;	   	  /* vector UART0 interrupt address */
+   \   00000044   0x........         ADR      R2,UART0Interrupt
+   \   00000048   0xE5802000         STR      R2,[R0, #+0]
+     41          
+     42          
+     43             // enable access to divisor latch regs
+     44             U0IER = 0;
+   \   0000004C   0xE3A044E0         MOV      R4,#-536870912
+   \   00000050   0xE3844CC0         ORR      R4,R4,#0xC000
+   \   00000054   0xE3A00000         MOV      R0,#+0
+   \   00000058   0xE5840004         STR      R0,[R4, #+4]
+     45             U0LCR = 0x83;        //LCR_ENABLE_LATCH_ACCESS;
+   \   0000005C   0xE3A02083         MOV      R2,#+131
+   \   00000060   0xE5C4200C         STRB     R2,[R4, #+12]
+     46             // set divisor for desired baud
+     47             U0DLM = 0x00;
+   \   00000064   0xE5840004         STR      R0,[R4, #+4]
+     48             U0DLL = ((PCLK_VPB*1000) / (SpeedRS232*16)); //0x2;  //115200 ->8/4 //@@@@ 0x0A/4->18432000/(16*115200)
+   \   00000068   0x........         LDR      R0,??DataTable1
+   \   0000006C   0xE5900000         LDR      R0,[R0, #+0]
+   \   00000070   0xE3A02FFA         MOV      R2,#+1000
+   \   00000074   0xE0000092         MUL      R0,R2,R0
+   \   00000078   0xE1A01201         LSL      R1,R1,#+4
+   \   0000007C   0x........         BL       __aeabi_uidiv
+   \   00000080   0xE5C40000         STRB     R0,[R4, #+0]
+     49             // disable access to divisor latch regs (enable access to xmit/rcv fifos
+     50             // and int enable regs)
+     51             U0LCR =0x3; //LCR_DISABLE_LATCH_ACCESS;
+   \   00000084   0xE3A00003         MOV      R0,#+3
+   \   00000088   0xE5C4000C         STRB     R0,[R4, #+12]
+     52             // setup fifo control reg - trigger level 0 (1 byte fifos), no dma
+     53             // disable fifos (450 mode) @@@@@@@@@@ @@ @@@@@@ 1-@@ @@@@@
+     54             U0FCR =0x07; //1byte, clear FIFO
+   \   0000008C   0xE3A00007         MOV      R0,#+7
+   \   00000090   0xE5840008         STR      R0,[R4, #+8]
+     55             // disable all UART0 interrupts
+     56             U0IER = 1;
+   \   00000094   0xE3A00001         MOV      R0,#+1
+   \   00000098   0xE5840004         STR      R0,[R4, #+4]
+     57             // setup line control reg - disable break transmittion, even parity,
+     58             // 1 stop bit, 8 bit chars
+     59          
+     60          //   urLSR = U0LSR; //@@@@@@@@@@@ @@@@@@
+     61          //   urLSR = U0RBR;
+     62          }
+   \   0000009C   0xE8BD4010         POP      {R4,LR}
+   \   000000A0   0xE12FFF1E         BX       LR               ;; return
+   \   000000A4                      REQUIRE _A_PINSEL0
+   \   000000A4                      REQUIRE _A_VICVectCntl0
+   \   000000A4                      REQUIRE VICVectAddr0
+   \   000000A4                      REQUIRE _A_U0IER
+   \   000000A4                      REQUIRE _A_U0LCR
+   \   000000A4                      REQUIRE U0RBRTHR
+   \   000000A4                      REQUIRE _A_U0FCR
+     63          /****************************************************************************/
+     64          /****************************************************************************/
+     65          //static
+
+   \                                 In section .text, align 4, keep-with-next
+     66          void UART0Interrupt(void)
+     67          {
+   \                     UART0Interrupt:
+   \   00000000   0xE92D4078         PUSH     {R3-R6,LR}
+     68          unsigned int adrbyteE,tt;
+     69          
+     70          //   IO0SET_bit.P0_7 = 1; //@@@@@@@
+     71          
+     72             FLAG.UART_RS = 1;
+   \   00000004   0x........         LDR      R12,??DataTable1_1
+   \   00000008   0xE59C0000         LDR      R0,[R12, #+0]
+   \   0000000C   0xE3801040         ORR      R1,R0,#0x40
+   \   00000010   0xE58C1000         STR      R1,[R12, #+0]
+     73            //@@@@@@@@@ @@ @@@@@@@ @@@@@@
+     74            if (U0IIR == 6)
+   \   00000014   0xE3A004E0         MOV      R0,#-536870912
+   \   00000018   0xE3800CC0         ORR      R0,R0,#0xC000
+   \   0000001C   0xE590E008         LDR      LR,[R0, #+8]
+   \   00000020   0xE35E0006         CMP      LR,#+6
+   \   00000024   0x1A000003         BNE      ??UART0Interrupt_0
+     75                       {
+     76                         FLAG.UART_RS = 0;
+   \   00000028   0xE3C11040         BIC      R1,R1,#0x40
+   \   0000002C   0xE58C1000         STR      R1,[R12, #+0]
+     77                         U0FCR =0x07; //1byte, clear FIFO
+   \   00000030   0xE3A01007         MOV      R1,#+7
+   \   00000034   0xE5801008         STR      R1,[R0, #+8]
+     78                       }//if U0IIR
+     79          
+     80             while (!(U0LSR & 0x01))//@@@@@@@@ @@@@@@@@ @@@@?
+   \                     ??UART0Interrupt_0:
+   \   00000038   0xE5D01014         LDRB     R1,[R0, #+20]
+   \   0000003C   0xE3110001         TST      R1,#0x1
+   \   00000040   0x1A000007         BNE      ??UART0Interrupt_1
+     81                { //@@@ @@@@@
+     82                  if (U0LSR && 0x80)
+   \   00000044   0xE5D01014         LDRB     R1,[R0, #+20]
+   \   00000048   0xE3510000         CMP      R1,#+0
+   \   0000004C   0x0AFFFFF9         BEQ      ??UART0Interrupt_0
+     83                  {
+     84                   FLAG.UART_RS = 0;
+   \   00000050   0xE59C1000         LDR      R1,[R12, #+0]
+   \   00000054   0xE3C11040         BIC      R1,R1,#0x40
+   \   00000058   0xE58C1000         STR      R1,[R12, #+0]
+     85                   U0FCR =0x07; //1byte, clear FIFO
+   \   0000005C   0xE3A01007         MOV      R1,#+7
+   \   00000060   0xE5801008         STR      R1,[R0, #+8]
+     86                   break;
+     87                  }
+     88                }
+     89          /***************************************/
+     90            SoftTimerVal = 0; //@@@@@@@ @@@@@@ @@@@@@
+   \                     ??UART0Interrupt_1:
+   \   00000064   0xE3A0E000         MOV      LR,#+0
+   \   00000068   0x........         LDR      R1,??DataTable1_2
+   \   0000006C   0xE581E000         STR      LR,[R1, #+0]
+     91          
+     92            if (COMMAND[1] == 0x15)
+   \   00000070   0x........         LDR      R1,??DataTable1_3
+   \   00000074   0xE5D14001         LDRB     R4,[R1, #+1]
+   \   00000078   0xE3540015         CMP      R4,#+21
+   \   0000007C   0x1A000007         BNE      ??UART0Interrupt_2
+     93            {
+     94            adrbyteE = (COMMAND[5] << 8) | COMMAND[6];//@@@@@@@ @@@@@ @@@@@@ @@@@@@
+   \   00000080   0xE5D12005         LDRB     R2,[R1, #+5]
+   \   00000084   0xE5D13006         LDRB     R3,[R1, #+6]
+   \   00000088   0xE1932402         ORRS     R2,R3,R2, LSL #+8
+     95            tt = 9;
+   \   0000008C   0xE3A03009         MOV      R3,#+9
+     96            if (adrbyteE == 0)
+   \   00000090   0x1A000002         BNE      ??UART0Interrupt_2
+     97                  tt += TimeByte;
+   \   00000094   0x........         LDR      R3,??DataTable1_4
+   \   00000098   0xE5D33000         LDRB     R3,[R3, #+0]
+   \   0000009C   0xE2833009         ADD      R3,R3,#+9
+     98            }
+     99            if (FLAG.UART_RS)
+   \                     ??UART0Interrupt_2:
+   \   000000A0   0xE59CC000         LDR      R12,[R12, #+0]
+   \   000000A4   0xE3A05001         MOV      R5,#+1
+   \   000000A8   0xE115032C         TST      R5,R12, LSR #+6
+   \   000000AC   0x0A00005F         BEQ      ??UART0Interrupt_3
+    100             //  @@ @@@@ @@@@ - @@@@@@  @@@@ @ @@@@@@ @@@@@@@ @@@ @ @@@@@@ @@@@@@
+    101                if ((COMMAND[1] == 0x15) && (ByteCOMMAND == tt)&& (COMMAND[5] < 0x0C))
+   \   000000B0   0x........         LDR      R12,??DataTable1_5
+   \   000000B4   0xE59C5000         LDR      R5,[R12, #+0]
+   \   000000B8   0xE3540015         CMP      R4,#+21
+   \   000000BC   0x1A000025         BNE      ??UART0Interrupt_4
+   \   000000C0   0xE1550003         CMP      R5,R3
+   \   000000C4   0x1A000023         BNE      ??UART0Interrupt_4
+   \   000000C8   0xE5D16005         LDRB     R6,[R1, #+5]
+   \   000000CC   0xE356000B         CMP      R6,#+11
+   \   000000D0   0xCA000020         BGT      ??UART0Interrupt_4
+    102                  { //@@@@@@@@ @@@@@@
+    103                    if (ByteCurrentIzm == 0) //1-e 4(2) @@@@@ @@@@@ @@@@@??????? @ @@@@@@@
+   \   000000D4   0x........         LDR      R12,??DataTable1_6
+   \   000000D8   0xE59C4000         LDR      R4,[R12, #+0]
+   \   000000DC   0xE3540000         CMP      R4,#+0
+   \   000000E0   0x1A00000C         BNE      ??UART0Interrupt_5
+    104                            {
+    105                            LiveTime[0] = COMMAND[9] ;
+   \   000000E4   0x........         LDR      R5,??DataTable1_7
+   \   000000E8   0xE5D16009         LDRB     R6,[R1, #+9]
+   \   000000EC   0xE5C56000         STRB     R6,[R5, #+0]
+    106                            LiveTime[1] = COMMAND[10] ;
+   \   000000F0   0xE5D1600A         LDRB     R6,[R1, #+10]
+   \   000000F4   0xE5C56001         STRB     R6,[R5, #+1]
+    107                            if (tt == 13)
+   \   000000F8   0xE353000D         CMP      R3,#+13
+   \   000000FC   0x1A000004         BNE      ??UART0Interrupt_6
+    108                            {
+    109                            LiveTime[2] = COMMAND[11] ;
+   \   00000100   0xE5D1300B         LDRB     R3,[R1, #+11]
+   \   00000104   0xE5C53002         STRB     R3,[R5, #+2]
+    110                            LiveTime[3] = COMMAND[12] ;
+   \   00000108   0xE5D1100C         LDRB     R1,[R1, #+12]
+   \   0000010C   0xE5C51003         STRB     R1,[R5, #+3]
+   \   00000110   0xEA000000         B        ??UART0Interrupt_5
+    111                            }
+    112                              else
+    113                            {
+    114                            LiveTime[2] = 0 ;
+   \                     ??UART0Interrupt_6:
+   \   00000114   0xE1C5E0B2         STRH     LR,[R5, #+2]
+    115                            LiveTime[3] = 0 ;
+    116                            }
+    117          
+    118                            }
+    119                    if (adrbyteE != 0)
+   \                     ??UART0Interrupt_5:
+   \   00000118   0xE3520000         CMP      R2,#+0
+   \   0000011C   0x0A000002         BEQ      ??UART0Interrupt_7
+    120                          adrbyteE-=TimeByte;  //@@ @@@@@@@ @@@@@ @@@@@@@@ @@ @@@@@ @@@@@@@
+   \   00000120   0x........         LDR      R1,??DataTable1_4
+   \   00000124   0xE5D11000         LDRB     R1,[R1, #+0]
+   \   00000128   0xE0422001         SUB      R2,R2,R1
+    121                    adrbyteE+= ByteCurrentIzm; //@@@@@ @@@@@@@@@@ @@@@@
+   \                     ??UART0Interrupt_7:
+   \   0000012C   0xE0841002         ADD      R1,R4,R2
+    122                    BUFFSPECTR[adrbyteE] = U0RBR ;
+   \   00000130   0xE5D00000         LDRB     R0,[R0, #+0]
+   \   00000134   0x........         LDR      R2,??DataTable1_8
+   \   00000138   0xE7C20001         STRB     R0,[R2, +R1]
+    123                    if (adrbyteE < 3075)// @@@@@@ @@@@@@ @@@@@@@@@ @@@@@@@@@@ - @@ @@@@@@@@@@
+   \   0000013C   0xE3A00003         MOV      R0,#+3
+   \   00000140   0xE3800EC0         ORR      R0,R0,#0xC00
+   \   00000144   0xE1510000         CMP      R1,R0
+   \   00000148   0x2A000038         BCS      ??UART0Interrupt_3
+    124                                ByteCurrentIzm++;
+   \   0000014C   0xE2840001         ADD      R0,R4,#+1
+   \   00000150   0xE58C0000         STR      R0,[R12, #+0]
+   \   00000154   0xEA000035         B        ??UART0Interrupt_3
+    125                  }//command 15
+    126          /*****************************/
+    127                else
+    128                  if ((COMMAND[1] == 0x13) && (ByteCOMMAND == 7) && (COMMAND[4]<223))
+   \                     ??UART0Interrupt_4:
+   \   00000158   0xE3540013         CMP      R4,#+19
+   \   0000015C   0x1A00000F         BNE      ??UART0Interrupt_8
+   \   00000160   0xE3550007         CMP      R5,#+7
+   \   00000164   0x1A00000D         BNE      ??UART0Interrupt_8
+   \   00000168   0xE5D1E004         LDRB     LR,[R1, #+4]
+   \   0000016C   0xE35E00DF         CMP      LR,#+223
+   \   00000170   0xAA00000A         BGE      ??UART0Interrupt_8
+    129                  {//@@@@@@@@ @@@@@@@ @@@@@@ @@@ @@@@@@@
+    130                    adrbyteE = COMMAND[4]+ByteCurrentIzm;
+   \   00000174   0x........         LDR      R2,??DataTable1_6
+   \   00000178   0xE5923000         LDR      R3,[R2, #+0]
+   \   0000017C   0xE083100E         ADD      R1,R3,LR
+    131                    CurrentDIzm[adrbyteE]= U0RBR;
+   \   00000180   0xE5D00000         LDRB     R0,[R0, #+0]
+   \   00000184   0x........         LDR      R12,??DataTable1_9
+   \   00000188   0xE7CC0001         STRB     R0,[R12, +R1]
+    132                    if (adrbyteE<226)//@@@@@@ @@@@@@@@@@ - @@ @@@@@@@@@@
+   \   0000018C   0xE35100E2         CMP      R1,#+226
+   \   00000190   0x2A000026         BCS      ??UART0Interrupt_3
+    133                                ByteCurrentIzm++;
+   \   00000194   0xE2830001         ADD      R0,R3,#+1
+   \   00000198   0xE5820000         STR      R0,[R2, #+0]
+   \   0000019C   0xEA000023         B        ??UART0Interrupt_3
+    134                  }//command 13
+    135                else
+    136                  if ((COMMAND[1] == 0x16) && (ByteCOMMAND == 4) && (COMMAND[2]==122))
+   \                     ??UART0Interrupt_8:
+   \   000001A0   0xE3540016         CMP      R4,#+22
+   \   000001A4   0x1A000018         BNE      ??UART0Interrupt_9
+   \   000001A8   0xE3550004         CMP      R5,#+4
+   \   000001AC   0x1A000016         BNE      ??UART0Interrupt_9
+   \   000001B0   0xE5D12002         LDRB     R2,[R1, #+2]
+   \   000001B4   0xE352007A         CMP      R2,#+122
+   \   000001B8   0x1A000013         BNE      ??UART0Interrupt_9
+    137                  {//@@@@@@@@ @@@@@@@ @@@@@@@@@@@@@ @@@@@@@@@
+    138                    if (ByteCurrentIzm == 0)
+   \   000001BC   0x........         LDR      R3,??DataTable1_10
+   \   000001C0   0x........         LDR      R2,??DataTable1_6
+   \   000001C4   0xE592C000         LDR      R12,[R2, #+0]
+   \   000001C8   0xE35C0000         CMP      R12,#+0
+   \   000001CC   0x1A000003         BNE      ??UART0Interrupt_10
+    139                            {//0-@ @@@@ @@@ @@@@@@@@ @ @@@@@@ COMMAND
+    140                            TABLTemperCORR[0] = COMMAND[3];
+   \   000001D0   0xE5D11003         LDRB     R1,[R1, #+3]
+   \   000001D4   0xE5C31000         STRB     R1,[R3, #+0]
+    141                            ByteCurrentIzm++;
+   \   000001D8   0xE3A01001         MOV      R1,#+1
+   \   000001DC   0xE5821000         STR      R1,[R2, #+0]
+    142                            }
+    143                    TABLTemperCORR[ByteCurrentIzm]= U0RBR;
+   \                     ??UART0Interrupt_10:
+   \   000001E0   0xE5921000         LDR      R1,[R2, #+0]
+   \   000001E4   0xE5D00000         LDRB     R0,[R0, #+0]
+   \   000001E8   0xE7C30001         STRB     R0,[R3, +R1]
+    144                    if (ByteCurrentIzm < 124)//@@@@@@ @@@@@@@@@@ - @@ @@@@@@@@@@
+   \   000001EC   0xE351007C         CMP      R1,#+124
+   \   000001F0   0xAA000002         BGE      ??UART0Interrupt_11
+    145                                ByteCurrentIzm++;
+   \   000001F4   0xE2810001         ADD      R0,R1,#+1
+   \   000001F8   0xE5820000         STR      R0,[R2, #+0]
+   \   000001FC   0xEA00000B         B        ??UART0Interrupt_3
+    146                        else
+    147                          ByteCurrentIzm = 124;
+   \                     ??UART0Interrupt_11:
+   \   00000200   0xE3A0007C         MOV      R0,#+124
+   \   00000204   0xE5820000         STR      R0,[R2, #+0]
+   \   00000208   0xEA000008         B        ??UART0Interrupt_3
+    148                  }//command 16
+    149          /*****************************/
+    150                   else
+    151                    {
+    152                      COMMAND[ByteCOMMAND]= U0RBR;
+   \                     ??UART0Interrupt_9:
+   \   0000020C   0xE5D00000         LDRB     R0,[R0, #+0]
+   \   00000210   0xE7C10005         STRB     R0,[R1, +R5]
+    153                      if (ByteCOMMAND<16)//@@@@@@ @@@@@@@ @@@@@@@@@@ - @@ @@@@@@@@@@
+   \   00000214   0xE355000F         CMP      R5,#+15
+   \   00000218   0x8A000002         BHI      ??UART0Interrupt_12
+    154                                ByteCOMMAND++;//@@@@@@ @@@@@ @ @@@@@@@ @@@@@@@
+   \   0000021C   0xE2850001         ADD      R0,R5,#+1
+   \   00000220   0xE58C0000         STR      R0,[R12, #+0]
+   \   00000224   0xEA000001         B        ??UART0Interrupt_3
+    155                       else
+    156                         ByteCOMMAND = 15;
+   \                     ??UART0Interrupt_12:
+   \   00000228   0xE3A0000F         MOV      R0,#+15
+   \   0000022C   0xE58C0000         STR      R0,[R12, #+0]
+    157                    } //@@@@@@@@@
+    158          
+    159          //   IO0SET_bit.P0_7 = 0; //@@@@@@@
+    160          }
+   \                     ??UART0Interrupt_3:
+   \   00000230   0xE8BD4071         POP      {R0,R4-R6,LR}
+   \   00000234   0xE12FFF1E         BX       LR               ;; return
+   \   00000238                      REQUIRE _A_U0FCR
+   \   00000238                      REQUIRE _A_U0LSR
+   \   00000238                      REQUIRE U0RBRTHR
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1:
+   \   00000000   0x........         DC32     PCLK_VPB
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_1:
+   \   00000000   0x........         DC32     FLAG
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_2:
+   \   00000000   0x........         DC32     SoftTimerVal
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_3:
+   \   00000000   0x........         DC32     COMMAND
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_4:
+   \   00000000   0x........         DC32     TimeByte
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_5:
+   \   00000000   0x........         DC32     ByteCOMMAND
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_6:
+   \   00000000   0x........         DC32     ByteCurrentIzm
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_7:
+   \   00000000   0x........         DC32     LiveTime
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_8:
+   \   00000000   0x........         DC32     BUFFSPECTR
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_9:
+   \   00000000   0x........         DC32     CurrentDIzm
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_10:
+   \   00000000   0x........         DC32     TABLTemperCORR
+    161          /****************************************************************************/
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       8   InitialiseUART0
+         8 __aeabi_uidiv
+      20   UART0Interrupt
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  ??DataTable1
+       4  ??DataTable1_1
+       4  ??DataTable1_10
+       4  ??DataTable1_2
+       4  ??DataTable1_3
+       4  ??DataTable1_4
+       4  ??DataTable1_5
+       4  ??DataTable1_6
+       4  ??DataTable1_7
+       4  ??DataTable1_8
+       4  ??DataTable1_9
+     164  InitialiseUART0
+       4  LiveTime
+       1  U0RBRTHR
+     568  UART0Interrupt
+       4  VICVectAddr0
+       4  _A_PINSEL0
+       4  _A_U0FCR
+       4  _A_U0IER
+       1  _A_U0LCR
+       1  _A_U0LSR
+       4  _A_VICVectCntl0
+
+ 
+   4 bytes in section .bss
+  23 bytes in section .noinit  (abs)
+ 776 bytes in section .text
+ 
+ 776 bytes of CODE memory
+   4 bytes of DATA memory (+ 23 bytes shared)
+
+Errors: none
+Warnings: none

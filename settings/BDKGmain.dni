@@ -1,0 +1,20 @@
+[DisAssemblyWindow]
+NumStates=_ 1
+State 1=_ 1
+[Log file]
+LoggingEnabled=_ 0
+LogFile=_ ""
+Category=_ 0
+[TermIOLog]
+LoggingEnabled=_ 0
+LogFile=_ ""
+[Disassemble mode]
+mode=0
+[Breakpoints]
+Bp0=_ "Code" "{$PROJ_DIR$\I2CEEPROM.cpp}.254.4@1" 1 0 0 0 "" 0 ""
+Bp1=_ "Code" "{$PROJ_DIR$\I2CEEPROM.cpp}.254.4@1" 1 0 0 0 "" 0 ""
+Bp2=_ "Code" "{$PROJ_DIR$\AnswerCOM.cpp}.601.1@1" 1 0 0 0 "" 0 ""
+Count=3
+[Low Level]
+Pipeline mode=0
+Initialized=1

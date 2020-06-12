@@ -1,0 +1,1032 @@
+###############################################################################
+#
+# IAR ANSI C/C++ Compiler V8.20.1.14183/W32 for ARM       12/Jun/2020  11:30:59
+# Copyright 1999-2017 IAR Systems AB.
+#
+#    Cpu mode     =  arm
+#    Endian       =  little
+#    Source file  =  D:\Users\Chirikalo\ARM_proj\AT1315_for_test\InterEINT0.cpp
+#    Command line =  
+#        -f C:\Users\CHIRIK~1\AppData\Local\Temp\EWC99D.tmp
+#        (D:\Users\Chirikalo\ARM_proj\AT1315_for_test\InterEINT0.cpp -lCN
+#        D:\Users\Chirikalo\ARM_proj\AT1315_for_test\Debug\List -o
+#        D:\Users\Chirikalo\ARM_proj\AT1315_for_test\Debug\Obj --no_unroll
+#        --no_inline --no_tbaa --no_scheduling --debug --endian=little
+#        --cpu=ARM7TDMI-S -e --fpu=None --dlib_config "C:\Program Files
+#        (x86)\IAR Systems\Embedded Workbench
+#        8.0\arm\INC\c\DLib_Config_Normal.h" --cpu_mode arm -Om
+#        --use_c++_inline)
+#    Locale       =  C
+#    List file    =  
+#        D:\Users\Chirikalo\ARM_proj\AT1315_for_test\Debug\List\InterEINT0.lst
+#    Object file  =  
+#        D:\Users\Chirikalo\ARM_proj\AT1315_for_test\Debug\Obj\InterEINT0.o
+#
+###############################################################################
+
+D:\Users\Chirikalo\ARM_proj\AT1315_for_test\InterEINT0.cpp
+      1          /******************************************************/
+      2          /*  пп обработки основного (FIQ) прерывания по P0.16 */
+      3          /*  пп записи в порт порогов и коэфф. усиления      */
+      4          /****************************************************/
+      5          #include <intrinsics.h>
+      6          #include <NXP/iolpc2294.h>
+
+   \                                 In section .noinit, at 0xe01fc140
+   \   __absolute union <unnamed>#160 volatile _A_EXTINT
+   \                     _A_EXTINT:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe01fc148
+   \   __absolute union <unnamed>#162 volatile _A_EXTMODE
+   \                     _A_EXTMODE:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe01fc14c
+   \   __absolute union <unnamed>#163 volatile _A_EXTPOLAR
+   \                     _A_EXTPOLAR:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xfffff00c
+   \   __absolute union <unnamed>#178 volatile _A_VICIntSelect
+   \                     _A_VICIntSelect:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe002c004
+   \   __absolute union <unnamed>#201 volatile _A_PINSEL1
+   \                     _A_PINSEL1:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe0028000
+   \   __absolute union <unnamed>#202 const volatile _A_IO0PIN
+   \                     _A_IO0PIN:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe0028004
+   \   __absolute union <unnamed>#203 volatile _A_IO0SET
+   \                     _A_IO0SET:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe0028008
+   \   __absolute union <unnamed>#204 volatile _A_IO0DIR
+   \                     _A_IO0DIR:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe002800c
+   \   __absolute union <unnamed>#205 volatile _A_IO0CLR
+   \                     _A_IO0CLR:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe0028020
+   \   __absolute union <unnamed>#220 const volatile _A_IO2PIN
+   \                     _A_IO2PIN:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe0028024
+   \   __absolute union <unnamed>#221 volatile _A_IO2SET
+   \                     _A_IO2SET:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe002802c
+   \   __absolute union <unnamed>#223 volatile _A_IO2CLR
+   \                     _A_IO2CLR:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe0008004
+   \   __absolute union <unnamed>#377 volatile _A_T1TCR
+   \                     _A_T1TCR:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe0008008
+   \   __absolute unsigned long volatile T1TC
+   \                     T1TC:
+   \   00000000                      DS8 4
+      7          #include "my_macros.h"
+      8          
+      9          //@@@@ @@@@@@@@@@ @@@@@@@@@@ (VICENABLE...)
+     10          #define INTERENT0     0x4000   /* bit 14h int*/
+     11          #define TCR_DISABLE   0x0       /* timer TCR bit 0 =0-disable counting */
+     12          #define TCR_ENABLE    0x1       /* timer TCR bit 0 =1-enable counting */
+     13          
+     14          extern void STOPEINT0(void);
+     15          //unsigned char SPECTR[3075],BUFFSPECTR[3075];
+     16          
+
+   \                                 In section .bss, align 4
+     17          unsigned char BUFFSPECTR[3075];
+   \                     BUFFSPECTR:
+   \   00000000                      DS8 3076
+
+   \                                 In section .noinit, align 4
+     18          __no_init unsigned long SPECTR[1025];
+   \                     SPECTR:
+   \   00000000                      DS8 4100
+     19          
+     20          
+     21          #define EMCDAC  0x83000000;
+     22          #define EMCACP  0x82000000;
+     23          //extern __BITFLAG FLAG;   //@@@ @ macros
+     24          extern __BITFLAG FLAG;   //@@@ @ macros
+     25          
+     26          extern unsigned int T1TC_temp;
+     27          
+
+   \                                 In section .bss, align 4
+     28          unsigned int DAC;
+   \                     DAC:
+   \   00000000                      DS8 4
+     29          __fiq __arm  void IntEINT0(void);
+     30          unsigned char FLAGdac128;
+   \                     FLAGdac128:
+   \   00000004                      DS8 1
+     31          unsigned char FLAGOver3byte;
+   \                     FLAGOver3byte:
+   \   00000005                      DS8 1
+     32          
+
+   \                                 In section .bss, align 2
+     33          unsigned short tmp;
+   \                     tmp:
+   \   00000000                      DS8 2
+     34          /*****************************************************
+     35          * Initialise EINT0
+     36          *****************************************************/
+
+   \                                 In section .text, align 4, keep-with-next
+     37          void InitialiseEINT0(void)
+     38          {
+     39              PINSEL1 = 0x1;               /* select P0:16 as EINT0 */
+   \                     InitialiseEINT0:
+   \   00000000   0xE3A00001         MOV      R0,#+1
+   \   00000004   0xE3A0124E         MOV      R1,#-536870908
+   \   00000008   0xE3811BB0         ORR      R1,R1,#0x2C000
+   \   0000000C   0xE5810000         STR      R0,[R1, #+0]
+     40              //VPBDIV   = 0;
+     41              EXTMODE_bit.EXTMODE0 = 1;   // @@@@@@ @@ @@@@@
+   \   00000010   0x........         LDR      R1,??DataTable3  ;; 0xe01fc140
+   \   00000014   0xE5912008         LDR      R2,[R1, #+8]
+   \   00000018   0xE3822001         ORR      R2,R2,#0x1
+   \   0000001C   0xE5812008         STR      R2,[R1, #+8]
+     42              EXTINT = 0x1;                /* clear EINT0 interrupt status */
+   \   00000020   0xE5810000         STR      R0,[R1, #+0]
+     43              VICIntSelect  = INTERENT0;   /* FIQ  */
+   \   00000024   0xE3A00C40         MOV      R0,#+16384
+   \   00000028   0xE3E010F3         MVN      R1,#+243
+   \   0000002C   0xE3C11EF0         BIC      R1,R1,#0xF00
+   \   00000030   0xE5810000         STR      R0,[R1, #+0]
+     44              FLAG.SPECTR = 1;             /* @@@@@@@@@@@@@ @@@@ @@@@@@@@@@ @@@@@@@*/
+   \   00000034   0x........         LDR      R0,??DataTable3_1
+   \   00000038   0xE5901000         LDR      R1,[R0, #+0]
+   \   0000003C   0xE3811010         ORR      R1,R1,#0x10
+   \   00000040   0xE5801000         STR      R1,[R0, #+0]
+     45          }
+   \   00000044   0xE12FFF1E         BX       LR               ;; return
+   \   00000048                      REQUIRE _A_PINSEL1
+   \   00000048                      REQUIRE _A_EXTMODE
+   \   00000048                      REQUIRE _A_EXTINT
+   \   00000048                      REQUIRE _A_VICIntSelect
+     46          /********************************************************/
+     47          /*@@@@@@@@@ @@@@@@@@@@ EINT0 - @@@@@@ @@ @@@@@ @ startup*/
+     48          /*******************************************************/
+
+   \                                 In section .text, align 4, keep-with-next
+     49          __fiq __arm void IntEINT0(void)
+     50          {
+   \                     IntEINT0:
+   \   00000000   0xE24EE004         SUB      LR,LR,#+4
+   \   00000004   0xE92D401F         PUSH     {R0-R4,LR}
+     51             unsigned int ADRCANAL;
+     52             unsigned int IZM;
+     53          //   int irab;  /*@@@ @@@@@*/
+     54             unsigned int  DACtek;
+     55          
+     56             unsigned int* pulMemory;
+     57          
+     58             FLAGOver3byte=0;      //FALSE-@@@@@ @@@@@ @@@@@@@@@@@@ 3-@ @@@@
+   \   00000008   0xE3A09000         MOV      R9,#+0
+   \   0000000C   0x........         LDR      R8,??DataTable3_2
+   \   00000010   0xE5C89005         STRB     R9,[R8, #+5]
+     59          /**********************************************************
+     60               @@@@@@ @@@@@@@@ @@@@@@@@ DAC -> CS3 @@ @@@@@@@ @@@@@@*/
+     61             pulMemory = (unsigned int*) EMCDAC;
+     62             //*pulMemory = DAC<<16;
+     63             //DAC=0x55;
+     64             //--11.10.2011-- @@@ @@@@@@@@@@@@ @@@@ @@@ @@@ @@@@@@@@@@@@@
+     65              *pulMemory = DAC;
+   \   00000014   0xE598B000         LDR      R11,[R8, #+0]
+   \   00000018   0xE3A0A483         MOV      R10,#-2097152000
+   \   0000001C   0xE58AB000         STR      R11,[R10, #+0]
+     66             //*pulMemory = 0;
+     67          
+     68               DACtek=DAC;
+   \   00000020   0xE598B000         LDR      R11,[R8, #+0]
+   \   00000024   0xE1A0A00B         MOV      R10,R11
+     69             //DACtek = 0;
+     70          /***************************************************************/
+     71          /* @@@@@@@@@@@/@@@@@@@@@@ DAC */
+     72               if (FLAGdac128 == 0)
+   \   00000028   0xE5D81004         LDRB     R1,[R8, #+4]
+   \   0000002C   0xE3510000         CMP      R1,#+0
+   \   00000030   0x1A000006         BNE      ??IntEINT0_0
+     73                      { DAC++;
+   \   00000034   0xE28BC001         ADD      R12,R11,#+1
+   \   00000038   0xE588C000         STR      R12,[R8, #+0]
+     74                        if (DAC == 0x7F)
+   \   0000003C   0xE35C007F         CMP      R12,#+127
+   \   00000040   0x1A000006         BNE      ??IntEINT0_1
+     75                              FLAGdac128=1;
+   \   00000044   0xE3A02001         MOV      R2,#+1
+   \   00000048   0xE5C82004         STRB     R2,[R8, #+4]
+   \   0000004C   0xEA000003         B        ??IntEINT0_1
+     76                        }
+     77                else
+     78                      { DAC--;
+   \                     ??IntEINT0_0:
+   \   00000050   0xE25B0001         SUBS     R0,R11,#+1
+   \   00000054   0xE5880000         STR      R0,[R8, #+0]
+     79                        if (DAC==0)
+   \   00000058   0x1A000000         BNE      ??IntEINT0_1
+     80                              FLAGdac128=0;
+   \   0000005C   0xE5C89004         STRB     R9,[R8, #+4]
+     81                        }
+     82          //     DELAYTACKT(irab,43);         //@@@@@@@@ @@ -3uSek @@@ @@@@@@@@@@@@ @@@@@@@
+     83          
+     84          //----- @@@ WDT ----------------------------
+     85              T1TC_temp = T1TC;
+   \                     ??IntEINT0_1:
+   \   00000060   0xE3A0B24E         MOV      R11,#-536870908
+   \   00000064   0xE38BBC80         ORR      R11,R11,#0x8000
+   \   00000068   0xE59B3004         LDR      R3,[R11, #+4]
+   \   0000006C   0x........         LDR      LR,??DataTable3_3
+   \   00000070   0xE58E3000         STR      R3,[LR, #+0]
+     86          /*******************************************/
+     87               IO0CLR_bit.P0_24 = 1;        //@@@@@@@ @@@@ P0.24=0
+   \   00000074   0xE3A0C4E0         MOV      R12,#-536870912
+   \   00000078   0xE38CCBA0         ORR      R12,R12,#0x28000
+   \   0000007C   0xE59C000C         LDR      R0,[R12, #+12]
+   \   00000080   0xE3801740         ORR      R1,R0,#0x1000000
+   \   00000084   0xE58C100C         STR      R1,[R12, #+12]
+     88               T1TCR = 0;         //@@@@@@@@@@ @@@@@@@ TMR1 - @@@@@@@ @@@@@
+   \   00000088   0xE58B9000         STR      R9,[R11, #+0]
+     89               EXTPOLAR_bit.EXTPOLAR0 = 1;
+   \   0000008C   0x........         LDR      R9,??DataTable3  ;; 0xe01fc140
+   \   00000090   0xE599200C         LDR      R2,[R9, #+12]
+   \   00000094   0xE3823001         ORR      R3,R2,#0x1
+   \   00000098   0xE589300C         STR      R3,[R9, #+12]
+     90               EXTINT = 0x1;
+   \   0000009C   0xE3A00001         MOV      R0,#+1
+   \   000000A0   0xE5890000         STR      R0,[R9, #+0]
+     91            /************************************************************************
+     92           @@@@ @@ @@@@@@@@@@@@ @@ @@@@@@@@@, @@@@@@@@@ @@@@@@@ @@@@@@@@@@ */
+     93                if  (IO2PIN_bit.P2_29)    //((FLAG.STAB) ||)
+   \   000000A4   0xE59CE020         LDR      LR,[R12, #+32]
+   \   000000A8   0xE1A01000         MOV      R1,R0
+   \   000000AC   0xE1110EAE         TST      R1,LR, LSR #+29
+   \   000000B0   0x0A00001C         BEQ      ??IntEINT0_2
+     94          //STARTACP:
+     95               { //@@@@@@ @@@@@ @@@@@@@@@@@@@@
+     96               IO0CLR_bit.P0_23 = 1; //P0.23=0
+   \   000000B4   0xE59C200C         LDR      R2,[R12, #+12]
+   \   000000B8   0xE3823880         ORR      R3,R2,#0x800000
+   \   000000BC   0xE58C300C         STR      R3,[R12, #+12]
+     97               IO0SET_bit.P0_23 = 1;        //@@@@@ @@@@@@@@@@@@@@
+   \   000000C0   0xE59CE004         LDR      LR,[R12, #+4]
+   \   000000C4   0xE38E1880         ORR      R1,LR,#0x800000
+   \   000000C8   0xE58C1004         STR      R1,[R12, #+4]
+     98          /*************************************************************/
+     99          /*  @@@@@@ @@@@@@(@@@@@@ @@@@@@) @@ @@@@@@@ @@@@@@ - CS2*/
+    100               pulMemory = (unsigned int*) EMCACP;
+    101               ADRCANAL =*pulMemory;
+    102               ADRCANAL&=0x00000FFF;
+    103              // ADRCANAL = ((ADRCANAL-DACtek)>>2)*3;// >>16
+    104               ADRCANAL = ((ADRCANAL-DACtek)>>2);
+   \   000000CC   0xE3A02482         MOV      R2,#-2113929216
+   \   000000D0   0xE1D230B0         LDRH     R3,[R2, #+0]
+   \   000000D4   0xE1A0EA03         LSL      LR,R3,#+20
+   \   000000D8   0xE06AAA2E         RSB      R10,R10,LR, LSR #+20
+   \   000000DC   0xE1A0A12A         LSR      R10,R10,#+2
+    105          /**********************************************************/
+    106          /* @@@@@@@@@@@@ @@@@@@@@@ @ @@@@@@ ADRCANAL *****/
+    107               //if (ADRCANAL < 3072)
+    108               if (ADRCANAL < 1024)
+   \   000000E0   0xE35A0E40         CMP      R10,#+1024
+   \   000000E4   0x2A00000F         BCS      ??IntEINT0_2
+    109               {
+    110               //IZM = SPECTR[ADRCANAL] | (SPECTR[ADRCANAL+1]<<8) | (SPECTR[ADRCANAL+2]<<16);
+    111                  IZM = SPECTR[ADRCANAL];
+    112                  IZM++;
+   \   000000E8   0x........         LDR      R1,??DataTable3_4
+   \   000000EC   0xE791210A         LDR      R2,[R1, +R10, LSL #+2]
+   \   000000F0   0xE2822001         ADD      R2,R2,#+1
+    113                if ( IZM < 0xFFFFFF && FLAG.SPECTR )
+   \   000000F4   0x........         LDR      R3,??DataTable3_1
+   \   000000F8   0xE593E000         LDR      LR,[R3, #+0]
+   \   000000FC   0xE3E044FF         MVN      R4,#-16777216
+   \   00000100   0xE1520004         CMP      R2,R4
+   \   00000104   0x2A000004         BCS      ??IntEINT0_3
+   \   00000108   0xE1A04000         MOV      R4,R0
+   \   0000010C   0xE114022E         TST      R4,LR, LSR #+4
+   \   00000110   0x0A000001         BEQ      ??IntEINT0_3
+    114               //if (IZM < 0xFFFFFF)
+    115                {//@@@@@ @@@@@@@@
+    116                //SPECTR[ADRCANAL]   = IZM;
+    117                //SPECTR[ADRCANAL+1] = IZM >> 8;
+    118                //SPECTR[ADRCANAL+2] = IZM >> 16;
+    119                //============ @@@@ (30.09.2011)========
+    120                  /*
+    121                  if( ADRCANAL == 262)
+    122                  {
+    123                    IO0SET_bit.P0_14 = 1;
+    124                    IO0CLR_bit.P0_14 = 1;
+    125                  }
+    126                  */
+    127                //=======================================
+    128                  SPECTR[ADRCANAL]   = IZM;
+   \   00000114   0xE781210A         STR      R2,[R1, +R10, LSL #+2]
+   \   00000118   0xEA000002         B        ??IntEINT0_2
+    129                }
+    130          /**************************************************************/
+    131               else
+    132                   {
+    133                   FLAGOver3byte = 1;       //@@@@@@@@@@@@ 3-@ @@@@
+   \                     ??IntEINT0_3:
+   \   0000011C   0xE5C80005         STRB     R0,[R8, #+5]
+    134                   //---- @@@@@@@ 14.10.2011------
+    135                   /*
+    136                   STOPEINT0();
+    137                   FLAG.SPECTR = 0;
+    138                   */
+    139                   FLAG.testerror = 1;
+   \   00000120   0xE38E1008         ORR      R1,LR,#0x8
+   \   00000124   0xE5831000         STR      R1,[R3, #+0]
+    140                   //------------------------------
+    141                   }
+    142               }//if ADRCANAL < 3072
+    143          }//@@@@@ @@@@@ @@@@@@@@@@@@@@
+    144          /**********************************************************/
+    145          /* @@@@@ @@@@@@@@@, @@@@@@ @@ @@@@@@@@@ @@@@@@@@@ */
+    146               //RESETDET:
+    147               if (!FLAGOver3byte)             //@@@@ @@@@@@@@@@@@ 4-@ @@@@??-@@@@@@@@@@ @@@@@@@@@
+   \                     ??IntEINT0_2:
+   \   00000128   0xE5D88005         LDRB     R8,[R8, #+5]
+   \   0000012C   0xE3580000         CMP      R8,#+0
+   \   00000130   0x1A000016         BNE      ??IntEINT0_4
+    148                  { //@@@@@@ @@@@@ @@@@@@ @@@@@@@@@ @ @@@@@@ @@@@@@@@@@@@@@
+    149                  IO0CLR_bit.P0_5 = 1;  //P0.5=0
+   \   00000134   0xE59C300C         LDR      R3,[R12, #+12]
+   \   00000138   0xE393E020         ORRS     LR,R3,#0x20
+   \   0000013C   0xE58CE00C         STR      LR,[R12, #+12]
+    150                  asm("nop");
+   \   00000140   0xE1A00000         nop
+    151                  asm("nop");
+   \   00000144   0xE1A00000         nop
+    152                  IO0SET_bit.P0_5 = 1;         //@@@@@ @@@@@@@@@
+   \   00000148   0xE59CA004         LDR      R10,[R12, #+4]
+   \   0000014C   0xE38A2020         ORR      R2,R10,#0x20
+   \   00000150   0xE58C2004         STR      R2,[R12, #+4]
+   \   00000154   0xE1A08000         MOV      R8,R0
+    153          //        while (!IO0PIN_bit.P0_16);   //@@@@ @@@@@  @@ @@@@@@@
+    154          /**********************************************************/
+    155                  while (!(EXTINT && 1))
+   \                     ??IntEINT0_5:
+   \   00000158   0xE5994000         LDR      R4,[R9, #+0]
+   \   0000015C   0xE3540000         CMP      R4,#+0
+   \   00000160   0x1A000002         BNE      ??IntEINT0_6
+    156                  {
+    157                    if( IO0PIN_bit.P0_16 )
+   \   00000164   0xE59C1000         LDR      R1,[R12, #+0]
+   \   00000168   0xE1180821         TST      R8,R1, LSR #+16
+   \   0000016C   0x0AFFFFF9         BEQ      ??IntEINT0_5
+    158                      break;
+    159                  }
+    160                  EXTINT = 0x1;             //@@@@@ @@@@@@@@@@
+   \                     ??IntEINT0_6:
+   \   00000170   0xE5890000         STR      R0,[R9, #+0]
+    161                  EXTPOLAR_bit.EXTPOLAR0 = 0;
+   \   00000174   0xE599300C         LDR      R3,[R9, #+12]
+   \   00000178   0xE3C3E001         BIC      LR,R3,#0x1
+   \   0000017C   0xE589E00C         STR      LR,[R9, #+12]
+    162                  //while (EXTINT & 1)
+    163                  //    EXTINT = 0x1;             //@@@@@ @@@@@@@@@@
+    164                  IO0SET_bit.P0_24 = 1;        //@@@@@@@ @@@@
+   \   00000180   0xE59C9004         LDR      R9,[R12, #+4]
+   \   00000184   0xE389A740         ORR      R10,R9,#0x1000000
+   \   00000188   0xE58CA004         STR      R10,[R12, #+4]
+    165                  T1TCR = TCR_ENABLE;          //@@@@@@@@@ @@@@@@@ TMR0
+   \   0000018C   0xE58B0000         STR      R0,[R11, #+0]
+    166                  } //@@@@@ @@@@@ @@@@@@ @@@@@@@@@ @ @@@@@@ @@@@@@@@@@@@@@
+    167           FLAG.noEINT0 = 0; //@@@@@ @@@@@ @@@@@@@@ @@@@@@@ @@@@@@@@@@ @@ @@@@@@@ @@@@@ @@@@@@ 2 @@@@@@ @ TMR0 @@@@@@@@@@
+   \                     ??IntEINT0_4:
+   \   00000190   0x........         LDR      R8,??DataTable3_1
+   \   00000194   0xE598C000         LDR      R12,[R8, #+0]
+   \   00000198   0xE3CCB001         BIC      R11,R12,#0x1
+   \   0000019C   0xE588B000         STR      R11,[R8, #+0]
+    168          }//@@@@@ @@
+   \   000001A0   0xE8FD801F         LDM      SP!,{R0-R4,PC}^  ;; return
+   \   000001A4                      REQUIRE T1TC
+   \   000001A4                      REQUIRE _A_IO0CLR
+   \   000001A4                      REQUIRE _A_T1TCR
+   \   000001A4                      REQUIRE _A_EXTPOLAR
+   \   000001A4                      REQUIRE _A_EXTINT
+   \   000001A4                      REQUIRE _A_IO2PIN
+   \   000001A4                      REQUIRE _A_IO0SET
+   \   000001A4                      REQUIRE _A_IO0PIN
+    169          /**************************************************************************/
+    170          /*  @@@@@@ @ @@@@ @@@@@@@ @@@@@@, @@@@@@@@ @@@@@@, @@@@@@@@@@@@ @@@@@@@@  */
+    171          /**************************************************************************/
+    172          /**************************************************************************/
+    173          /*  @@@@@@ @ @@@@ @@@@@@@ @@@@@@, @@@@@@@@ @@@@@@, @@@@@@@@@@@@ @@@@@@@@  */
+    174          /**************************************************************************/
+
+   \                                 In section .text, align 4, keep-with-next
+    175          void ZAPFACTOR (unsigned short factor,unsigned char nf)
+    176          //unsigned short factor; /* @@@@@ @@@ @@@@@@@@@@@ */
+    177          //unsigned char nf; /*@@@@@@@ 0 - @@@@@@ @@@@@, 1 = @@@@@@@ @@@@@,2=@@@@@@@@@@@ @@@@@@@@ */
+    178          {
+   \                     ZAPFACTOR:
+   \   00000000   0xE92D4000         PUSH     {LR}
+    179          
+    180            int i,irab,pausacik;
+    181            pausacik = 43;
+    182            __disable_interrupt();
+   \   00000004   0xE10F2000         MRS      R2,CPSR
+   \   00000008   0xE38220C0         ORR      R2,R2,#0xC0
+   \   0000000C   0xE121F002         MSR      CPSR_c,R2
+    183            IO0DIR_bit.P0_3 = 1;  /*P0.3 Di/o @@@@@@@@@@@ @@ @@@@@*/
+   \   00000010   0xE3A0224E         MOV      R2,#-536870908
+   \   00000014   0xE3822BA0         ORR      R2,R2,#0x28000
+   \   00000018   0xE5923004         LDR      R3,[R2, #+4]
+   \   0000001C   0xE3833008         ORR      R3,R3,#0x8
+   \   00000020   0xE5823004         STR      R3,[R2, #+4]
+    184            DELAYTACKT(irab,pausacik);
+   \   00000024   0xE3A0302B         MOV      R3,#+43
+   \                     ??ZAPFACTOR_0:
+   \   00000028   0xE2533001         SUBS     R3,R3,#+1
+   \   0000002C   0x5AFFFFFD         BPL      ??ZAPFACTOR_0
+    185            //tmp=factor;
+    186            //factor = factor << 3;  /* @@@@@@@@ @@@@@ - @@@@@ 12-@@@@@@@@*/
+    187          
+    188            switch( nf )
+   \   00000030   0xE1B03001         MOVS     R3,R1
+   \   00000034   0x0A000003         BEQ      ??ZAPFACTOR_1
+   \   00000038   0xE3530002         CMP      R3,#+2
+   \   0000003C   0x0A000006         BEQ      ??ZAPFACTOR_2
+   \   00000040   0x3A000003         BCC      ??ZAPFACTOR_3
+   \   00000044   0xEA000007         B        ??ZAPFACTOR_4
+    189            {
+    190            case 0:
+    191              {
+    192                factor= factor & 0x7FFF; //@@@ 16 @ 0 @@@ @@@@@@ @
+   \                     ??ZAPFACTOR_1:
+   \   00000048   0xE1A00880         LSL      R0,R0,#+17
+   \   0000004C   0xE1A008A0         LSR      R0,R0,#+17
+    193                break;
+   \   00000050   0xEA000004         B        ??ZAPFACTOR_4
+    194              }
+    195            case 1:
+    196              {
+    197                factor= factor | 0x8000; //@@@ 16 @ 1 @@@ @@@@@@ @
+   \                     ??ZAPFACTOR_3:
+   \   00000054   0xE3800C80         ORR      R0,R0,#0x8000
+    198                break;
+   \   00000058   0xEA000002         B        ??ZAPFACTOR_4
+    199              }
+    200            case 2:
+    201              {
+    202                factor = factor << 2;  /* @@@@@@@@ @@@@@ - @@@@@ 12-@@@@@@@@*/
+    203                factor= factor & 0x3FFF;
+   \                     ??ZAPFACTOR_2:
+   \   0000005C   0xE1A00100         LSL      R0,R0,#+2
+   \   00000060   0xE1A00900         LSL      R0,R0,#+18
+   \   00000064   0xE1A00920         LSR      R0,R0,#+18
+    204                break;
+    205              }
+    206            }
+    207            if (nf==2)
+   \                     ??ZAPFACTOR_4:
+   \   00000068   0xE3530002         CMP      R3,#+2
+   \   0000006C   0xE592C028         LDR      R12,[R2, #+40]
+   \   00000070   0x1A000002         BNE      ??ZAPFACTOR_5
+    208                  IO2CLR_bit.P2_26 =1;  /*CS6 = 0 @@@@@@@@@@@ @@@@@@@@*/
+   \   00000074   0xE38CC640         ORR      R12,R12,#0x4000000
+   \   00000078   0xE582C028         STR      R12,[R2, #+40]
+   \   0000007C   0xEA000002         B        ??ZAPFACTOR_6
+    209              else
+    210              {
+    211              IO2CLR_bit.P2_25 =1;  /*CS5 = 0 @@@@@@*/
+   \                     ??ZAPFACTOR_5:
+   \   00000080   0xE38CC780         ORR      R12,R12,#0x2000000
+   \   00000084   0xE582C028         STR      R12,[R2, #+40]
+    212              factor = factor | 0x4000;  //@@@@@@@@@ @@@@@@@@@@@@@@
+   \   00000088   0xE3800C40         ORR      R0,R0,#0x4000
+    213              }
+    214            DELAYTACKT(irab,pausacik);
+   \                     ??ZAPFACTOR_6:
+   \   0000008C   0xE3A0C02B         MOV      R12,#+43
+   \                     ??ZAPFACTOR_7:
+   \   00000090   0xE25CC001         SUBS     R12,R12,#+1
+   \   00000094   0x5AFFFFFD         BPL      ??ZAPFACTOR_7
+    215           // for (i = 12; --i >=0;)
+    216          
+    217            for (i = 16; --i >=0;)
+   \   00000098   0xE3A0C010         MOV      R12,#+16
+   \   0000009C   0xEA00001B         B        ??ZAPFACTOR_8
+    218            {
+    219          //--11.10.2011--- @@@@@@@@@@@ @@@@@@@@ @@@@@@@@@ @@@ ----------------
+    220               if ((factor & 0x8000) == 0)
+    221                IO0CLR_bit.P0_3 = 1;   //@@@ DI/O = 0
+    222                else                   // @@@
+    223                  IO0SET_bit.P0_3 = 1; //@@@ DI/O = 1
+   \                     ??ZAPFACTOR_9:
+   \   000000A0   0xE592E000         LDR      LR,[R2, #+0]
+   \   000000A4   0xE38EE008         ORR      LR,LR,#0x8
+   \   000000A8   0xE582E000         STR      LR,[R2, #+0]
+   \   000000AC   0xEA000004         B        ??ZAPFACTOR_10
+   \                     ??ZAPFACTOR_11:
+   \   000000B0   0xE3100C80         TST      R0,#0x8000
+   \   000000B4   0x1AFFFFF9         BNE      ??ZAPFACTOR_9
+   \   000000B8   0xE592E008         LDR      LR,[R2, #+8]
+   \   000000BC   0xE38EE008         ORR      LR,LR,#0x8
+   \   000000C0   0xE582E008         STR      LR,[R2, #+8]
+    224          //--11.10.2011--- @@@@@@@@@@@ @@@@@@@@ @@@@@@@@@ @@@ ----------------
+    225              DELAYTACKT(irab,pausacik);
+   \                     ??ZAPFACTOR_10:
+   \   000000C4   0xE3A0E02B         MOV      LR,#+43
+   \                     ??ZAPFACTOR_12:
+   \   000000C8   0xE25EE001         SUBS     LR,LR,#+1
+   \   000000CC   0x5AFFFFFD         BPL      ??ZAPFACTOR_12
+    226          
+    227              IO0SET_bit.P0_2 = 1;      //SCK = 1
+   \   000000D0   0xE592E000         LDR      LR,[R2, #+0]
+   \   000000D4   0xE38EE004         ORR      LR,LR,#0x4
+   \   000000D8   0xE582E000         STR      LR,[R2, #+0]
+    228          
+    229              DELAYTACKT(irab,pausacik);
+   \   000000DC   0xE3A0E02B         MOV      LR,#+43
+   \                     ??ZAPFACTOR_13:
+   \   000000E0   0xE25EE001         SUBS     LR,LR,#+1
+   \   000000E4   0x5AFFFFFD         BPL      ??ZAPFACTOR_13
+    230              //----11.10.2011-----------------
+    231              /*
+    232              if ((factor & 0x8000) == 0)
+    233                IO0CLR_bit.P0_3 = 1;   //@@@ DI/O = 0
+    234                else                   // @@@
+    235                  IO0SET_bit.P0_3 = 1; //@@@ DI/O = 1
+    236              */
+    237             //------------------------------------
+    238              DELAYTACKT(irab,pausacik);
+   \   000000E8   0xE3A0E02B         MOV      LR,#+43
+   \                     ??ZAPFACTOR_14:
+   \   000000EC   0xE25EE001         SUBS     LR,LR,#+1
+   \   000000F0   0x5AFFFFFD         BPL      ??ZAPFACTOR_14
+    239              IO0CLR_bit.P0_2 = 1;      //SCK = 0
+   \   000000F4   0xE592E008         LDR      LR,[R2, #+8]
+   \   000000F8   0xE38EE004         ORR      LR,LR,#0x4
+   \   000000FC   0xE582E008         STR      LR,[R2, #+8]
+    240              DELAYTACKT(irab,pausacik);
+   \   00000100   0xE3A0E02B         MOV      LR,#+43
+   \                     ??ZAPFACTOR_15:
+   \   00000104   0xE25EE001         SUBS     LR,LR,#+1
+   \   00000108   0x5AFFFFFD         BPL      ??ZAPFACTOR_15
+    241              factor = factor << 1; //@@@@@@@@ @@ 1 @@@@@@
+   \   0000010C   0xE1A00080         LSL      R0,R0,#+1
+    242            }
+   \                     ??ZAPFACTOR_8:
+   \   00000110   0xE25CC001         SUBS     R12,R12,#+1
+   \   00000114   0x5AFFFFE5         BPL      ??ZAPFACTOR_11
+    243          
+    244            //IO0SET_bit.P0_2 = 1;      //SCK = 1   9.07.2008
+    245            IO0CLR_bit.P0_2 = 1;      //SCK = 0
+   \   00000118   0xE5920008         LDR      R0,[R2, #+8]
+   \   0000011C   0xE3800004         ORR      R0,R0,#0x4
+   \   00000120   0xE5820008         STR      R0,[R2, #+8]
+    246            DELAYTACKT(irab,pausacik);
+   \   00000124   0xE3A0002B         MOV      R0,#+43
+   \                     ??ZAPFACTOR_16:
+   \   00000128   0xE2500001         SUBS     R0,R0,#+1
+   \   0000012C   0x5AFFFFFD         BPL      ??ZAPFACTOR_16
+    247          
+    248            if (nf==2)
+   \   00000130   0xE3530002         CMP      R3,#+2
+   \   00000134   0xE5920020         LDR      R0,[R2, #+32]
+   \   00000138   0x1A000005         BNE      ??ZAPFACTOR_17
+    249            {
+    250                  IO2SET_bit.P2_26 =1;  /*CS6 = 1 @@@@@@@@@@@ @@@@@@@@*/
+   \   0000013C   0xE3800640         ORR      R0,R0,#0x4000000
+   \   00000140   0xE5820020         STR      R0,[R2, #+32]
+    251                  IO2SET_bit.P2_25 =1;  /*CS5 = 1 @@@@@@*/
+   \   00000144   0xE5920020         LDR      R0,[R2, #+32]
+   \   00000148   0xE3800780         ORR      R0,R0,#0x2000000
+   \   0000014C   0xE5820020         STR      R0,[R2, #+32]
+   \   00000150   0xEA000004         B        ??ZAPFACTOR_18
+    252            }
+    253              else
+    254              {
+    255              IO2SET_bit.P2_25 =1;  /*CS5 = 1 @@@@@@*/
+   \                     ??ZAPFACTOR_17:
+   \   00000154   0xE3800780         ORR      R0,R0,#0x2000000
+   \   00000158   0xE5820020         STR      R0,[R2, #+32]
+    256              IO2SET_bit.P2_26 =1;  /*CS6 = 1 @@@@@@@@@@@ @@@@@@@@*/
+   \   0000015C   0xE5920020         LDR      R0,[R2, #+32]
+   \   00000160   0xE3800640         ORR      R0,R0,#0x4000000
+   \   00000164   0xE5820020         STR      R0,[R2, #+32]
+    257              }
+    258            DELAYTACKT(irab,pausacik);
+   \                     ??ZAPFACTOR_18:
+   \   00000168   0xE3A0002B         MOV      R0,#+43
+   \                     ??ZAPFACTOR_19:
+   \   0000016C   0xE2500001         SUBS     R0,R0,#+1
+   \   00000170   0x5AFFFFFD         BPL      ??ZAPFACTOR_19
+    259            if (nf==0 || nf==1)
+   \   00000174   0xE3510000         CMP      R1,#+0
+   \   00000178   0x0A000001         BEQ      ??ZAPFACTOR_20
+   \   0000017C   0xE3530001         CMP      R3,#+1
+   \   00000180   0x1A00000B         BNE      ??ZAPFACTOR_21
+    260            {
+    261            IO2CLR_bit.P2_30 = 1;      //LDA = 0 - @@@@@@ @@@@@ @@@ @@@@@@@@@@@ @@@@@@@@
+   \                     ??ZAPFACTOR_20:
+   \   00000184   0xE5920028         LDR      R0,[R2, #+40]
+   \   00000188   0xE3800440         ORR      R0,R0,#0x40000000
+   \   0000018C   0xE5820028         STR      R0,[R2, #+40]
+    262            DELAYTACKT(irab,pausacik);
+   \   00000190   0xE3A0002B         MOV      R0,#+43
+   \                     ??ZAPFACTOR_22:
+   \   00000194   0xE2500001         SUBS     R0,R0,#+1
+   \   00000198   0x5AFFFFFD         BPL      ??ZAPFACTOR_22
+    263            IO2SET_bit.P2_30 = 1;      //LDA = 1 - @@@@@@ @@@@@ @@@ @@@@@@@@@@@ @@@@@@@@
+   \   0000019C   0xE5920020         LDR      R0,[R2, #+32]
+   \   000001A0   0xE3800440         ORR      R0,R0,#0x40000000
+   \   000001A4   0xE5820020         STR      R0,[R2, #+32]
+    264            DELAYTACKT(irab,pausacik);
+   \   000001A8   0xE3A0002B         MOV      R0,#+43
+   \                     ??ZAPFACTOR_23:
+   \   000001AC   0xE2500001         SUBS     R0,R0,#+1
+   \   000001B0   0x5AFFFFFD         BPL      ??ZAPFACTOR_23
+    265            }
+    266           /* if (nf == 1)
+    267            {
+    268              IO2CLR_bit.P2_31 = 1;      //LDB = 0 - @@@@@@@ @@@@@
+    269              DELAYTACKT(irab,pausacik);
+    270              IO2SET_bit.P2_31 = 1;      //LDB = 1 - @@@@@@@ @@@@@
+    271            }
+    272            else
+    273            {
+    274              IO2CLR_bit.P2_30 = 1;      //LDA = 0 - @@@@@@ @@@@@ @@@ @@@@@@@@@@@ @@@@@@@@
+    275              DELAYTACKT(irab,pausacik);
+    276              IO2SET_bit.P2_30 = 1;      //LDA = 1 - @@@@@@ @@@@@ @@@ @@@@@@@@@@@ @@@@@@@@
+    277              DELAYTACKT(irab,pausacik);
+    278            }*/
+    279            IO0DIR_bit.P0_3 = 0;  /*P0.3 Di/o @@@@@@@@@@@ @@ @@@@*/
+   \                     ??ZAPFACTOR_21:
+   \   000001B4   0xE5920004         LDR      R0,[R2, #+4]
+   \   000001B8   0xE3C00008         BIC      R0,R0,#0x8
+   \   000001BC   0xE5820004         STR      R0,[R2, #+4]
+    280            __enable_interrupt();
+   \   000001C0   0xE10F0000         MRS      R0,CPSR
+   \   000001C4   0xE3C000C0         BIC      R0,R0,#0xC0
+   \   000001C8   0xE121F000         MSR      CPSR_c,R0
+    281          
+    282          }
+   \   000001CC   0xE8BD4000         POP      {LR}
+   \   000001D0   0xE12FFF1E         BX       LR               ;; return
+   \   000001D4                      REQUIRE _A_IO0DIR
+   \   000001D4                      REQUIRE _A_IO2CLR
+   \   000001D4                      REQUIRE _A_IO0CLR
+   \   000001D4                      REQUIRE _A_IO0SET
+   \   000001D4                      REQUIRE _A_IO2SET
+    283          
+
+   \                                 In section .text, align 4, keep-with-next
+    284          void ZAPFACTOR2 (unsigned short factor,unsigned char nf) //@@@@@@ @@@@
+    285          //unsigned short factor; /* @@@@@ @@@ @@@@@@@@@@@ */
+    286          //unsigned char nf; /*@@@@@@@ 0 - @@@@@@ @@@@@, 1 = @@@@@@@ @@@@@,2=@@@@@@@@@@@ @@@@@@@@ */
+    287          {
+   \                     ZAPFACTOR2:
+   \   00000000   0xE24DD004         SUB      SP,SP,#+4
+    288            int i,irab,pausacik;
+    289            pausacik = 43;
+    290            IO0DIR_bit.P0_3 = 1;  /*P0.3 Di/o @@@@@@@@@@@ @@ @@@@@*/
+   \   00000004   0xE3A0224E         MOV      R2,#-536870908
+   \   00000008   0xE3822BA0         ORR      R2,R2,#0x28000
+   \   0000000C   0xE5923004         LDR      R3,[R2, #+4]
+   \   00000010   0xE3833008         ORR      R3,R3,#0x8
+   \   00000014   0xE5823004         STR      R3,[R2, #+4]
+    291            DELAYTACKT(irab,pausacik);
+   \   00000018   0xE3A0302B         MOV      R3,#+43
+   \                     ??ZAPFACTOR2_0:
+   \   0000001C   0xE2533001         SUBS     R3,R3,#+1
+   \   00000020   0x5AFFFFFD         BPL      ??ZAPFACTOR2_0
+    292            factor = factor << 3;  /* @@@@@@@@ @@@@@ - @@@@@ 12-@@@@@@@@*/
+   \   00000024   0xE1A00180         LSL      R0,R0,#+3
+    293            if (nf==2)
+   \   00000028   0xE3510002         CMP      R1,#+2
+   \   0000002C   0xE5923028         LDR      R3,[R2, #+40]
+   \   00000030   0x1A000002         BNE      ??ZAPFACTOR2_1
+    294                  IO2CLR_bit.P2_26 =1;  /*CS6 = 0 @@@@@@@@@@@ @@@@@@@@*/
+   \   00000034   0xE3833640         ORR      R3,R3,#0x4000000
+   \   00000038   0xE5823028         STR      R3,[R2, #+40]
+   \   0000003C   0xEA000001         B        ??ZAPFACTOR2_2
+    295              else
+    296              IO2CLR_bit.P2_25 =1;  /*CS5 = 0 @@@@@@*/
+   \                     ??ZAPFACTOR2_1:
+   \   00000040   0xE3833780         ORR      R3,R3,#0x2000000
+   \   00000044   0xE5823028         STR      R3,[R2, #+40]
+    297            DELAYTACKT(irab,pausacik);
+   \                     ??ZAPFACTOR2_2:
+   \   00000048   0xE3A0302B         MOV      R3,#+43
+   \                     ??ZAPFACTOR2_3:
+   \   0000004C   0xE2533001         SUBS     R3,R3,#+1
+   \   00000050   0x5AFFFFFD         BPL      ??ZAPFACTOR2_3
+    298            for (i = 12; --i >=0;)
+   \   00000054   0xE3A0300C         MOV      R3,#+12
+   \   00000058   0xEA000018         B        ??ZAPFACTOR2_4
+    299            {
+    300              IO0SET_bit.P0_2 = 1;      //SCK = 1
+   \                     ??ZAPFACTOR2_5:
+   \   0000005C   0xE592C000         LDR      R12,[R2, #+0]
+   \   00000060   0xE38CC004         ORR      R12,R12,#0x4
+   \   00000064   0xE582C000         STR      R12,[R2, #+0]
+    301              factor = factor << 1; //@@@@@@@@ @@ 1 @@@@@@
+   \   00000068   0xE1A00080         LSL      R0,R0,#+1
+    302              DELAYTACKT(irab,pausacik);
+   \   0000006C   0xE3A0C02B         MOV      R12,#+43
+   \                     ??ZAPFACTOR2_6:
+   \   00000070   0xE25CC001         SUBS     R12,R12,#+1
+   \   00000074   0x5AFFFFFD         BPL      ??ZAPFACTOR2_6
+    303              if ((factor & 0x8000) == 0)
+   \   00000078   0xE3100C80         TST      R0,#0x8000
+   \   0000007C   0x1A000003         BNE      ??ZAPFACTOR2_7
+    304                IO0CLR_bit.P0_3 = 1;   //@@@ DI/O = 0
+   \   00000080   0xE592C008         LDR      R12,[R2, #+8]
+   \   00000084   0xE38CC008         ORR      R12,R12,#0x8
+   \   00000088   0xE582C008         STR      R12,[R2, #+8]
+   \   0000008C   0xEA000002         B        ??ZAPFACTOR2_8
+    305                else                   // @@@
+    306                  IO0SET_bit.P0_3 = 1; //@@@ DI/O = 1
+   \                     ??ZAPFACTOR2_7:
+   \   00000090   0xE592C000         LDR      R12,[R2, #+0]
+   \   00000094   0xE38CC008         ORR      R12,R12,#0x8
+   \   00000098   0xE582C000         STR      R12,[R2, #+0]
+    307              DELAYTACKT(irab,pausacik);
+   \                     ??ZAPFACTOR2_8:
+   \   0000009C   0xE3A0C02B         MOV      R12,#+43
+   \                     ??ZAPFACTOR2_9:
+   \   000000A0   0xE25CC001         SUBS     R12,R12,#+1
+   \   000000A4   0x5AFFFFFD         BPL      ??ZAPFACTOR2_9
+    308              IO0CLR_bit.P0_2 = 1;      //SCK = 0
+   \   000000A8   0xE592C008         LDR      R12,[R2, #+8]
+   \   000000AC   0xE38CC004         ORR      R12,R12,#0x4
+   \   000000B0   0xE582C008         STR      R12,[R2, #+8]
+    309              DELAYTACKT(irab,pausacik);
+   \   000000B4   0xE3A0C02B         MOV      R12,#+43
+   \                     ??ZAPFACTOR2_10:
+   \   000000B8   0xE25CC001         SUBS     R12,R12,#+1
+   \   000000BC   0x5AFFFFFD         BPL      ??ZAPFACTOR2_10
+    310            }
+   \                     ??ZAPFACTOR2_4:
+   \   000000C0   0xE2533001         SUBS     R3,R3,#+1
+   \   000000C4   0x5AFFFFE4         BPL      ??ZAPFACTOR2_5
+    311          
+    312            IO0SET_bit.P0_2 = 1;      //SCK = 1
+   \   000000C8   0xE5920000         LDR      R0,[R2, #+0]
+   \   000000CC   0xE3800004         ORR      R0,R0,#0x4
+   \   000000D0   0xE5820000         STR      R0,[R2, #+0]
+    313            DELAYTACKT(irab,pausacik);
+   \   000000D4   0xE3A0002B         MOV      R0,#+43
+   \                     ??ZAPFACTOR2_11:
+   \   000000D8   0xE2500001         SUBS     R0,R0,#+1
+   \   000000DC   0x5AFFFFFD         BPL      ??ZAPFACTOR2_11
+    314          
+    315            if (nf==2)
+   \   000000E0   0xE3510002         CMP      R1,#+2
+   \   000000E4   0xE5920020         LDR      R0,[R2, #+32]
+   \   000000E8   0x1A000002         BNE      ??ZAPFACTOR2_12
+    316                  IO2SET_bit.P2_26 =1;  /*CS6 = 1 @@@@@@@@@@@ @@@@@@@@*/
+   \   000000EC   0xE3800640         ORR      R0,R0,#0x4000000
+   \   000000F0   0xE5820020         STR      R0,[R2, #+32]
+   \   000000F4   0xEA000001         B        ??ZAPFACTOR2_13
+    317              else
+    318              IO2SET_bit.P2_25 =1;  /*CS5 = 1 @@@@@@*/
+   \                     ??ZAPFACTOR2_12:
+   \   000000F8   0xE3800780         ORR      R0,R0,#0x2000000
+   \   000000FC   0xE5820020         STR      R0,[R2, #+32]
+    319            DELAYTACKT(irab,pausacik);
+   \                     ??ZAPFACTOR2_13:
+   \   00000100   0xE3A0002B         MOV      R0,#+43
+   \                     ??ZAPFACTOR2_14:
+   \   00000104   0xE2500001         SUBS     R0,R0,#+1
+   \   00000108   0x5AFFFFFD         BPL      ??ZAPFACTOR2_14
+    320          
+    321            if (nf == 1)
+   \   0000010C   0xE3510001         CMP      R1,#+1
+   \   00000110   0xE5920028         LDR      R0,[R2, #+40]
+   \   00000114   0x1A000008         BNE      ??ZAPFACTOR2_15
+    322            {
+    323              IO2CLR_bit.P2_31 = 1;      //LDB = 0 - @@@@@@@ @@@@@
+   \   00000118   0xE3800480         ORR      R0,R0,#0x80000000
+   \   0000011C   0xE5820028         STR      R0,[R2, #+40]
+    324              DELAYTACKT(irab,pausacik);
+   \   00000120   0xE3A0002B         MOV      R0,#+43
+   \                     ??ZAPFACTOR2_16:
+   \   00000124   0xE2500001         SUBS     R0,R0,#+1
+   \   00000128   0x5AFFFFFD         BPL      ??ZAPFACTOR2_16
+    325              IO2SET_bit.P2_31 = 1;      //LDB = 1 - @@@@@@@ @@@@@
+   \   0000012C   0xE5920020         LDR      R0,[R2, #+32]
+   \   00000130   0xE3800480         ORR      R0,R0,#0x80000000
+   \   00000134   0xE5820020         STR      R0,[R2, #+32]
+   \   00000138   0xEA00000A         B        ??ZAPFACTOR2_17
+    326            }
+    327            else
+    328            {
+    329              IO2CLR_bit.P2_30 = 1;      //LDA = 0 - @@@@@@ @@@@@ @@@ @@@@@@@@@@@ @@@@@@@@
+   \                     ??ZAPFACTOR2_15:
+   \   0000013C   0xE3800440         ORR      R0,R0,#0x40000000
+   \   00000140   0xE5820028         STR      R0,[R2, #+40]
+    330              DELAYTACKT(irab,pausacik);
+   \   00000144   0xE3A0002B         MOV      R0,#+43
+   \                     ??ZAPFACTOR2_18:
+   \   00000148   0xE2500001         SUBS     R0,R0,#+1
+   \   0000014C   0x5AFFFFFD         BPL      ??ZAPFACTOR2_18
+    331              IO2SET_bit.P2_30 = 1;      //LDA = 1 - @@@@@@ @@@@@ @@@ @@@@@@@@@@@ @@@@@@@@
+   \   00000150   0xE5920020         LDR      R0,[R2, #+32]
+   \   00000154   0xE3800440         ORR      R0,R0,#0x40000000
+   \   00000158   0xE5820020         STR      R0,[R2, #+32]
+    332              DELAYTACKT(irab,pausacik);
+   \   0000015C   0xE3A0002B         MOV      R0,#+43
+   \                     ??ZAPFACTOR2_19:
+   \   00000160   0xE2500001         SUBS     R0,R0,#+1
+   \   00000164   0x5AFFFFFD         BPL      ??ZAPFACTOR2_19
+    333            }
+    334            IO0DIR_bit.P0_3 = 0;  /*P0.3 Di/o @@@@@@@@@@@ @@ @@@@*/
+   \                     ??ZAPFACTOR2_17:
+   \   00000168   0xE5920004         LDR      R0,[R2, #+4]
+   \   0000016C   0xE3C00008         BIC      R0,R0,#0x8
+   \   00000170   0xE5820004         STR      R0,[R2, #+4]
+    335          
+    336          }
+   \   00000174   0xE28DD004         ADD      SP,SP,#+4
+   \   00000178   0xE12FFF1E         BX       LR               ;; return
+   \   0000017C                      REQUIRE _A_IO0DIR
+   \   0000017C                      REQUIRE _A_IO2CLR
+   \   0000017C                      REQUIRE _A_IO0SET
+   \   0000017C                      REQUIRE _A_IO0CLR
+   \   0000017C                      REQUIRE _A_IO2SET
+    337          /*****************************************************/
+    338          
+
+   \                                 In section .text, align 4, keep-with-next
+    339          __irq __arm void prefetch_handler(void)
+    340          {
+   \                     prefetch_handler:
+   \   00000000   0xE92D0007         PUSH     {R0-R2}
+    341             if( IO2PIN_bit.P2_17 )
+   \   00000004   0x........         LDR      R0,??DataTable3_5  ;; 0xe0028020
+   \   00000008   0xE5901000         LDR      R1,[R0, #+0]
+   \   0000000C   0xE3A02001         MOV      R2,#+1
+   \   00000010   0xE11208A1         TST      R2,R1, LSR #+17
+   \   00000014   0x0A000003         BEQ      ??prefetch_handler_0
+    342                {
+    343                  IO2CLR_bit.P2_17 = 1;
+   \   00000018   0xE590100C         LDR      R1,[R0, #+12]
+   \   0000001C   0xE3811B80         ORR      R1,R1,#0x20000
+   \   00000020   0xE580100C         STR      R1,[R0, #+12]
+   \   00000024   0xEA000002         B        ??prefetch_handler_1
+    344                }
+    345                else
+    346                {
+    347                  IO2SET_bit.P2_17 = 1;
+   \                     ??prefetch_handler_0:
+   \   00000028   0xE5901004         LDR      R1,[R0, #+4]
+   \   0000002C   0xE3811B80         ORR      R1,R1,#0x20000
+   \   00000030   0xE5801004         STR      R1,[R0, #+4]
+    348                }
+    349          	
+    350          }
+   \                     ??prefetch_handler_1:
+   \   00000034   0xE8BD0007         POP      {R0-R2}
+   \   00000038   0xE25EF004         SUBS     PC,LR,#+4        ;; return
+   \   0000003C                      REQUIRE _A_IO2PIN
+   \   0000003C                      REQUIRE _A_IO2CLR
+   \   0000003C                      REQUIRE _A_IO2SET
+    351          
+
+   \                                 In section .text, align 4, keep-with-next
+    352          __irq __arm void data_handler(void)
+    353          {
+   \                     data_handler:
+   \   00000000   0xE92D0007         PUSH     {R0-R2}
+    354            if( IO2PIN_bit.P2_18 )
+   \   00000004   0x........         LDR      R0,??DataTable3_5  ;; 0xe0028020
+   \   00000008   0xE5901000         LDR      R1,[R0, #+0]
+   \   0000000C   0xE3A02001         MOV      R2,#+1
+   \   00000010   0xE1120921         TST      R2,R1, LSR #+18
+   \   00000014   0x0A000003         BEQ      ??data_handler_0
+    355                {
+    356                  IO2CLR_bit.P2_18 = 1;
+   \   00000018   0xE590100C         LDR      R1,[R0, #+12]
+   \   0000001C   0xE3811A40         ORR      R1,R1,#0x40000
+   \   00000020   0xE580100C         STR      R1,[R0, #+12]
+   \   00000024   0xEA000002         B        ??data_handler_1
+    357                }
+    358                else
+    359                {
+    360                  IO2SET_bit.P2_18 = 1;
+   \                     ??data_handler_0:
+   \   00000028   0xE5901004         LDR      R1,[R0, #+4]
+   \   0000002C   0xE3811A40         ORR      R1,R1,#0x40000
+   \   00000030   0xE5801004         STR      R1,[R0, #+4]
+    361                }
+    362          	
+    363          }
+   \                     ??data_handler_1:
+   \   00000034   0xE8BD0007         POP      {R0-R2}
+   \   00000038   0xE25EF004         SUBS     PC,LR,#+4        ;; return
+   \   0000003C                      REQUIRE _A_IO2PIN
+   \   0000003C                      REQUIRE _A_IO2CLR
+   \   0000003C                      REQUIRE _A_IO2SET
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable3:
+   \   00000000   0xE01FC140         DC32     0xe01fc140
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable3_1:
+   \   00000000   0x........         DC32     FLAG
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable3_2:
+   \   00000000   0x........         DC32     DAC
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable3_3:
+   \   00000000   0x........         DC32     T1TC_temp
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable3_4:
+   \   00000000   0x........         DC32     SPECTR
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable3_5:
+   \   00000000   0xE0028020         DC32     0xe0028020
+    364          
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       0   InitialiseEINT0
+      24   IntEINT0
+       4   ZAPFACTOR
+       4   ZAPFACTOR2
+      12   data_handler
+      12   prefetch_handler
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  ??DataTable3
+       4  ??DataTable3_1
+       4  ??DataTable3_2
+       4  ??DataTable3_3
+       4  ??DataTable3_4
+       4  ??DataTable3_5
+    3076  BUFFSPECTR
+       6  DAC
+          FLAGdac128
+          FLAGOver3byte
+      72  InitialiseEINT0
+     420  IntEINT0
+    4100  SPECTR
+       4  T1TC
+     468  ZAPFACTOR
+     380  ZAPFACTOR2
+       4  _A_EXTINT
+       4  _A_EXTMODE
+       4  _A_EXTPOLAR
+       4  _A_IO0CLR
+       4  _A_IO0DIR
+       4  _A_IO0PIN
+       4  _A_IO0SET
+       4  _A_IO2CLR
+       4  _A_IO2PIN
+       4  _A_IO2SET
+       4  _A_PINSEL1
+       4  _A_T1TCR
+       4  _A_VICIntSelect
+      60  data_handler
+      60  prefetch_handler
+       2  tmp
+
+ 
+ 3 084 bytes in section .bss
+ 4 100 bytes in section .noinit
+    56 bytes in section .noinit  (abs)
+ 1 484 bytes in section .text
+ 
+ 1 484 bytes of CODE memory
+ 7 184 bytes of DATA memory (+ 56 bytes shared)
+
+Errors: none
+Warnings: none

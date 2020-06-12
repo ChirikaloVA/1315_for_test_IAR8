@@ -1,0 +1,735 @@
+###############################################################################
+#
+# IAR ANSI C/C++ Compiler V8.20.1.14183/W32 for ARM       12/Jun/2020  11:30:59
+# Copyright 1999-2017 IAR Systems AB.
+#
+#    Cpu mode     =  arm
+#    Endian       =  little
+#    Source file  =  D:\Users\Chirikalo\ARM_proj\AT1315_for_test\InterTMR0.cpp
+#    Command line =  
+#        -f C:\Users\CHIRIK~1\AppData\Local\Temp\EWCA1B.tmp
+#        (D:\Users\Chirikalo\ARM_proj\AT1315_for_test\InterTMR0.cpp -lCN
+#        D:\Users\Chirikalo\ARM_proj\AT1315_for_test\Debug\List -o
+#        D:\Users\Chirikalo\ARM_proj\AT1315_for_test\Debug\Obj --no_unroll
+#        --no_inline --no_tbaa --no_scheduling --debug --endian=little
+#        --cpu=ARM7TDMI-S -e --fpu=None --dlib_config "C:\Program Files
+#        (x86)\IAR Systems\Embedded Workbench
+#        8.0\arm\INC\c\DLib_Config_Normal.h" --cpu_mode arm -Om
+#        --use_c++_inline)
+#    Locale       =  C
+#    List file    =  
+#        D:\Users\Chirikalo\ARM_proj\AT1315_for_test\Debug\List\InterTMR0.lst
+#    Object file  =  
+#        D:\Users\Chirikalo\ARM_proj\AT1315_for_test\Debug\Obj\InterTMR0.o
+#
+###############################################################################
+
+D:\Users\Chirikalo\ARM_proj\AT1315_for_test\InterTMR0.cpp
+      1          /*****************************************************************************/
+      2          /* пп обработки  TIMR0 (IRQ) прерывания-ОБЩИЙ на 2 сек и 2/3 сек??????       */
+      3          /****************************************************************************/
+      4          
+      5          #include <intrinsics.h>
+      6          #include <NXP/iolpc2294.h>
+
+   \                                 In section .noinit, at 0xfffff104
+   \   __absolute unsigned long volatile VICVectAddr1
+   \                     VICVectAddr1:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xfffff204
+   \   __absolute union <unnamed>#185 volatile _A_VICVectCntl1
+   \                     _A_VICVectCntl1:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe0028000
+   \   __absolute union <unnamed>#202 const volatile _A_IO0PIN
+   \                     _A_IO0PIN:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe0004000
+   \   __absolute union <unnamed>#370 volatile _A_T0IR
+   \                     _A_T0IR:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe0004004
+   \   __absolute union <unnamed>#371 volatile _A_T0TCR
+   \                     _A_T0TCR:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe0004008
+   \   __absolute unsigned long volatile T0TC
+   \                     T0TC:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe000400c
+   \   __absolute unsigned long volatile T0PR
+   \                     T0PR:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe0004010
+   \   __absolute unsigned long volatile T0PC
+   \                     T0PC:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe0004014
+   \   __absolute union <unnamed>#372 volatile _A_T0MCR
+   \                     _A_T0MCR:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe0004018
+   \   __absolute unsigned long volatile T0MR0
+   \                     T0MR0:
+   \   00000000                      DS8 4
+      7          #include "my_macros.h"
+      8          
+      9          // The following is the timer interval required in ms. Change as required.
+     10          /*********** tmr0***************/
+     11          #define TCR_ENABLE        0x1       /* timer TCR bit 0 =1-enable counting */
+     12          #define TCR_RESET         0x2       /* timer TCR bit 1 =1-reset and sinch count and pres */
+     13          #define MATCH_0_INTERRUPT 0x1       /* bit enable interrapt for MR0  */
+     14          #define MATCH_0_RESET     0x2       /* bit reset TC  for MR0  */
+     15          /*==============================*/
+
+   \                                 In section .bss, align 4
+     16          unsigned long ulGlobalMaxTimer0Value;
+     17          long TH,TL;
+     18          int Temp_i;           //@@@@@@@@@@ @@@@@@@@ @@@@@@@ @@@ @@@@ @@@@@ @@ @@@@@  @@@@@ @@@@ @@@ 10.07.2008
+     19          float TEMPERFLOAT;    //@@@@@@@ @@@@@@@ @@@@@@@@@@@
+     20          float TEMPERFLOATtek;    // @@@@@@@ @@@@@@@@@@@
+     21          float MasTemper[20];
+     22          int IndMasTemper;
+     23          float TIMER0_INTERVAL;     //120000.0@@@@@@@@ @ msek // @@@@@@ 2 @@@@@@  - @@@@@@@@@ @@@@@@@@@@@
+     24          __BITFLAG FLAGrez;   //@@@ @ macros
+   \                     FLAGrez:
+   \   00000000                      DS8 4
+   \                     ulGlobalMaxTimer0Value:
+   \   00000004                      DS8 4
+   \                     TH:
+   \   00000008                      DS8 4
+   \                     TL:
+   \   0000000C                      DS8 4
+   \                     Temp_i:
+   \   00000010                      DS8 4
+   \                     TEMPERFLOAT:
+   \   00000014                      DS8 4
+   \                     TEMPERFLOATtek:
+   \   00000018                      DS8 4
+   \                     MasTemper:
+   \   0000001C                      DS8 80
+   \                     IndMasTemper:
+   \   0000006C                      DS8 4
+   \                     TIMER0_INTERVAL:
+   \   00000070                      DS8 4
+     25          /**************************************************************************/
+     26          void MIDTEMPER(void);
+     27          void TEMPERATURA(void);
+     28          
+     29          void RESETTMR0(void);
+     30          
+     31          void TimerInterrupt0(void);
+     32          /******************************************************/
+     33          //extern unsigned char gpi1;//@@@@@@@
+     34          extern __BITFLAG FLAG;   //@@@ @ macros
+     35          extern  double dPeriod;
+     36          extern unsigned int PCLK_VPB;
+     37          extern unsigned  short KODADC;
+     38          extern unsigned  short KODADCEEPROM;
+     39          extern unsigned char TABLTemperCORR[126]; //@@@@@@@ @@@@@@ @@@@@@@@@ 61 @@@@ @@ 2 @@@@@ +CRC 2@+1@@@@@@+ 1@ @@@@
+     40          extern void STOPEINT0(void);
+     41          extern void STARTEINT0(void);
+     42          extern void ZAPFACTOR (unsigned short factor,unsigned char nf);
+     43          
+     44          extern unsigned short TEST_pause;
+     45          
+     46          /**********************************************************
+     47           * Initialise timer 0, @@@@@@ @@@@@@@@ @ @@@@@@@@ @@@@@@@@@
+     48           *********************************************************/
+
+   \                                 In section .text, align 4, keep-with-next
+     49          void InitialiseTimer0(void)
+     50          {
+   \                     InitialiseTimer0:
+   \   00000000   0xE92D4038         PUSH     {R3-R5,LR}
+     51             VICVectCntl1  = 0x24;    			  		/* vector timer 0 as highest priority and enabled */
+   \   00000004   0xE3E000FB         MVN      R0,#+251
+   \   00000008   0xE3C00EE0         BIC      R0,R0,#0xE00
+   \   0000000C   0xE3A01024         MOV      R1,#+36
+   \   00000010   0xE5801100         STR      R1,[R0, #+256]
+     52             VICVectAddr1  = (int) TimerInterrupt0;	  		/* vector timer 0 interrupt address */
+   \   00000014   0x........         ADR      R1,TimerInterrupt0
+   \   00000018   0xE5801000         STR      R1,[R0, #+0]
+     53             T0TCR = TCR_RESET;     //reset counter
+   \   0000001C   0xE3A0424E         MOV      R4,#-536870908
+   \   00000020   0xE3844C40         ORR      R4,R4,#0x4000
+   \   00000024   0xE3A00002         MOV      R0,#+2
+   \   00000028   0xE5840000         STR      R0,[R4, #+0]
+     54             T0TCR = 0;             //@@@@@@@@@@ @@@@@@@
+   \   0000002C   0xE3A00000         MOV      R0,#+0
+   \   00000030   0xE5840000         STR      R0,[R4, #+0]
+     55             T0PC  = 0;            // Initialise the prescale counter to 0...
+   \   00000034   0xE584000C         STR      R0,[R4, #+12]
+     56             T0PR  = 0;
+   \   00000038   0xE5840008         STR      R0,[R4, #+8]
+     57             T0MCR = MATCH_0_INTERRUPT | MATCH_0_RESET; //int generate and counter reset
+   \   0000003C   0xE3A00003         MOV      R0,#+3
+   \   00000040   0xE5840010         STR      R0,[R4, #+16]
+     58             ulGlobalMaxTimer0Value = (TIMER0_INTERVAL/dPeriod);
+     59             //ulGlobalMaxTimer0Value *= 1000000; // max @@@@@@@@ @@@@@@@@ @@@ @@@@
+     60             ulGlobalMaxTimer0Value *= 50000; // max @@@@@@@@ @@@@@@@@ @@@ @@@@
+   \   00000044   0x........         LDR      R5,??DataTable5
+   \   00000048   0xE5950070         LDR      R0,[R5, #+112]
+   \   0000004C   0x........         BL       __aeabi_f2d
+   \   00000050   0x........         LDR      R12,??DataTable5_1
+   \   00000054   0xE89C000C         LDM      R12,{R2,R3}
+   \   00000058   0x........         BL       __aeabi_ddiv
+   \   0000005C   0x........         BL       __aeabi_d2uiz
+   \   00000060   0xE3A01050         MOV      R1,#+80
+   \   00000064   0xE3811CC3         ORR      R1,R1,#0xC300
+   \   00000068   0xE0000091         MUL      R0,R1,R0
+   \   0000006C   0xE5850004         STR      R0,[R5, #+4]
+     61             T0MR0 = ulGlobalMaxTimer0Value;
+   \   00000070   0xE5840014         STR      R0,[R4, #+20]
+     62          }
+   \   00000074   0xE8BD4031         POP      {R0,R4,R5,LR}
+   \   00000078   0xE12FFF1E         BX       LR               ;; return
+   \   0000007C                      REQUIRE _A_VICVectCntl1
+   \   0000007C                      REQUIRE VICVectAddr1
+   \   0000007C                      REQUIRE _A_T0TCR
+   \   0000007C                      REQUIRE T0PC
+   \   0000007C                      REQUIRE T0PR
+   \   0000007C                      REQUIRE _A_T0MCR
+   \   0000007C                      REQUIRE T0MR0
+     63          /*****************************************************/
+
+   \                                 In section .text, align 4, keep-with-next
+     64          void RESETTMR0(void)
+     65          {
+     66            T0TCR = TCR_RESET;     //reset counter
+   \                     RESETTMR0:
+   \   00000000   0xE3A004E0         MOV      R0,#-536870912
+   \   00000004   0xE3800C40         ORR      R0,R0,#0x4000
+   \   00000008   0xE3A01002         MOV      R1,#+2
+   \   0000000C   0xE5801004         STR      R1,[R0, #+4]
+     67            T0IR  = 0xFF;          // Clear the interrupt bit within the IR register...
+   \   00000010   0xE3A010FF         MOV      R1,#+255
+   \   00000014   0xE5801000         STR      R1,[R0, #+0]
+     68            T0TCR = TCR_ENABLE;   //start counter
+   \   00000018   0xE3A01001         MOV      R1,#+1
+   \   0000001C   0xE5801004         STR      R1,[R0, #+4]
+     69          }
+   \   00000020   0xE12FFF1E         BX       LR               ;; return
+   \   00000024                      REQUIRE _A_T0TCR
+   \   00000024                      REQUIRE _A_T0IR
+     70          /*****************************************************/
+
+   \                                 In section .text, align 4, keep-with-next
+     71          void TimerInterrupt0(void)
+     72          {
+     73             //============ @@@@ (12.08.2009)========
+     74              //IO0SET_bit.P0_14 = 1;
+     75              //IO0CLR_bit.P0_14 = 1;
+     76              //=======================================
+     77          
+     78            //if( TEST_pause )
+     79             // ++ TEST_pause;
+     80            FLAG.temperature = 0; // @@@@@@@ @@@ @@@@ @@@@@@ @@@@@@@@
+     81            FLAG.noEINT0 = 1;   //@@@@ @@@@@@@@ @@@@@@@ @@@@@@@@@@ @@ @@@@@@@ @@@@@@@@@@@@ @ EINT0 @@@@@@@@@@
+   \                     TimerInterrupt0:
+   \   00000000   0x........         LDR      R0,??DataTable5_2
+   \   00000004   0xE5901000         LDR      R1,[R0, #+0]
+   \   00000008   0xE3C11002         BIC      R1,R1,#0x2
+   \   0000000C   0xE3811001         ORR      R1,R1,#0x1
+   \   00000010   0xE5801000         STR      R1,[R0, #+0]
+     82          //  FLAG.temperature = 0; // @@@@@@@ @@@ @@@@ @@@@@@ @@@@@@@@
+     83            if (!FLAG.temperWaitHL)   //@@@@ @@@@@@ @@@@@@@@
+   \   00000014   0xE3A02001         MOV      R2,#+1
+   \   00000018   0xE11206A1         TST      R2,R1, LSR #+13
+   \   0000001C   0x1A000002         BNE      ??TimerInterrupt0_0
+     84                  FLAG.temperIZM = 1; //@@@@ @@@@@@@@ @@@@@@@@@@@
+   \   00000020   0xE3811C40         ORR      R1,R1,#0x4000
+   \   00000024   0xE5801000         STR      R1,[R0, #+0]
+   \   00000028   0xEA000005         B        ??TimerInterrupt0_1
+     85            else
+     86            {//@@@ @@@@@@@@@ @@@@@@@
+     87             T0TCR = 0;                      //@@@@@@@@@@ @@@@@@@
+   \                     ??TimerInterrupt0_0:
+   \   0000002C   0xE3A02000         MOV      R2,#+0
+   \   00000030   0xE3A0324E         MOV      R3,#-536870908
+   \   00000034   0xE3833C40         ORR      R3,R3,#0x4000
+   \   00000038   0xE5832000         STR      R2,[R3, #+0]
+     88           //  T0MR0 = ulGlobalMaxTimer0Value; //@@@@@@@@@@@@  @@@@@@ @@@@@@@@@ @@@@@@@@@@@
+     89             FLAG.temperature = 1; //error temper @@@@@@ @@ @@@@@@@@
+   \   0000003C   0xE3811002         ORR      R1,R1,#0x2
+   \   00000040   0xE5801000         STR      R1,[R0, #+0]
+     90            }
+     91            FLAGrez =FLAG;
+   \                     ??TimerInterrupt0_1:
+   \   00000044   0xE5900000         LDR      R0,[R0, #+0]
+   \   00000048   0x........         LDR      R1,??DataTable5
+   \   0000004C   0xE5810000         STR      R0,[R1, #+0]
+     92            RESETTMR0();
+   \   00000050   0x........         B        RESETTMR0        ;; tailcall
+   \   00000054                      REQUIRE _A_T0TCR
+     93             //============ @@@@ (12.08.2009)========
+     94              //IO0SET_bit.P0_14 = 1;
+     95              //IO0CLR_bit.P0_14 = 1;
+     96              //=======================================
+     97          }
+     98          /***************************************************************************/
+     99          /*                    @@ @@@@@@@@@ @@@@@@@@@@@                             */
+    100          /***************************************************************************/
+
+   \                                 In section .text, align 4, keep-with-next
+    101          void TEMPERATURA(void)
+    102          {
+   \                     TEMPERATURA:
+   \   00000000   0xE92D47FC         PUSH     {R2-R10,LR}
+    103            struct{
+    104                  unsigned pin07 :1;
+    105                  } zP07 ;
+    106            float tdiv;
+    107          
+    108            STOPEINT0();
+   \   00000004   0x........         BL       STOPEINT0
+    109            T0TCR = 0;                      //@@@@@@@@@@ @@@@@@@
+   \   00000008   0xE3A04000         MOV      R4,#+0
+   \   0000000C   0xE3A0524E         MOV      R5,#-536870908
+   \   00000010   0xE3855C40         ORR      R5,R5,#0x4000
+   \   00000014   0xE5854000         STR      R4,[R5, #+0]
+    110            T0MR0 = (500 *1000000)/dPeriod; // 500msek max @@@@ @@@@@@@@@ @@@@@ @@@@@@ @@@@@@@
+   \   00000018   0xE1A00004         MOV      R0,R4
+   \   0000001C   0x........         LDR      R1,??DataTable5_3  ;; 0x41bdcd65
+   \   00000020   0x........         LDR      R12,??DataTable5_1
+   \   00000024   0xE89C000C         LDM      R12,{R2,R3}
+   \   00000028   0x........         BL       __aeabi_ddiv
+   \   0000002C   0x........         BL       __aeabi_d2uiz
+   \   00000030   0xE5850014         STR      R0,[R5, #+20]
+    111            FLAG.temperWaitHL =1;
+   \   00000034   0x........         LDR      R6,??DataTable5_2
+   \   00000038   0xE5960000         LDR      R0,[R6, #+0]
+   \   0000003C   0xE3800D80         ORR      R0,R0,#0x2000
+   \   00000040   0xE5860000         STR      R0,[R6, #+0]
+    112            zP07.pin07 = IO0PIN_bit.P0_7;
+   \   00000044   0xE3A084E0         MOV      R8,#-536870912
+   \   00000048   0xE3888BA0         ORR      R8,R8,#0x28000
+   \   0000004C   0xE5980000         LDR      R0,[R8, #+0]
+   \   00000050   0xE3A01001         MOV      R1,#+1
+   \   00000054   0xE00193A0         AND      R9,R1,R0, LSR #+7
+    113            RESETTMR0();      //@@@@ @@@ @@@@@@@?????
+   \   00000058   0x........         BL       RESETTMR0
+   \   0000005C   0x........         LDR      R7,??DataTable5
+   \   00000060   0xE3A01001         MOV      R1,#+1
+    114            while ((IO0PIN_bit.P0_7 == zP07.pin07) && (FLAGrez.temperature == 0));//@@@@ @@@@@@@@@z .pin07
+   \                     ??TEMPERATURA_0:
+   \   00000064   0xE5980000         LDR      R0,[R8, #+0]
+   \   00000068   0xE00103A0         AND      R0,R1,R0, LSR #+7
+   \   0000006C   0xE1500009         CMP      R0,R9
+   \   00000070   0x1A000002         BNE      ??TEMPERATURA_1
+   \   00000074   0xE5970000         LDR      R0,[R7, #+0]
+   \   00000078   0xE11100A0         TST      R1,R0, LSR #+1
+   \   0000007C   0x0AFFFFF8         BEQ      ??TEMPERATURA_0
+    115          
+    116            RESETTMR0();
+   \                     ??TEMPERATURA_1:
+   \   00000080   0x........         BL       RESETTMR0
+    117            while ((IO0PIN_bit.P0_7 == !zP07.pin07) && (FLAGrez.temperature == 0)) ; //@@@@ @@@@@@@@@
+   \                     ??TEMPERATURA_2:
+   \   00000084   0xE5980000         LDR      R0,[R8, #+0]
+   \   00000088   0xE3A01001         MOV      R1,#+1
+   \   0000008C   0xE00103A0         AND      R0,R1,R0, LSR #+7
+   \   00000090   0xE2291001         EOR      R1,R9,#0x1
+   \   00000094   0xE1500001         CMP      R0,R1
+   \   00000098   0x1A000003         BNE      ??TEMPERATURA_3
+   \   0000009C   0xE5970000         LDR      R0,[R7, #+0]
+   \   000000A0   0xE3A01001         MOV      R1,#+1
+   \   000000A4   0xE11100A0         TST      R1,R0, LSR #+1
+   \   000000A8   0x0AFFFFF5         BEQ      ??TEMPERATURA_2
+    118            T0TCR = 0;
+   \                     ??TEMPERATURA_3:
+   \   000000AC   0xE5854000         STR      R4,[R5, #+0]
+    119            TH = T0TC;
+   \   000000B0   0xE5950004         LDR      R0,[R5, #+4]
+   \   000000B4   0xE5870008         STR      R0,[R7, #+8]
+    120            RESETTMR0();
+   \   000000B8   0x........         BL       RESETTMR0
+   \   000000BC   0xE3A01001         MOV      R1,#+1
+    121            while ((IO0PIN_bit.P0_7 == zP07.pin07) && (FLAGrez.temperature == 0)) ; //@@@@ @@@@@@@@@
+   \                     ??TEMPERATURA_4:
+   \   000000C0   0xE5980000         LDR      R0,[R8, #+0]
+   \   000000C4   0xE00103A0         AND      R0,R1,R0, LSR #+7
+   \   000000C8   0xE1500009         CMP      R0,R9
+   \   000000CC   0x1A000002         BNE      ??TEMPERATURA_5
+   \   000000D0   0xE5970000         LDR      R0,[R7, #+0]
+   \   000000D4   0xE11100A0         TST      R1,R0, LSR #+1
+   \   000000D8   0x0AFFFFF8         BEQ      ??TEMPERATURA_4
+    122            T0TCR = 0;
+   \                     ??TEMPERATURA_5:
+   \   000000DC   0xE5854000         STR      R4,[R5, #+0]
+    123            TL    = T0TC;
+   \   000000E0   0xE5950004         LDR      R0,[R5, #+4]
+   \   000000E4   0xE587000C         STR      R0,[R7, #+12]
+    124            STARTEINT0();
+   \   000000E8   0x........         BL       STARTEINT0
+    125            FLAG.temperWaitHL = 0;
+   \   000000EC   0xE5960000         LDR      R0,[R6, #+0]
+   \   000000F0   0xE3C08D80         BIC      R8,R0,#0x2000
+   \   000000F4   0xE5868000         STR      R8,[R6, #+0]
+    126            T0MR0 = ulGlobalMaxTimer0Value; //@@@@@@@@@@@@  @@@@@@ @@@@@@@@@ @@@@@@@@@@@
+   \   000000F8   0xE5970004         LDR      R0,[R7, #+4]
+   \   000000FC   0xE5850014         STR      R0,[R5, #+20]
+    127            RESETTMR0();
+   \   00000100   0x........         BL       RESETTMR0
+    128            if (TL > TH)
+   \   00000104   0xE597500C         LDR      R5,[R7, #+12]
+   \   00000108   0xE1A00005         MOV      R0,R5
+   \   0000010C   0x........         BL       __aeabi_i2f
+   \   00000110   0xE1A09000         MOV      R9,R0
+   \   00000114   0xE597A008         LDR      R10,[R7, #+8]
+   \   00000118   0xE1A0000A         MOV      R0,R10
+   \   0000011C   0x........         BL       __aeabi_i2f
+   \   00000120   0xE1A01000         MOV      R1,R0
+   \   00000124   0xE15A0005         CMP      R10,R5
+   \   00000128   0xAA000002         BGE      ??TEMPERATURA_6
+    129                  tdiv = (float)TH  / (float) TL ;
+   \   0000012C   0xE1A01009         MOV      R1,R9
+   \   00000130   0x........         BL       __aeabi_fdiv
+   \   00000134   0xEA000001         B        ??TEMPERATURA_7
+    130            else
+    131                  tdiv = (float)TL  / (float) TH ;
+   \                     ??TEMPERATURA_6:
+   \   00000138   0xE1A00009         MOV      R0,R9
+   \   0000013C   0x........         BL       __aeabi_fdiv
+    132            MasTemper[IndMasTemper] = 421.0 - (751.0 * (tdiv)); //@@@@@@@ @@@@@@@@@@@ @ @@@@@@
+   \                     ??TEMPERATURA_7:
+   \   00000140   0x........         BL       __aeabi_f2d
+   \   00000144   0xE1A02000         MOV      R2,R0
+   \   00000148   0xE1A03001         MOV      R3,R1
+   \   0000014C   0xE1A00004         MOV      R0,R4
+   \   00000150   0x........         LDR      R1,??DataTable5_4  ;; 0x40877800
+   \   00000154   0x........         BL       __aeabi_dmul
+   \   00000158   0xE1A02000         MOV      R2,R0
+   \   0000015C   0xE1A03001         MOV      R3,R1
+   \   00000160   0xE1A00004         MOV      R0,R4
+   \   00000164   0x........         LDR      R1,??DataTable5_5  ;; 0x407a5000
+   \   00000168   0x........         BL       __aeabi_dsub
+   \   0000016C   0x........         BL       __aeabi_d2f
+   \   00000170   0xE597206C         LDR      R2,[R7, #+108]
+   \   00000174   0xE0871102         ADD      R1,R7,R2, LSL #+2
+   \   00000178   0xE581001C         STR      R0,[R1, #+28]
+    133            TEMPERFLOATtek = MasTemper[IndMasTemper];    // @@@@@@@ @@@@@@@@@@@
+   \   0000017C   0xE5870018         STR      R0,[R7, #+24]
+    134            if ((TEMPERFLOATtek < 9.5) && (TEMPERFLOATtek > 50.5))
+   \   00000180   0xE3A01440         MOV      R1,#+1073741824
+   \   00000184   0xE3811746         ORR      R1,R1,#0x1180000
+   \   00000188   0x........         BL       __aeabi_cfcmple
+   \   0000018C   0x2A000004         BCS      ??TEMPERATURA_8
+   \   00000190   0x........         LDR      R1,??DataTable5_6  ;; 0x424a0001
+   \   00000194   0x........         BL       __aeabi_cfrcmple
+   \   00000198   0x8A000001         BHI      ??TEMPERATURA_8
+    135              FLAG.minmaxTemper = 1;      //@@@@@@@ @@@@@@@@@@@ @@@ @@@@@@@@@
+   \   0000019C   0xE3880B80         ORR      R0,R8,#0x20000
+   \   000001A0   0xE5860000         STR      R0,[R6, #+0]
+    136            IndMasTemper++;
+   \                     ??TEMPERATURA_8:
+   \   000001A4   0xE2820001         ADD      R0,R2,#+1
+   \   000001A8   0xE587006C         STR      R0,[R7, #+108]
+    137            if (IndMasTemper == 20)
+   \   000001AC   0xE3500014         CMP      R0,#+20
+   \   000001B0   0x1A000000         BNE      ??TEMPERATURA_9
+    138              IndMasTemper =0;      //@@@@@@ @@@@@@@@@ @@ @@@@@
+   \   000001B4   0xE587406C         STR      R4,[R7, #+108]
+    139          }
+   \                     ??TEMPERATURA_9:
+   \   000001B8   0xE8BD47F3         POP      {R0,R1,R4-R10,LR}
+   \   000001BC   0xE12FFF1E         BX       LR               ;; return
+   \   000001C0                      REQUIRE _A_T0TCR
+   \   000001C0                      REQUIRE T0MR0
+   \   000001C0                      REQUIRE _A_IO0PIN
+   \   000001C0                      REQUIRE T0TC
+    140          /****************************************************************************/
+    141          /* @@@@@@@@@@ @@@@@@@ @@@@@@@ @@@@@@@@@@@ @@@@@@@ @@@@@@@@@@ */
+    142          /****************************************************************************/
+
+   \                                 In section .text, align 4, keep-with-next
+    143          void MIDTEMPER(void)
+    144          {
+   \                     MIDTEMPER:
+   \   00000000   0xE92D4038         PUSH     {R3-R5,LR}
+    145            float tsum;
+    146            int i;
+    147            tsum = 0.0;
+   \   00000004   0xE3A00000         MOV      R0,#+0
+    148            for (i=20; --i>=0;)
+   \   00000008   0xE3A04014         MOV      R4,#+20
+   \   0000000C   0x........         LDR      R5,??DataTable5
+   \   00000010   0xEA000002         B        ??MIDTEMPER_0
+    149                      tsum+= MasTemper[i];
+   \                     ??MIDTEMPER_1:
+   \   00000014   0xE0851104         ADD      R1,R5,R4, LSL #+2
+   \   00000018   0xE591101C         LDR      R1,[R1, #+28]
+   \   0000001C   0x........         BL       __aeabi_fadd
+   \                     ??MIDTEMPER_0:
+   \   00000020   0xE2544001         SUBS     R4,R4,#+1
+   \   00000024   0x5AFFFFFA         BPL      ??MIDTEMPER_1
+    150            TEMPERFLOAT = tsum/20.0;  //@@@@@@@ @@@@@@@@@@@ @@ @@@@@@@@@ 40 @@@@@
+   \   00000028   0xE3A01440         MOV      R1,#+1073741824
+   \   0000002C   0xE3811768         ORR      R1,R1,#0x1A00000
+   \   00000030   0x........         BL       __aeabi_fdiv
+   \   00000034   0xE5850014         STR      R0,[R5, #+20]
+    151          }
+   \   00000038   0xE8BD4031         POP      {R0,R4,R5,LR}
+   \   0000003C   0xE12FFF1E         BX       LR               ;; return
+    152          /****************************************************************************/
+    153          /*@@@@@@@@@@@@@ @@@@@@@@@@@@, @@@@@@ @@@ @@@@@@@ @@@@@*/
+    154          /*@@@@@@@ @@@@ @@@@ @@@@@@@@@: @@ +10 @@@@ @@ +50 @@@@*/
+    155          /* @@@@@@@@ @@@  -10...+9 @@@@ @ @@@@@@@*/
+    156          /*@@@@ @@@@@@@@@@@ @@ @@@@@@ @ @@@@@ @@@@@@ @@ @@@@@@@@@@@@*/
+    157          /****************************************************************************/
+
+   \                                 In section .text, align 4, keep-with-next
+    158          void SETKOEFF(void)
+    159          {
+   \                     SETKOEFF:
+   \   00000000   0x........         LDR      R0,??DataTable5_2
+   \   00000004   0xE5900000         LDR      R0,[R0, #+0]
+   \   00000008   0xE2000BA0         AND      R0,R0,#0x28000
+   \   0000000C   0xE3500C80         CMP      R0,#+32768
+   \   00000010   0x0A000000         BEQ      ??SETKOEFF_0
+   \   00000014   0xE12FFF1E         BX       LR
+   \                     ??SETKOEFF_0:
+   \   00000018   0xE92D4038         PUSH     {R3-R5,LR}
+    160             int i;
+    161             if ((FLAG.temperCORR) && (!FLAG.minmaxTemper))
+    162            {
+    163             i = ((int)(TEMPERFLOAT+0.5)+10)<<1;  //@@@@@@@ @@@@@@ @@@@@ -10 @@@@,@@@@@@@@@@
+   \   0000001C   0x........         LDR      R4,??DataTable5
+   \   00000020   0xE5940014         LDR      R0,[R4, #+20]
+   \   00000024   0x........         BL       __aeabi_f2d
+   \   00000028   0xE1A02000         MOV      R2,R0
+   \   0000002C   0xE1A03001         MOV      R3,R1
+   \   00000030   0xE3A00000         MOV      R0,#+0
+   \   00000034   0xE3A015C0         MOV      R1,#+805306368
+   \   00000038   0xE38116FE         ORR      R1,R1,#0xFE00000
+   \   0000003C   0x........         BL       __aeabi_dadd
+   \   00000040   0x........         BL       __aeabi_d2iz
+   \   00000044   0xE280000A         ADD      R0,R0,#+10
+   \   00000048   0xE1A05080         LSL      R5,R0,#+1
+    164             //--- 25.10.2010 ---------------------
+    165              if( (i >= 0) & (i <= 122) )
+   \   0000004C   0x........         LDR      R0,??DataTable5_7
+   \   00000050   0xE355007B         CMP      R5,#+123
+   \   00000054   0x2A000008         BCS      ??SETKOEFF_1
+    166              {
+    167                //@@ @@@@ @ @@@@@@@ @@@@@@?????
+    168                KODADC = KODADCEEPROM +(TABLTemperCORR[i]<< 8 | TABLTemperCORR[i+1]);
+   \   00000058   0x........         LDR      R1,??DataTable5_8
+   \   0000005C   0x........         LDR      R2,??DataTable5_9
+   \   00000060   0xE1D220B0         LDRH     R2,[R2, #+0]
+   \   00000064   0xE7D13005         LDRB     R3,[R1, +R5]
+   \   00000068   0xE0811005         ADD      R1,R1,R5
+   \   0000006C   0xE5D11001         LDRB     R1,[R1, #+1]
+   \   00000070   0xE1811403         ORR      R1,R1,R3, LSL #+8
+   \   00000074   0xE0811002         ADD      R1,R1,R2
+   \   00000078   0xE1C010B0         STRH     R1,[R0, #+0]
+    169              }
+    170             //--- 20.10.2010 ---------------------
+    171             if( KODADC > 4000 )
+   \                     ??SETKOEFF_1:
+   \   0000007C   0xE1D010B0         LDRH     R1,[R0, #+0]
+   \   00000080   0xE3A020A1         MOV      R2,#+161
+   \   00000084   0xE3822EF0         ORR      R2,R2,#0xF00
+   \   00000088   0xE1510002         CMP      R1,R2
+   \   0000008C   0xBA000001         BLT      ??SETKOEFF_2
+    172               KODADC = 4000;
+   \   00000090   0xE3A01EFA         MOV      R1,#+4000
+   \   00000094   0xE1C010B0         STRH     R1,[R0, #+0]
+    173             //-----------------------------------
+    174             /*
+    175             if(Temp_i != i)
+    176              ZAPFACTOR(KODADC,2); //@@@@@ @@@@@@@ KODADC-@@@@@@@@@@ @@@@@@ @@@@@ @@@ @@@@@@@  LDA
+    177             */
+    178             //--- 12.01.2010 ---------------------
+    179             if(Temp_i != i)
+   \                     ??SETKOEFF_2:
+   \   00000098   0xE5941010         LDR      R1,[R4, #+16]
+   \   0000009C   0xE1510005         CMP      R1,R5
+   \   000000A0   0x0A000002         BEQ      ??SETKOEFF_3
+    180              ZAPFACTOR(KODADC,2); //@@@@@ @@@@@@@ KODADC-@@@@@@@@@@ @@@@@@ @@@@@ @@@ @@@@@@@  LDA
+   \   000000A4   0xE3A01002         MOV      R1,#+2
+   \   000000A8   0xE1D000B0         LDRH     R0,[R0, #+0]
+   \   000000AC   0x........         BL       ZAPFACTOR
+    181             //-----------------------------------
+    182             Temp_i=i;
+   \                     ??SETKOEFF_3:
+   \   000000B0   0xE5845010         STR      R5,[R4, #+16]
+    183          
+    184            }//if (FLAG.temperCORR)
+    185          
+    186          }//end SETKOEFF
+   \   000000B4   0xE8BD4031         POP      {R0,R4,R5,LR}
+   \   000000B8   0xE12FFF1E         BX       LR               ;; return
+    187          /****************************************************************************/
+    188          /* @@@@@@@@@@ @@@@@@@ @@@@@@@@@@ 1-@ @@@@@@@@@@ @@@ @@@@@@@@@@@@@*/
+    189          /****************************************************************************/
+
+   \                                 In section .text, align 4, keep-with-next
+    190          void TEMPERATURA1(void)
+    191          {
+   \                     TEMPERATURA1:
+   \   00000000   0xE92D4010         PUSH     {R4,LR}
+    192            int i;
+    193            IndMasTemper = 0;  //@@@@@@@@ @@@@@@@@@ @@@@@@ @ 0
+   \   00000004   0x........         LDR      R4,??DataTable5
+   \   00000008   0xE3A00000         MOV      R0,#+0
+   \   0000000C   0xE584006C         STR      R0,[R4, #+108]
+    194            TEMPERATURA();
+   \   00000010   0x........         BL       TEMPERATURA
+    195            for (i=20; --i>=1;)
+   \   00000014   0xE3A00014         MOV      R0,#+20
+   \   00000018   0xE284201C         ADD      R2,R4,#+28
+   \   0000001C   0xEA000001         B        ??TEMPERATURA1_0
+    196                      MasTemper[i]= MasTemper[0];
+   \                     ??TEMPERATURA1_1:
+   \   00000020   0xE594101C         LDR      R1,[R4, #+28]
+   \   00000024   0xE7821100         STR      R1,[R2, +R0, LSL #+2]
+   \                     ??TEMPERATURA1_0:
+   \   00000028   0xE2400001         SUB      R0,R0,#+1
+   \   0000002C   0xE3500000         CMP      R0,#+0
+   \   00000030   0xCAFFFFFA         BGT      ??TEMPERATURA1_1
+    197            MIDTEMPER();
+   \   00000034   0xE8BD4010         POP      {R4,LR}
+   \   00000038   0x........         B        MIDTEMPER        ;; tailcall
+    198          }
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5:
+   \   00000000   0x........         DC32     FLAGrez
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_1:
+   \   00000000   0x........         DC32     dPeriod
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_2:
+   \   00000000   0x........         DC32     FLAG
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_3:
+   \   00000000   0x41BDCD65         DC32     0x41bdcd65
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_4:
+   \   00000000   0x40877800         DC32     0x40877800
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_5:
+   \   00000000   0x407A5000         DC32     0x407a5000
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_6:
+   \   00000000   0x424A0001         DC32     0x424a0001
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_7:
+   \   00000000   0x........         DC32     KODADC
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_8:
+   \   00000000   0x........         DC32     TABLTemperCORR
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_9:
+   \   00000000   0x........         DC32     KODADCEEPROM
+    199          /****************************************************************************/
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+      16   InitialiseTimer0
+        16   -> __aeabi_d2uiz
+        16   -> __aeabi_ddiv
+        16   -> __aeabi_f2d
+      16   MIDTEMPER
+        16   -> __aeabi_fadd
+        16   -> __aeabi_fdiv
+       0   RESETTMR0
+      16   SETKOEFF
+        16   -> ZAPFACTOR
+        16   -> __aeabi_d2iz
+        16   -> __aeabi_dadd
+        16   -> __aeabi_f2d
+      40   TEMPERATURA
+        40   -> RESETTMR0
+        40   -> STARTEINT0
+        40   -> STOPEINT0
+        40   -> __aeabi_d2f
+        40   -> __aeabi_d2uiz
+        40   -> __aeabi_ddiv
+        40   -> __aeabi_dmul
+        40   -> __aeabi_dsub
+        40   -> __aeabi_f2d
+        40   -> __aeabi_fdiv
+        40   -> __aeabi_i2f
+        40 __aeabi_cfcmple
+        40 __aeabi_cfrcmple
+       8   TEMPERATURA1
+         0   -> MIDTEMPER
+         8   -> TEMPERATURA
+       0   TimerInterrupt0
+         0   -> RESETTMR0
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  ??DataTable5
+       4  ??DataTable5_1
+       4  ??DataTable5_2
+       4  ??DataTable5_3
+       4  ??DataTable5_4
+       4  ??DataTable5_5
+       4  ??DataTable5_6
+       4  ??DataTable5_7
+       4  ??DataTable5_8
+       4  ??DataTable5_9
+     116  FLAGrez
+          ulGlobalMaxTimer0Value
+          TH
+          TL
+          Temp_i
+          TEMPERFLOAT
+          TEMPERFLOATtek
+          MasTemper
+          IndMasTemper
+          TIMER0_INTERVAL
+     124  InitialiseTimer0
+      64  MIDTEMPER
+      36  RESETTMR0
+     188  SETKOEFF
+       4  T0MR0
+       4  T0PC
+       4  T0PR
+       4  T0TC
+     448  TEMPERATURA
+      60  TEMPERATURA1
+      84  TimerInterrupt0
+       4  VICVectAddr1
+       4  _A_IO0PIN
+       4  _A_T0IR
+       4  _A_T0MCR
+       4  _A_T0TCR
+       4  _A_VICVectCntl1
+
+ 
+   116 bytes in section .bss
+    40 bytes in section .noinit  (abs)
+ 1 044 bytes in section .text
+ 
+ 1 044 bytes of CODE memory
+   116 bytes of DATA memory (+ 40 bytes shared)
+
+Errors: none
+Warnings: 2

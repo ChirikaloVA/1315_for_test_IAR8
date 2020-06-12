@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<Workspace>
+  <ConfigDictionary>
+    
+  <CurrentConfigs><Project>BDKGmain/Debug</Project></CurrentConfigs></ConfigDictionary>
+  <Desktop>
+    <Static>
+      <Workspace>
+        <ColumnWidths>
+          
+          
+          
+          
+        <Column0>13</Column0><Column1>7</Column1><Column2>0</Column2><Column3>5557744</Column3></ColumnWidths>
+      </Workspace>
+    <Build><ColumnWidth0>20</ColumnWidth0><ColumnWidth1>660</ColumnWidth1><ColumnWidth2>176</ColumnWidth2><ColumnWidth3>44</ColumnWidth3></Build><TerminalIO/><Profiling/><Debug-Log/><Breakpoints/></Static>
+    <Windows>
+      
+    <Wnd0>
+        <Tabs>
+          <Tab>
+            <Identity>TabID-12156-11493</Identity>
+            <TabName>Workspace</TabName>
+            <Factory>Workspace</Factory>
+            <Session>
+              
+            <NodeDict><ExpandedNode>BDKGmain</ExpandedNode></NodeDict></Session>
+          </Tab>
+        </Tabs>
+        
+      <SelectedTab>0</SelectedTab></Wnd0><Wnd1><Tabs><Tab><Identity>TabID-12741-11891</Identity><TabName>Build</TabName><Factory>Build</Factory><Session/></Tab><Tab><Identity>TabID-23220-2032</Identity><TabName>Debug Log</TabName><Factory>Debug-Log</Factory><Session/></Tab><Tab><Identity>TabID-24700-11226</Identity><TabName>Breakpoints</TabName><Factory>Breakpoints</Factory><Session/></Tab></Tabs><SelectedTab>1</SelectedTab></Wnd1></Windows>
+    <Editor>
+      
+      
+      
+      
+    <Pane><Tab><Factory>TextEditor</Factory><Filename>D:\Iar\IAR_BDKG\InterTMR1.cpp</Filename><XPos>0</XPos><YPos>20</YPos><SelStart>1909</SelStart><SelEnd>1930</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Program Files\IAR Systems\Embedded Workbench 4.0 Evaluation\arm\inc\io_macros.h</Filename><XPos>0</XPos><YPos>12</YPos><SelStart>988</SelStart><SelEnd>988</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Iar\IAR_BDKG\InterUART0.cpp</Filename><XPos>0</XPos><YPos>18</YPos><SelStart>1223</SelStart><SelEnd>1223</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Iar\IAR_BDKG\InterTMR0.cpp</Filename><XPos>0</XPos><YPos>21</YPos><SelStart>2074</SelStart><SelEnd>2081</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Iar\IAR_BDKG\AnswerCOM.cpp</Filename><XPos>0</XPos><YPos>156</YPos><SelStart>7385</SelStart><SelEnd>7385</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Iar\IAR_BDKG\BDKGmain.cpp</Filename><XPos>0</XPos><YPos>199</YPos><SelStart>6717</SelStart><SelEnd>6717</SelEnd></Tab><ActiveTab>5</ActiveTab><Tab><Factory>TextEditor</Factory><Filename>D:\Iar\IAR_BDKG\InterEINT0.cpp</Filename><XPos>0</XPos><YPos>100</YPos><SelStart>4050</SelStart><SelEnd>4050</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\Iar\IAR_BDKG\I2CEEPROM.cpp</Filename><XPos>0</XPos><YPos>30</YPos><SelStart>2101</SelStart><SelEnd>2101</SelEnd></Tab></Pane><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
+    <Positions>
+      
+      
+      
+      
+      
+    <Top><Row0><Sizes><Toolbar-0084bad0><key>iaridepm1</key></Toolbar-0084bad0></Sizes></Row0><Row1><Sizes/></Row1></Top><Left><Row0><Sizes><Wnd0><Rect><Top>-2</Top><Left>-2</Left><Bottom>538</Bottom><Right>40</Right><x>-2</x><y>-2</y><xscreen>0</xscreen><yscreen>0</yscreen><sizeHorzCX>0</sizeHorzCX><sizeHorzCY>0</sizeHorzCY><sizeVertCX>41015</sizeVertCX><sizeVertCY>769230</sizeVertCY></Rect></Wnd0></Sizes></Row0></Left><Right><Row0><Sizes/></Row0></Right><Bottom><Row0><Sizes><Wnd1><Rect><Top>-2</Top><Left>-2</Left><Bottom>120</Bottom><Right>1026</Right><x>-2</x><y>-2</y><xscreen>1028</xscreen><yscreen>122</yscreen><sizeHorzCX>1003906</sizeHorzCX><sizeHorzCY>173789</sizeHorzCY><sizeVertCX>0</sizeVertCX><sizeVertCY>0</sizeVertCY></Rect></Wnd1></Sizes></Row0></Bottom><Float><Sizes/></Float></Positions>
+  </Desktop>
+</Workspace>
+
+

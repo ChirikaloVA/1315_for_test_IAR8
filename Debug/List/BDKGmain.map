@@ -1,0 +1,1876 @@
+################################################################################
+#                                                                              #
+#      IAR Universal Linker V4.59J/386                                         #
+#                                                                              #
+#           Link time     =  01/Feb/2007  15:33:14                             #
+#           Target CPU    =  ARM                                               #
+#           List file     =  D:\Iar\IAR_BDKG\Debug\List\BDKGmain.map           #
+#           Output file 1 =  D:\Iar\IAR_BDKG\Debug\Exe\BDKGmain.d79            #
+#                            Format: debug                                     #
+#                            UBROF version 10.0.1                              #
+#                            Using library modules for C-SPY (-rt)             #
+#           Output file 2 =  D:\Iar\IAR_BDKG\Debug\Exe\BDKGmain.sim            #
+#                            Format: simple-code                               #
+#           Command line  =  D:\Iar\IAR_BDKG\Debug\Obj\AnswerCOM.r79           #
+#                            D:\Iar\IAR_BDKG\Debug\Obj\BDKGmain.r79            #
+#                            D:\Iar\IAR_BDKG\Debug\Obj\I2CEEPROM.r79           #
+#                            D:\Iar\IAR_BDKG\Debug\Obj\InterEINT0.r79          #
+#                            D:\Iar\IAR_BDKG\Debug\Obj\InterTMR0.r79           #
+#                            D:\Iar\IAR_BDKG\Debug\Obj\InterTMR1.r79           #
+#                            D:\Iar\IAR_BDKG\Debug\Obj\InterUART0.r79          #
+#                            D:\Iar\IAR_BDKG\Debug\Obj\evba7_cstartup.r79 -o   #
+#                            D:\Iar\IAR_BDKG\Debug\Exe\BDKGmain.d79 -l         #
+#                            D:\Iar\IAR_BDKG\Debug\List\BDKGmain.map -xms      #
+#                            "-ID:\Program Files\IAR Systems\Embedded Workbenc #
+#                            h 4.0 Evaluation\arm\LIB\"                        #
+#                            -f D:\Iar\IAR_BDKG\LPC2xxx_ROM.xcl (-carm         #
+#                            -DROM_BASE_ADDR=00000000                          #
+#                            -DRAM_BASE_ADDR=40000000 -DROM_SIZE=1E000         #
+#                            -DRAM_SIZE=4000 -DROMSTART=(ROM_BASE_ADDR)        #
+#                            -DROMEND=(ROM_BASE_ADDR+ROM_SIZE-1)               #
+#                            -DRAMSTART=(RAM_BASE_ADDR)                        #
+#                            -DRAMEND=(RAMSTART+RAM_SIZE-1)                    #
+#                            -DIRAMSTART=RAMSTART -DIRAMEND=RAMEND             #
+#                            -Z(CODE)INTVEC=ROMSTART-(ROMSTART+3F)             #
+#                            -Z(CODE)ICODE,DIFUNCT=ROMSTART-ROMEND             #
+#                            -Z(CODE)SWITAB=ROMSTART-ROMEND                    #
+#                            -Z(CODE)CODE=ROMSTART-ROMEND                      #
+#                            -Z(CONST)CODE_ID=ROMSTART-ROMEND                  #
+#                            -Z(CONST)INITTAB,DATA_ID,DATA_C=ROMSTART-ROMEND   #
+#                            -Z(CONST)CHECKSUM=ROMSTART-ROMEND                 #
+#                            -Z(DATA)DATA_I,DATA_Z,DATA_N=RAMSTART-RAMEND      #
+#                            -Z(DATA)CODE_I=RAMSTART-RAMEND -QCODE_I=CODE_ID   #
+#                            -Z(DATA)CSTACK+200,FIQ_STACK+200,IRQ_STACK+200,HE #
+#                            AP+0=IRAMSTART-IRAMEND)                           #
+#                            -Hff -J2,crc16 -rt                                #
+#                            "D:\Program Files\IAR Systems\Embedded Workbench  #
+#                            4.0 Evaluation\arm\LIB\dl4tpainl8n.r79"           #
+#                            -Osimple-code=D:\Iar\IAR_BDKG\Debug\Exe\BDKGmain. #
+#                            sim                                               #
+#                            -s __program_start                                #
+#                                                                              #
+#                        Copyright 1987-2005 IAR Systems. All rights reserved. #
+################################################################################
+
+
+
+
+
+                ****************************************
+                *                                      *
+                *           CROSS REFERENCE            *
+                *                                      *
+                ****************************************
+
+       Program entry at :           00000000  Relocatable, from module : ?RESET
+
+
+
+
+                ****************************************
+                *                                      *
+                *            RUNTIME MODEL             *
+                *                                      *
+                ****************************************
+
+  ARMv4M                 = USED
+  ARMv4T                 = USED
+  StackAlign4            = USED
+  StackAlign8            = USED
+  __code_model           = *
+  __cpu_mode             = __pcs__interwork
+  __data_model           = absolute
+  __dlib_file_descriptor = 0
+  __endian               = little
+  __rt_version           = 6
+  __thumb_aware          = enabled
+
+
+
+                ****************************************
+                *                                      *
+                *              MODULE MAP              *
+                *                                      *
+                ****************************************
+
+
+  DEFINED ABSOLUTE ENTRIES
+  PROGRAM MODULE, NAME : ?ABS_ENTRY_MOD
+
+Absolute parts
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           IRAMEND                 40003FFF 
+           IRAMSTART               40000000 
+           RAMEND                  40003FFF 
+           RAMSTART                40000000 
+           ROMEND                  0001DFFF 
+           ROMSTART                00000000 
+           RAM_SIZE                00004000 
+           ROM_SIZE                0001E000 
+           RAM_BASE_ADDR           40000000 
+           ROM_BASE_ADDR           00000000 
+    *************************************************************************
+
+  FILE NAME : D:\Iar\IAR_BDKG\Debug\Obj\AnswerCOM.r79
+  PROGRAM MODULE, NAME : AnswerCOM
+
+  SEGMENTS IN THE MODULE
+  ======================
+DATA_AN (ABS)
+  Relative segment, address: E000C000 - E000C000 (0x1 bytes), align: 0
+  Segment part 6. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           U0RBRTHR                E000C000 
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: E0008008 - E000800B (0x4 bytes), align: 0
+  Segment part 7. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           T1TC                    E0008008 
+    -------------------------------------------------------------------------
+DATA_I
+  Relative segment, address: 40000000 - 400002EB (0x2ec bytes), align: 2
+  Segment part 9.             Intra module refs:   Segment part 59
+                                                   Segment part 64
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ByteCurrentIzm          40000004        UART0Interrupt (InterUART0)
+                                                   main (BDKGmain)
+           CRChi                   40000000        Segment part 32 (I2CEEPROM)
+                                                   main (BDKGmain)
+           CRClo                   40000002        Segment part 31 (I2CEEPROM)
+                                                   main (BDKGmain)
+           CurrentDIzm             40000008        UART0Interrupt (InterUART0)
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           auchCRCHi               400000EC 
+           auchCRCLo               400001EC 
+    -------------------------------------------------------------------------
+DATA_Z
+  Relative segment, address: 40001BB8 - 40001BB9 (0x2 bytes), align: 0
+  Segment part 11.            Intra module refs:   COM4
+                                                   TakingTemperature
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           TEMPERATURE             40001BB8 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00000190 - 00000223 (0x94 bytes), align: 2
+  Segment part 12.            Intra module refs:   COM11
+                                                   COM12
+                                                   COM13
+                                                   COM15
+                                                   COM3
+                                                   COM4
+                                                   COM6
+                                                   COM7
+                                                   COM8
+                                                   COMB
+                                                   COMerr
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           CRC16                   00000190        I2CKOEFF (I2CEEPROM)
+                                                   ReadEEPROMkoef (I2CEEPROM)
+                                                   main (BDKGmain)
+               non_banked function
+               stack 1 = 00000000 ( 0000000C )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00000224 - 00000273 (0x50 bytes), align: 2
+  Segment part 14.            Intra module refs:   COM15
+                                                   COMB
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           MOVSPECTR               00000224 
+               non_banked function
+               stack 1 = 00000000 ( 00000004 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00000274 - 00000397 (0x124 bytes), align: 2
+  Segment part 18.            Intra module refs:   COM4
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           TakingTemperature       00000274 
+               non_banked function
+               stack 1 = 00000000 ( 0000001C )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00000398 - 000003B3 (0x1c bytes), align: 2
+  Segment part 20.            Intra module refs:   COM12
+                                                   COM13
+                                                   COM15
+                                                   COMB
+                                                   COMMANDtoUART
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           BYTEtoUART              00000398 
+               non_banked function
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 000003B4 - 000003E3 (0x30 bytes), align: 2
+  Segment part 22.            Intra module refs:   COM11
+                                                   COM12
+                                                   COM13
+                                                   COM15
+                                                   COM3
+                                                   COM4
+                                                   COM5
+                                                   COM6
+                                                   COM7
+                                                   COM8
+                                                   COMB
+                                                   COMerr
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           COMMANDtoUART           000003B4 
+               non_banked function
+               stack 1 = 00000000 ( 0000000C )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 000003E4 - 00000407 (0x24 bytes), align: 2
+  Segment part 24.            Intra module refs:   COM11
+                                                   COM3
+                                                   COM4
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           toCOMMAND2byte          000003E4        I2CKOEFF (I2CEEPROM)
+               non_banked function
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00000408 - 0000042B (0x24 bytes), align: 2
+  Segment part 28.            Intra module refs:   COM3
+                                                   COM4
+                                                   COM5
+                                                   COM6
+                                                   COM8
+                                                   COMB
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           COMerr02                00000408 
+               non_banked function
+               stack 1 = 00000000 ( 00000004 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 0000042C - 0000046B (0x40 bytes), align: 2
+  Segment part 30.            Intra module refs:   COM12
+                                                   COM13
+                                                   COM15
+                                                   COM3
+                                                   COM4
+                                                   COM5
+                                                   COMB
+                                                   COMerr02
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           COMerr                  0000042C        main (BDKGmain)
+               non_banked function
+               stack 1 = 00000000 ( 00000004 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 0000046C - 000004C3 (0x58 bytes), align: 2
+  Segment part 32.            Intra module refs:   COM5
+                                                   COM6
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           STOPEINT0               0000046C        IntEINT0 (InterEINT0)
+                                                   main (BDKGmain)
+               non_banked function
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 000004C4 - 000004FB (0x38 bytes), align: 2
+  Segment part 34.            Intra module refs:   COM5
+                                                   COM6
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           STARTEINT0              000004C4 
+               non_banked function
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 000004FC - 0000065F (0x164 bytes), align: 2
+  Segment part 36.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           COM3                    000004FC        main (BDKGmain)
+               non_banked function
+               stack 1 = 00000000 ( 0000000C )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00000660 - 000007CB (0x16c bytes), align: 2
+  Segment part 38.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           COM4                    00000660        main (BDKGmain)
+               non_banked function
+               stack 1 = 00000000 ( 0000000C )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 000007CC - 000008BB (0xf0 bytes), align: 2
+  Segment part 40.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           COM5                    000007CC        main (BDKGmain)
+               non_banked function
+               stack 1 = 00000000 ( 00000010 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 000008BC - 000009EF (0x134 bytes), align: 2
+  Segment part 42.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           COM6                    000008BC        main (BDKGmain)
+               non_banked function
+               stack 1 = 00000000 ( 00000014 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 000009F0 - 000009F3 (0x4 bytes), align: 2
+  Segment part 43.            Intra module refs:   COM3
+                                                   COM6
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 000009F4 - 000009F7 (0x4 bytes), align: 2
+  Segment part 44.            Intra module refs:   COM3
+                                                   COM6
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 000009F8 - 000009FB (0x4 bytes), align: 2
+  Segment part 45.            Intra module refs:   COM3
+                                                   COM6
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 000009FC - 000009FF (0x4 bytes), align: 2
+  Segment part 46.            Intra module refs:   COM3
+                                                   COM6
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00000A00 - 00000A47 (0x48 bytes), align: 2
+  Segment part 48.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           COM7                    00000A00        main (BDKGmain)
+               non_banked function
+               stack 1 = 00000000 ( 00000004 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00000A48 - 00000B23 (0xdc bytes), align: 2
+  Segment part 50.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           COM8                    00000A48        main (BDKGmain)
+               non_banked function
+               stack 1 = 00000000 ( 00000004 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00000B24 - 00000C27 (0x104 bytes), align: 2
+  Segment part 52.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           COMB                    00000B24        main (BDKGmain)
+               non_banked function
+               stack 1 = 00000000 ( 00000014 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00000C28 - 00000CB7 (0x90 bytes), align: 2
+  Segment part 54.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           COM11                   00000C28        main (BDKGmain)
+               non_banked function
+               stack 1 = 00000000 ( 00000008 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00000CB8 - 00000DB7 (0x100 bytes), align: 2
+  Segment part 56.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           COM12                   00000CB8        main (BDKGmain)
+               non_banked function
+               stack 1 = 00000000 ( 00000010 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00000DB8 - 00000EB3 (0xfc bytes), align: 2
+  Segment part 58.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           COM13                   00000DB8        main (BDKGmain)
+               non_banked function
+               stack 1 = 00000000 ( 00000010 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00000EB4 - 00000EB7 (0x4 bytes), align: 2
+  Segment part 59.            Intra module refs:   COM12
+                                                   COM13
+                                                   COMB
+                                                   CRC16
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00000EB8 - 00000EBB (0x4 bytes), align: 2
+  Segment part 60.            Intra module refs:   COM11
+                                                   COM12
+                                                   COM13
+                                                   COM3
+                                                   COM4
+                                                   COM5
+                                                   COM6
+                                                   COM7
+                                                   COM8
+                                                   COMB
+                                                   COMMANDtoUART
+                                                   COMerr
+                                                   CRC16
+                                                   toCOMMAND2byte
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00000EBC - 000010BF (0x204 bytes), align: 2
+  Segment part 62.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           COM15                   00000EBC        main (BDKGmain)
+               non_banked function
+               stack 1 = 00000000 ( 00000024 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 000010C0 - 000010C3 (0x4 bytes), align: 2
+  Segment part 63.            Intra module refs:   COM15
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 000010C4 - 000010C7 (0x4 bytes), align: 2
+  Segment part 64.            Intra module refs:   COM15
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 000010C8 - 000010CB (0x4 bytes), align: 2
+  Segment part 65.            Intra module refs:   COM15
+                                                   COM5
+                                                   COMB
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 000010CC - 000010CF (0x4 bytes), align: 2
+  Segment part 66.            Intra module refs:   COM15
+                                                   COM5
+                                                   COMB
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 000010D0 - 000010D3 (0x4 bytes), align: 2
+  Segment part 67.            Intra module refs:   COM15
+                                                   COM3
+                                                   COM4
+                                                   COM5
+                                                   COM6
+                                                   COM7
+                                                   COM8
+                                                   COMerr02
+                                                   STARTEINT0
+                                                   STOPEINT0
+    -------------------------------------------------------------------------
+DATA_ID
+  Relative segment, address: 00003580 - 0000386B (0x2ec bytes), align: 2
+  Segment part 10.            Intra module refs:   Segment part 9
+    -------------------------------------------------------------------------
+INITTAB
+  Relative segment, address: 00003568 - 00003573 (0xc bytes), align: 2
+  Segment part 82. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?init?tab?DATA_Z        00003568 
+    -------------------------------------------------------------------------
+INITTAB
+  Relative segment, address: 00003574 - 0000357F (0xc bytes), align: 2
+  Segment part 84. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?init?tab?DATA_I        00003574 
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: E01FC140 - E01FC143 (0x4 bytes), align: 0
+  Segment part 1. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_EXTINT               E01FC140 
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: FFFFF010 - FFFFF013 (0x4 bytes), align: 0
+  Segment part 2. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_VICIntEnable         FFFFF010 
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: FFFFF014 - FFFFF017 (0x4 bytes), align: 0
+  Segment part 3. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_VICIntEnClear        FFFFF014 
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: E000C014 - E000C014 (0x1 bytes), align: 0
+  Segment part 4. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_U0LSR                E000C014 
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: E0008004 - E0008007 (0x4 bytes), align: 0
+  Segment part 5. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_T1TCR                E0008004 
+
+    *************************************************************************
+
+  FILE NAME : D:\Iar\IAR_BDKG\Debug\Obj\BDKGmain.r79
+  PROGRAM MODULE, NAME : BDKGmain
+
+  SEGMENTS IN THE MODULE
+  ======================
+DATA_AN (ABS)
+  Relative segment, address: FFFFF030 - FFFFF033 (0x4 bytes), align: 0
+  Segment part 25. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           VICVectAddr             FFFFF030 
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: E002C014 - E002C017 (0x4 bytes), align: 0
+  Segment part 26. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           PINSEL2                 E002C014 
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: E0004008 - E000400B (0x4 bytes), align: 0
+  Segment part 27. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           T0TC                    E0004008 
+    -------------------------------------------------------------------------
+DATA_Z
+  Relative segment, address: 400002EC - 40000317 (0x2c bytes), align: 2
+  Segment part 30.            Intra module refs:   ClearCOMMAND
+                                                   main
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ByteCOMMAND             4000030C        UART0Interrupt (InterUART0)
+           COMMAND                 400002F4        I2CKOEFF (I2CEEPROM)
+                                                   Segment part 60 (AnswerCOM)
+                                                   Segment part 63 (AnswerCOM)
+                                                   UART0Interrupt (InterUART0)
+           KODADC                  400002EC        ReadEEPROMkoef (I2CEEPROM)
+                                                   Segment part 45 (AnswerCOM)
+           MAXPOROG                400002F0        ReadEEPROMkoef (I2CEEPROM)
+                                                   Segment part 46 (AnswerCOM)
+           MINPOROG                400002EE        ReadEEPROMkoef (I2CEEPROM)
+                                                   Segment part 44 (AnswerCOM)
+           PCLK_VPB                40000314        InitialiseTimer1 (InterTMR1)
+                                                   InitialiseUART0 (InterUART0)
+           TIMEIZMsek              40000310        InitialiseTimer1 (InterTMR1)
+                                                   Segment part 43 (AnswerCOM)
+           dPeriod                 40000304        Segment part 21 (InterTMR0)
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 000010D4 - 00001137 (0x64 bytes), align: 2
+  Segment part 33.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           Pirq                    000010D4        __program_start (?RESET)
+               non_banked function
+               stack 1 = 00000000 ( 00000018 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00001138 - 0000115B (0x24 bytes), align: 2
+  Segment part 35.            Intra module refs:   main
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ClearCOMMAND            00001138        COMerr (AnswerCOM)
+               non_banked function
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 0000115C - 00001183 (0x28 bytes), align: 2
+  Segment part 37.            Intra module refs:   main
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ClearSPECTR             0000115C        COM5 (AnswerCOM)
+               non_banked function
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00001184 - 0000123B (0xb8 bytes), align: 2
+  Segment part 39.            Intra module refs:   main
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           InitialiseEMC           00001184 
+               non_banked function
+               stack 1 = 00000000 ( 00000004 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 0000123C - 0000128B (0x50 bytes), align: 2
+  Segment part 41.            Intra module refs:   main
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           DeInitialiseI2C         0000123C        I2CKOEFF (I2CEEPROM)
+               non_banked function
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 0000128C - 00001677 (0x3ec bytes), align: 2
+  Segment part 43.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           main                    0000128C        _main (?CMAIN)
+               non_banked function
+               stack 1 = 00000000 ( 00000028 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00001678 - 0000167B (0x4 bytes), align: 2
+  Segment part 44.            Intra module refs:   ClearCOMMAND
+                                                   main
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: FFE00008 - FFE0000B (0x4 bytes), align: 0
+  Segment part 1. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_BCFG2                FFE00008 
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: FFE0000C - FFE0000F (0x4 bytes), align: 0
+  Segment part 2. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_BCFG3                FFE0000C 
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: E01FC040 - E01FC043 (0x4 bytes), align: 0
+  Segment part 3. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_MEMMAP               E01FC040 
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: E01FC080 - E01FC083 (0x4 bytes), align: 0
+  Segment part 4. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_PLLCON               E01FC080 
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: E01FC084 - E01FC087 (0x4 bytes), align: 0
+  Segment part 5. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_PLLCFG               E01FC084 
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: E01FC088 - E01FC08B (0x4 bytes), align: 0
+  Segment part 6. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_PLLSTAT              E01FC088 
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: E01FC08C - E01FC08F (0x4 bytes), align: 0
+  Segment part 7. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_PLLFEED              E01FC08C 
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: E01FC0C4 - E01FC0C7 (0x4 bytes), align: 0
+  Segment part 8. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_PCONP                E01FC0C4 
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: E01FC100 - E01FC103 (0x4 bytes), align: 0
+  Segment part 9. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_VPBDIV               E01FC100 
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: E01FC000 - E01FC003 (0x4 bytes), align: 0
+  Segment part 10. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_MAMCR                E01FC000 
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: E01FC004 - E01FC007 (0x4 bytes), align: 0
+  Segment part 11. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_MAMTIM               E01FC004 
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: E0008000 - E0008003 (0x4 bytes), align: 0
+  Segment part 14. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_T1IR                 E0008000 
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: E002C000 - E002C003 (0x4 bytes), align: 0
+  Segment part 15. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_PINSEL0              E002C000 
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: E0028004 - E0028007 (0x4 bytes), align: 0
+  Segment part 17. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_IO0SET               E0028004 
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: E0028008 - E002800B (0x4 bytes), align: 0
+  Segment part 18. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_IO0DIR               E0028008 
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: E0028024 - E0028027 (0x4 bytes), align: 0
+  Segment part 19. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_IO2SET               E0028024 
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: E0028028 - E002802B (0x4 bytes), align: 0
+  Segment part 20. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_IO2DIR               E0028028 
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: E0028034 - E0028037 (0x4 bytes), align: 0
+  Segment part 21. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_IO3SET               E0028034 
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: E0028038 - E002803B (0x4 bytes), align: 0
+  Segment part 22. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_IO3DIR               E0028038 
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: E0004000 - E0004003 (0x4 bytes), align: 0
+  Segment part 23. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_T0IR                 E0004000 
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: E0004004 - E0004007 (0x4 bytes), align: 0
+  Segment part 24. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_T0TCR                E0004004 
+
+    *************************************************************************
+
+  FILE NAME : D:\Iar\IAR_BDKG\Debug\Obj\I2CEEPROM.r79
+  PROGRAM MODULE, NAME : I2CEEPROM
+
+  SEGMENTS IN THE MODULE
+  ======================
+DATA_AN (ABS)
+  Relative segment, address: FFFFF10C - FFFFF10F (0x4 bytes), align: 0
+  Segment part 11. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           VICVectAddr3            FFFFF10C 
+    -------------------------------------------------------------------------
+DATA_Z
+  Relative segment, address: 40000318 - 40000336 (0x1f bytes), align: 2
+  Segment part 13.            Intra module refs:   Segment part 25
+                                                   Segment part 30
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           FlerrRW                 40000336 
+           Flmembyte2              40000335 
+           I2CAddress              40000333 
+           I2CCounter              40000332 
+           I2CData                 4000032C 
+           MasEEPROMKoef           40000318        COM11 (AnswerCOM)
+           MemAddress              40000330 
+           lock                    40000334        DeInitialiseI2C (BDKGmain)
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 0000167C - 00001743 (0xc8 bytes), align: 2
+  Segment part 15.            Intra module refs:   I2CKOEFF
+                                                   ReadEEPROMkoef
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           InitialiseI2C           0000167C 
+               non_banked function
+               stack 1 = 00000000 ( 00000004 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00001744 - 00001763 (0x20 bytes), align: 2
+  Segment part 17.            Intra module refs:   I2CInterruptR
+                                                   I2CInterruptW
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           I2CStopBit              00001744 
+               non_banked function
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00001764 - 000018A3 (0x140 bytes), align: 2
+  Segment part 19.            Intra module refs:   InitialiseI2C
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           I2CInterruptW           00001764 
+               non_banked function
+               stack 1 = 00000000 ( 00000010 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 000018A4 - 000019D3 (0x130 bytes), align: 2
+  Segment part 21.            Intra module refs:   InitialiseI2C
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           I2CInterruptR           000018A4 
+               non_banked function
+               stack 1 = 00000000 ( 00000014 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 000019D4 - 000019D7 (0x4 bytes), align: 2
+  Segment part 22.            Intra module refs:   I2CInterruptR
+                                                   I2CInterruptW
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 000019D8 - 00001A4B (0x74 bytes), align: 2
+  Segment part 24.            Intra module refs:   I2CKOEFF
+                                                   ReadEEPROMkoef
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           I2CTransferByte         000019D8 
+               non_banked function
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00001A4C - 00001A4F (0x4 bytes), align: 2
+  Segment part 25.            Intra module refs:   I2CInterruptR
+                                                   I2CInterruptW
+                                                   I2CStopBit
+                                                   I2CTransferByte
+                                                   InitialiseI2C
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00001A50 - 00001BE3 (0x194 bytes), align: 2
+  Segment part 27.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ReadEEPROMkoef          00001A50        main (BDKGmain)
+               non_banked function
+               stack 1 = 00000000 ( 00000010 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00001BE4 - 00001CE3 (0x100 bytes), align: 2
+  Segment part 29.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           I2CKOEFF                00001BE4        COM6 (AnswerCOM)
+               non_banked function
+               stack 1 = 00000000 ( 0000000C )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00001CE4 - 00001CE7 (0x4 bytes), align: 2
+  Segment part 30.            Intra module refs:   I2CKOEFF
+                                                   ReadEEPROMkoef
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00001CE8 - 00001CEB (0x4 bytes), align: 2
+  Segment part 31.            Intra module refs:   I2CKOEFF
+                                                   ReadEEPROMkoef
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00001CEC - 00001CEF (0x4 bytes), align: 2
+  Segment part 32.            Intra module refs:   I2CKOEFF
+                                                   ReadEEPROMkoef
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: FFFFF20C - FFFFF20F (0x4 bytes), align: 0
+  Segment part 3. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_VICVectCntl3         FFFFF20C 
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: E001C000 - E001C003 (0x4 bytes), align: 0
+  Segment part 5. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_I2CONSET             E001C000 
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: E001C004 - E001C007 (0x4 bytes), align: 0
+  Segment part 6. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_I2STAT               E001C004 
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: E001C008 - E001C00B (0x4 bytes), align: 0
+  Segment part 7. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_I2DAT                E001C008 
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: E001C010 - E001C013 (0x4 bytes), align: 0
+  Segment part 8. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_I2SCLH               E001C010 
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: E001C014 - E001C017 (0x4 bytes), align: 0
+  Segment part 9. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_I2SCLL               E001C014 
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: E001C018 - E001C01B (0x4 bytes), align: 0
+  Segment part 10. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_I2CONCLR             E001C018 
+
+    *************************************************************************
+
+  FILE NAME : D:\Iar\IAR_BDKG\Debug\Obj\InterEINT0.r79
+  PROGRAM MODULE, NAME : InterEINT0
+
+  SEGMENTS IN THE MODULE
+  ======================
+DATA_Z
+  Relative segment, address: 40000338 - 40000F45 (0xc0e bytes), align: 2
+  Segment part 12.            Intra module refs:   Segment part 16
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           DAC                     4000033C        main (BDKGmain)
+           FLAG                    40000338        Segment part 20 (InterTMR0)
+                                                   Segment part 22 (I2CEEPROM)
+                                                   Segment part 44 (BDKGmain)
+                                                   Segment part 67 (AnswerCOM)
+                                                   UART0Interrupt (InterUART0)
+           FLAGOver3byte           40000F45 
+           FLAGdac128              40000F44 
+           SPECTR                  40000340        ClearSPECTR (BDKGmain)
+                                                   Segment part 66 (AnswerCOM)
+    -------------------------------------------------------------------------
+DATA_Z
+  Relative segment, address: 40000F48 - 40001B4B (0xc04 bytes), align: 2
+  Segment part 13.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           BUFFSPECTR              40000F48        Segment part 65 (AnswerCOM)
+                                                   UART0Interrupt (InterUART0)
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00001CF0 - 00001D2B (0x3c bytes), align: 2
+  Segment part 14.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           InitialiseEINT0         00001CF0        main (BDKGmain)
+               non_banked function
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00001D2C - 00001EBB (0x190 bytes), align: 2
+  Segment part 15.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           IntEINT0                00001D2C        __program_start (?RESET)
+               non_banked function
+               stack 1 = 00000000 ( 00000028 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00001EBC - 00001EBF (0x4 bytes), align: 2
+  Segment part 16.            Intra module refs:   InitialiseEINT0
+                                                   IntEINT0
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00001EC0 - 00001EC3 (0x4 bytes), align: 2
+  Segment part 17.            Intra module refs:   InitialiseEINT0
+                                                   IntEINT0
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00001EC4 - 00002053 (0x190 bytes), align: 2
+  Segment part 19.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ZAPFACTOR               00001EC4        COM6 (AnswerCOM)
+                                                   main (BDKGmain)
+               non_banked function
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: FFFFF00C - FFFFF00F (0x4 bytes), align: 0
+  Segment part 2. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_VICIntSelect         FFFFF00C 
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: E002C004 - E002C007 (0x4 bytes), align: 0
+  Segment part 3. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_PINSEL1              E002C004 
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: E002800C - E002800F (0x4 bytes), align: 0
+  Segment part 6. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_IO0CLR               E002800C 
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: E0028020 - E0028023 (0x4 bytes), align: 0
+  Segment part 7. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_IO2PIN               E0028020 
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: E002802C - E002802F (0x4 bytes), align: 0
+  Segment part 9. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_IO2CLR               E002802C 
+
+    *************************************************************************
+
+  FILE NAME : D:\Iar\IAR_BDKG\Debug\Obj\InterTMR0.r79
+  PROGRAM MODULE, NAME : InterTMR0
+
+  SEGMENTS IN THE MODULE
+  ======================
+DATA_AN (ABS)
+  Relative segment, address: FFFFF104 - FFFFF107 (0x4 bytes), align: 0
+  Segment part 6. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           VICVectAddr1            FFFFF104 
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: E000400C - E000400F (0x4 bytes), align: 0
+  Segment part 8. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           T0PR                    E000400C 
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: E0004010 - E0004013 (0x4 bytes), align: 0
+  Segment part 9. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           T0PC                    E0004010 
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: E0004018 - E000401B (0x4 bytes), align: 0
+  Segment part 10. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           T0MR0                   E0004018 
+    -------------------------------------------------------------------------
+DATA_Z
+  Relative segment, address: 40001B4C - 40001BAF (0x64 bytes), align: 2
+  Segment part 12.            Intra module refs:   Segment part 22
+                                                   Segment part 27
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           IndMasTemper            40001BAC 
+           MasTemper               40001B5C 
+           TEMPERFLOAT             40001B58        TakingTemperature (AnswerCOM)
+           TH                      40001B50 
+           TL                      40001B54 
+           ulGlobalMaxTimer0Value
+                                   40001B4C 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00002054 - 000020D7 (0x84 bytes), align: 2
+  Segment part 13.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           InitialiseTimer0        00002054        main (BDKGmain)
+               non_banked function
+               stack 1 = 00000000 ( 00000008 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 000020D8 - 000020FB (0x24 bytes), align: 2
+  Segment part 15.            Intra module refs:   TEMPERATURA
+                                                   TimerInterrupt0
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           RESETTMR0               000020D8 
+               non_banked function
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 000020FC - 0000214F (0x54 bytes), align: 2
+  Segment part 17.            Intra module refs:   InitialiseTimer0
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           TimerInterrupt0         000020FC 
+               non_banked function
+               stack 1 = 00000000 ( 00000004 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00002150 - 000022CB (0x17c bytes), align: 2
+  Segment part 19.            Intra module refs:   TEMPERATURA1
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           TEMPERATURA             00002150        main (BDKGmain)
+               non_banked function
+               stack 1 = 00000000 ( 0000001C )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 000022CC - 000022CF (0x4 bytes), align: 2
+  Segment part 20.            Intra module refs:   TEMPERATURA
+                                                   TimerInterrupt0
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 000022D0 - 000022D3 (0x4 bytes), align: 2
+  Segment part 21.            Intra module refs:   InitialiseTimer0
+                                                   TEMPERATURA
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 000022D4 - 000022D7 (0x4 bytes), align: 2
+  Segment part 22.            Intra module refs:   InitialiseTimer0
+                                                   TEMPERATURA
+                                                   TimerInterrupt0
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 000022D8 - 00002327 (0x50 bytes), align: 2
+  Segment part 24.            Intra module refs:   TEMPERATURA1
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           MIDTEMPER               000022D8        main (BDKGmain)
+               non_banked function
+               stack 1 = 00000000 ( 0000000C )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00002328 - 00002367 (0x40 bytes), align: 2
+  Segment part 26.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           TEMPERATURA1            00002328        main (BDKGmain)
+               non_banked function
+               stack 1 = 00000000 ( 00000008 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00002368 - 0000236B (0x4 bytes), align: 2
+  Segment part 27.            Intra module refs:   MIDTEMPER
+                                                   TEMPERATURA1
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: FFFFF204 - FFFFF207 (0x4 bytes), align: 0
+  Segment part 1. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_VICVectCntl1         FFFFF204 
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: E0028000 - E0028003 (0x4 bytes), align: 0
+  Segment part 2. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_IO0PIN               E0028000 
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: E0004014 - E0004017 (0x4 bytes), align: 0
+  Segment part 5. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_T0MCR                E0004014 
+
+    *************************************************************************
+
+  FILE NAME : D:\Iar\IAR_BDKG\Debug\Obj\InterTMR1.r79
+  PROGRAM MODULE, NAME : InterTMR1
+
+  SEGMENTS IN THE MODULE
+  ======================
+DATA_AN (ABS)
+  Relative segment, address: FFFFF108 - FFFFF10B (0x4 bytes), align: 0
+  Segment part 5. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           VICVectAddr2            FFFFF108 
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: E000800C - E000800F (0x4 bytes), align: 0
+  Segment part 6. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           T1PR                    E000800C 
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: E0008010 - E0008013 (0x4 bytes), align: 0
+  Segment part 7. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           T1PC                    E0008010 
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: E0008018 - E000801B (0x4 bytes), align: 0
+  Segment part 8. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           T1MR0                   E0008018 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 0000236C - 000023D7 (0x6c bytes), align: 2
+  Segment part 11.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           InitialiseTimer1        0000236C        COM5 (AnswerCOM)
+                                                   COM6 (AnswerCOM)
+                                                   main (BDKGmain)
+               non_banked function
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 000023D8 - 000023FB (0x24 bytes), align: 2
+  Segment part 13.            Intra module refs:   InitialiseTimer1
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           TimerInterrupt1         000023D8 
+               non_banked function
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: FFFFF208 - FFFFF20B (0x4 bytes), align: 0
+  Segment part 1. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_VICVectCntl2         FFFFF208 
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: E0008014 - E0008017 (0x4 bytes), align: 0
+  Segment part 4. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_T1MCR                E0008014 
+
+    *************************************************************************
+
+  FILE NAME : D:\Iar\IAR_BDKG\Debug\Obj\InterUART0.r79
+  PROGRAM MODULE, NAME : InterUART0
+
+  SEGMENTS IN THE MODULE
+  ======================
+DATA_AN (ABS)
+  Relative segment, address: FFFFF100 - FFFFF103 (0x4 bytes), align: 0
+  Segment part 7. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           VICVectAddr0            FFFFF100 
+    -------------------------------------------------------------------------
+DATA_Z
+  Relative segment, address: 40001BB0 - 40001BB3 (0x4 bytes), align: 2
+  Segment part 10.            Intra module refs:   UART0Interrupt
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           LiveTime                40001BB0        COM15 (AnswerCOM)
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 000023FC - 00002493 (0x98 bytes), align: 2
+  Segment part 11.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           InitialiseUART0         000023FC        COM8 (AnswerCOM)
+                                                   main (BDKGmain)
+               non_banked function
+               stack 1 = 00000000 ( 00000004 )
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00002494 - 00002627 (0x194 bytes), align: 2
+  Segment part 13.            Intra module refs:   InitialiseUART0
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           UART0Interrupt          00002494 
+               non_banked function
+               stack 1 = 00000000 ( 00000010 )
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: FFFFF200 - FFFFF203 (0x4 bytes), align: 0
+  Segment part 1. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_VICVectCntl0         FFFFF200 
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: E000C004 - E000C004 (0x1 bytes), align: 0
+  Segment part 3. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_U0IER                E000C004 
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: E000C008 - E000C008 (0x1 bytes), align: 0
+  Segment part 4. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_U0FCR                E000C008 
+    -------------------------------------------------------------------------
+DATA_AN (ABS)
+  Relative segment, address: E000C00C - E000C00C (0x1 bytes), align: 0
+  Segment part 5. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _A_U0LCR                E000C00C 
+
+    *************************************************************************
+
+  FILE NAME : D:\Iar\IAR_BDKG\Debug\Obj\evba7_cstartup.r79
+  LIBRARY MODULE, NAME : ?RESET
+
+  SEGMENTS IN THE MODULE
+  ======================
+INTVEC
+  Common segment, address: 00000000 - 0000003B (0x3c bytes), align: 2
+  Segment part 0.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           __program_start         00000000        Absolute parts (?ABS_ENTRY_MOD)
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           undef_handler           00000004 
+           swi_handler             00000008 
+           prefetch_handler        0000000C 
+           data_handler            00000010 
+           fiq_handler             0000001C 
+           _?0                     00000020 
+           _?1                     00000024 
+           _?2                     00000028 
+           _?3                     0000002C 
+           _?4                     00000030 
+           _?5                     00000034 
+           _?6                     00000038 
+
+    -------------------------------------------------------------------------
+  LIBRARY MODULE, NAME : ?CSTARTUP
+
+  SEGMENTS IN THE MODULE
+  ======================
+FIQ_STACK
+  Relative segment, address: 40001DBC, align: 2
+  Segment part 0. ROOT.
+    -------------------------------------------------------------------------
+IRQ_STACK
+  Relative segment, address: 40001FBC, align: 2
+  Segment part 1. ROOT.
+    -------------------------------------------------------------------------
+CSTACK
+  Relative segment, address: 40001BBC, align: 2
+  Segment part 3. ROOT.
+    -------------------------------------------------------------------------
+ICODE
+  Relative segment, address: 0000003C - 00000087 (0x4c bytes), align: 2
+  Segment part 4.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?cstartup               0000003C        __program_start (?RESET)
+           LOCAL                   ADDRESS         
+           =====                   =======         
+           _?0                     00000078 
+           _?1                     0000007C 
+           _?2                     00000080 
+           _?3                     00000084 
+
+    *************************************************************************
+
+  FILE NAME : D:\Program Files\IAR Systems\Embedded Workbench 4.0 Evaluation\arm\LIB\dl4tpainl8n.r79
+  LIBRARY MODULE, NAME : ?low_level_init
+
+  SEGMENTS IN THE MODULE
+  ======================
+ICODE
+  Relative segment, address: 00000088 - 0000008F (0x8 bytes), align: 2
+  Segment part 2.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           __low_level_init        00000088        ?main (?CMAIN)
+               non_banked function
+
+    -------------------------------------------------------------------------
+  LIBRARY MODULE, NAME : ?segment_init
+
+  SEGMENTS IN THE MODULE
+  ======================
+ICODE
+  Relative segment, address: 00000090 - 00000123 (0x94 bytes), align: 2
+  Segment part 2.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           __segment_init          00000090        ?main (?CMAIN)
+               non_banked function
+               stack 1 = 00000000 ( 0000000C )
+
+    -------------------------------------------------------------------------
+  LIBRARY MODULE, NAME : ?__dbg_break
+
+  SEGMENTS IN THE MODULE
+  ======================
+CODE
+  Relative segment, address: 00002628 - 0000262B (0x4 bytes), align: 2
+  Segment part 3.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           __DebugBreak            00002628        __exit (?__exit)
+               non_banked function
+
+    -------------------------------------------------------------------------
+  LIBRARY MODULE, NAME : ?__exit
+
+  SEGMENTS IN THE MODULE
+  ======================
+CODE
+  Relative segment, address: 0000262C - 00002647 (0x1c bytes), align: 2
+  Segment part 3.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           __exit                  0000262C        ?jump_to_exit (?_EXIT)
+               non_banked function
+               stack 1 = 00000000 ( 00000008 )
+
+    -------------------------------------------------------------------------
+  LIBRARY MODULE, NAME : ?exit
+
+  SEGMENTS IN THE MODULE
+  ======================
+CODE
+  Relative segment, address: 00002648 - 0000265F (0x18 bytes), align: 2
+  Segment part 3.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           exit                    00002648        _main (?CMAIN)
+               non_banked function
+               stack 1 = 00000000 ( 00000008 )
+
+    -------------------------------------------------------------------------
+  LIBRARY MODULE, NAME : ?CMAIN
+
+  SEGMENTS IN THE MODULE
+  ======================
+DIFUNCT
+  Relative segment, address: 00000190, align: 2
+  Segment part 0. ROOT.
+    -------------------------------------------------------------------------
+ICODE
+  Relative segment, address: 00000124 - 0000015B (0x38 bytes), align: 2
+  Segment part 1.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?main                   00000124        ?cstartup (?CSTARTUP)
+    -------------------------------------------------------------------------
+ICODE
+  Relative segment, address: 0000015C - 0000018F (0x34 bytes), align: 2
+  Segment part 3.             Intra module refs:   ?main
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _main                   00000170 
+
+    -------------------------------------------------------------------------
+  LIBRARY MODULE, NAME : ?_EXIT
+
+  SEGMENTS IN THE MODULE
+  ======================
+CODE
+  Relative segment, address: 00002660, align: 2
+  Segment part 0.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           _exit                   00002660        _main (?CMAIN)
+                                                   exit (?exit)
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00002660 - 0000266F (0x10 bytes), align: 2
+  Segment part 5.             Intra module refs:   _exit
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?jump_to_exit           00002660 
+
+    -------------------------------------------------------------------------
+  LIBRARY MODULE, NAME : ?div_module
+
+  SEGMENTS IN THE MODULE
+  ======================
+CODE
+  Relative segment, address: 00002670 - 0000267B (0xc bytes), align: 2
+  Segment part 5.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ??divu32_a              00002670        InitialiseUART0 (InterUART0)
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 0000267C - 00002693 (0x18 bytes), align: 2
+  Segment part 11.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ??div32_a               0000267C        COM4 (AnswerCOM)
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00002694 - 0000276B (0xd8 bytes), align: 2
+  Segment part 12.            Intra module refs:   ??div32_a
+                                                   ??divu32_a
+
+    -------------------------------------------------------------------------
+  LIBRARY MODULE, NAME : ?EnI_t
+
+  SEGMENTS IN THE MODULE
+  ======================
+CODE
+  Relative segment, address: 0000276C - 0000277B (0x10 bytes), align: 2
+  Segment part 1.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ??EnI_a                 0000276C        Pirq (BDKGmain)
+                                                   main (BDKGmain)
+
+    -------------------------------------------------------------------------
+  LIBRARY MODULE, NAME : ?DiI_t
+
+  SEGMENTS IN THE MODULE
+  ======================
+CODE
+  Relative segment, address: 0000277C - 00002797 (0x1c bytes), align: 2
+  Segment part 3.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ??DiI_a                 0000277C        Pirq (BDKGmain)
+                                                   main (BDKGmain)
+
+    -------------------------------------------------------------------------
+  LIBRARY MODULE, NAME : ?doubleSoftLIb
+
+  SEGMENTS IN THE MODULE
+  ======================
+CODE
+  Relative segment, address: 00002798 - 000027D3 (0x3c bytes), align: 2
+  Segment part 3.             Intra module refs:   __dAdd
+                                                   __dDiv
+                                                   __dMul
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 000027D4 - 000029FF (0x22c bytes), align: 2
+  Segment part 4.             Intra module refs:   Segment part 5
+                                                   __dAdd
+                                                   __dDiv
+                                                   __dMul
+                                                   __ulongToDouble
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00002A00 - 00002A47 (0x48 bytes), align: 2
+  Segment part 5.             Intra module refs:   __doubleToFloat
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00002A48 - 00002A4F (0x8 bytes), align: 2
+  Segment part 8.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           __dSub                  00002A48        TEMPERATURA (InterTMR0)
+                                                   TakingTemperature (AnswerCOM)
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00002A50 - 00002BDF (0x190 bytes), align: 2
+  Segment part 10.            Intra module refs:   __dSub
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           __dAdd                  00002A50 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00002BE0 - 00002CC3 (0xe4 bytes), align: 2
+  Segment part 12.            Intra module refs:   __dDiv
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           __dMul                  00002BE0        TEMPERATURA (InterTMR0)
+                                                   TakingTemperature (AnswerCOM)
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00002CC4 - 00002DCB (0x108 bytes), align: 2
+  Segment part 14.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           __dDiv                  00002CC4        InitialiseTimer0 (InterTMR0)
+                                                   MIDTEMPER (InterTMR0)
+                                                   TEMPERATURA (InterTMR0)
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00002DCC - 00002DF3 (0x28 bytes), align: 2
+  Segment part 16.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           __ulongToDouble         00002DCC        TakingTemperature (AnswerCOM)
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00002DF4 - 00002EDB (0xe8 bytes), align: 2
+  Segment part 20.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           __doubleToUlong         00002DF4        InitialiseTimer0 (InterTMR0)
+                                                   TEMPERATURA (InterTMR0)
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00002EDC - 00002FBF (0xe4 bytes), align: 2
+  Segment part 22.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           __doubleToLong          00002EDC        TakingTemperature (AnswerCOM)
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00002FC0 - 0000300F (0x50 bytes), align: 2
+  Segment part 24.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           __doubleToFloat         00002FC0        MIDTEMPER (InterTMR0)
+                                                   TEMPERATURA (InterTMR0)
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00003010 - 0000306F (0x60 bytes), align: 2
+  Segment part 26.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           __floatToDouble         00003010        MIDTEMPER (InterTMR0)
+                                                   TEMPERATURA (InterTMR0)
+                                                   TakingTemperature (AnswerCOM)
+
+    -------------------------------------------------------------------------
+  LIBRARY MODULE, NAME : ?floatSoftLib
+
+  SEGMENTS IN THE MODULE
+  ======================
+CODE
+  Relative segment, address: 00003070 - 00003093 (0x24 bytes), align: 2
+  Segment part 0.             Intra module refs:   __fAdd
+                                                   __fDiv
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00003094 - 00003233 (0x1a0 bytes), align: 2
+  Segment part 1.             Intra module refs:   Segment part 5
+                                                   Segment part 6
+                                                   __fAdd
+                                                   __fDiv
+                                                   __longToFloat
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?fDeNormalize           00003130        __doubleToFloat (?doubleSoftLIb)
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00003234 - 0000325B (0x28 bytes), align: 2
+  Segment part 5.             Intra module refs:   ?fDeNormalize
+                                                   __fAdd
+                                                   __floatToLong
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           ?raiseInexact           00003234        __dAdd (?doubleSoftLIb)
+                                                   __doubleToLong (?doubleSoftLIb)
+                                                   __doubleToUlong (?doubleSoftLIb)
+           ?raiseInvalid           00003248        __doubleToLong (?doubleSoftLIb)
+                                                   __doubleToUlong (?doubleSoftLIb)
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 0000325C - 00003283 (0x28 bytes), align: 2
+  Segment part 6.             Intra module refs:   __fGreaterEqual
+                                                   __fLess
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00003284 - 0000338F (0x10c bytes), align: 2
+  Segment part 10.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           __fAdd                  00003284        MIDTEMPER (InterTMR0)
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00003390 - 0000346B (0xdc bytes), align: 2
+  Segment part 14.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           __fDiv                  00003390        TEMPERATURA (InterTMR0)
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 0000346C - 00003487 (0x1c bytes), align: 2
+  Segment part 18.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           __longToFloat           0000346C        TEMPERATURA (InterTMR0)
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00003488 - 0000350B (0x84 bytes), align: 2
+  Segment part 22.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           __floatToLong           00003488        TakingTemperature (AnswerCOM)
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 0000350C - 00003553 (0x48 bytes), align: 2
+  Segment part 30.            Intra module refs:   __fGreaterEqual
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           __fLess                 0000350C 
+    -------------------------------------------------------------------------
+CODE
+  Relative segment, address: 00003554 - 00003567 (0x14 bytes), align: 2
+  Segment part 32.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           __fGreaterEqual         00003554        TakingTemperature (AnswerCOM)
+
+    -------------------------------------------------------------------------
+  LIBRARY MODULE, NAME : ?__FloatingPointFlags
+
+  SEGMENTS IN THE MODULE
+  ======================
+DATA_Z
+  Relative segment, address: 40001BB4 - 40001BB7 (0x4 bytes), align: 2
+  Segment part 0.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           __FloatingPointFlags    40001BB4        ?fDeNormalize (?floatSoftLib)
+                                                   Segment part 4 (?doubleSoftLIb)
+
+    *************************************************************************
+
+  DEFINED ABSOLUTE ENTRIES
+  PROGRAM MODULE, NAME : ?FILLER_BYTES
+
+  SEGMENTS IN THE MODULE
+  ======================
+INTVEC
+  Common segment, address: 00000000 - 0000003B (0x3c bytes), align: 0
+  Segment part 1.
+    -------------------------------------------------------------------------
+?FILL1
+  Relative segment, address: 0000386E - 0001DFFF (0x1a792 bytes), align: 0
+  Segment part 0.
+
+    *************************************************************************
+
+  DEFINED ABSOLUTE ENTRIES
+  PROGRAM MODULE, NAME : ?CHECKSUM
+
+  SEGMENTS IN THE MODULE
+  ======================
+CHECKSUM
+  Relative segment, address: 0000386C - 0000386D (0x2 bytes), align: 0
+  Segment part 1. ROOT.
+           ENTRY                   ADDRESS         REF BY
+           =====                   =======         ======
+           __checksum              0000386C 
+
+
+
+
+                ****************************************
+                *                                      *
+                *      SEGMENTS IN ADDRESS ORDER       *
+                *                                      *
+                ****************************************
+
+
+SEGMENT              SPACE    START ADDRESS   END ADDRESS     SIZE  TYPE  ALIGN
+=======              =====    =============   ===========     ====  ====  =====
+INTVEC                             00000000 - 0000003B          3C   com    2
+ICODE                              0000003C - 0000018F         154   rel    2
+DIFUNCT                                 00000190                     rel    2
+CODE                               00000190 - 00003567        33D8   rel    2
+INITTAB                            00003568 - 0000357F          18   rel    2
+DATA_ID                            00003580 - 0000386B         2EC   rel    2
+CHECKSUM                           0000386C - 0000386D           2   rel    0
+?FILL1                             0000386E - 0001DFFF       1A792   rel    0
+DATA_I                             40000000 - 400002EB         2EC   rel    2
+DATA_Z                             400002EC - 40001BB9        18CE   rel    2
+CSTACK                             40001BBC - 40001DBB         200   rel    2
+FIQ_STACK                          40001DBC - 40001FBB         200   rel    2
+IRQ_STACK                          40001FBC - 400021BB         200   rel    2
+DATA_AN (ABS)                      E0004000 - E0004003           4   rel    0
+                                   E0004004 - E0004007           4 
+                                   E0004008 - E000400B           4 
+                                   E000400C - E000400F           4 
+                                   E0004010 - E0004013           4 
+                                   E0004014 - E0004017           4 
+                                   E0004018 - E000401B           4 
+                                   E0008000 - E0008003           4 
+                                   E0008004 - E0008007           4 
+                                   E0008008 - E000800B           4 
+                                   E000800C - E000800F           4 
+                                   E0008010 - E0008013           4 
+                                   E0008014 - E0008017           4 
+                                   E0008018 - E000801B           4 
+                                   E000C000 - E000C000           1 
+                                   E000C004 - E000C004           1 
+                                   E000C008 - E000C008           1 
+                                   E000C00C - E000C00C           1 
+                                   E000C014 - E000C014           1 
+                                   E001C000 - E001C003           4 
+                                   E001C004 - E001C007           4 
+                                   E001C008 - E001C00B           4 
+                                   E001C010 - E001C013           4 
+                                   E001C014 - E001C017           4 
+                                   E001C018 - E001C01B           4 
+                                   E0028000 - E0028003           4 
+                                   E0028004 - E0028007           4 
+                                   E0028008 - E002800B           4 
+                                   E002800C - E002800F           4 
+                                   E0028020 - E0028023           4 
+                                   E0028024 - E0028027           4 
+                                   E0028028 - E002802B           4 
+                                   E002802C - E002802F           4 
+                                   E0028034 - E0028037           4 
+                                   E0028038 - E002803B           4 
+                                   E002C000 - E002C003           4 
+                                   E002C004 - E002C007           4 
+                                   E002C014 - E002C017           4 
+                                   E01FC000 - E01FC003           4 
+                                   E01FC004 - E01FC007           4 
+                                   E01FC040 - E01FC043           4 
+                                   E01FC080 - E01FC083           4 
+                                   E01FC084 - E01FC087           4 
+                                   E01FC088 - E01FC08B           4 
+                                   E01FC08C - E01FC08F           4 
+                                   E01FC0C4 - E01FC0C7           4 
+                                   E01FC100 - E01FC103           4 
+                                   E01FC140 - E01FC143           4 
+                                   FFE00008 - FFE0000B           4 
+                                   FFE0000C - FFE0000F           4 
+                                   FFFFF00C - FFFFF00F           4 
+                                   FFFFF010 - FFFFF013           4 
+                                   FFFFF014 - FFFFF017           4 
+                                   FFFFF030 - FFFFF033           4 
+                                   FFFFF100 - FFFFF103           4 
+                                   FFFFF104 - FFFFF107           4 
+                                   FFFFF108 - FFFFF10B           4 
+                                   FFFFF10C - FFFFF10F           4 
+                                   FFFFF200 - FFFFF203           4 
+                                   FFFFF204 - FFFFF207           4 
+                                   FFFFF208 - FFFFF20B           4 
+                                   FFFFF20C - FFFFF20F           4 
+
+
+                ****************************************
+                *                                      *
+                *              CHECKSUMS               *
+                *                                      *
+                ****************************************
+
+Symbol      Checksum  Memory  Start  End
+------      --------  ------  -----  ---
+__checksum    0x138a   CODE    00000000 - 0000386B
+                       CODE    0000386E - 0001DFFF
+
+                ****************************************
+                *                                      *
+                *        END OF CROSS REFERENCE        *
+                *                                      *
+                ****************************************
+
+ 13 672 bytes of CODE  memory (+              108 434 range fill )
+  8 634 bytes of DATA  memory (+ 233 absolute )
+    774 bytes of CONST memory
+
+Errors: none
+Warnings: none
+

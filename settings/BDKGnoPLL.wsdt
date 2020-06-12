@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<Workspace>
+  <ConfigDictionary>
+    
+  <CurrentConfigs><Project>BDKGnoPLL/Debug</Project></CurrentConfigs></ConfigDictionary>
+  <Desktop>
+    <Static>
+      <Workspace>
+        <ColumnWidths>
+          
+          
+          
+          
+        <Column0>188</Column0><Column1>20</Column1><Column2>16</Column2><Column3>1242340</Column3></ColumnWidths>
+      </Workspace>
+      <Build>
+        
+        
+        
+        
+      <PreferedWindows><Position>3</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows><Window><Factory>Debug-Log</Factory></Window><Window><Factory>Breakpoints</Factory></Window></Windows></PreferedWindows><ColumnWidth0>20</ColumnWidth0><ColumnWidth1>497</ColumnWidth1><ColumnWidth2>307</ColumnWidth2><ColumnWidth3>48</ColumnWidth3></Build>
+      <TerminalIO/>
+      <Profiling/>
+      <Debug-Log><PreferedWindows><Position>3</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows><Window><Factory>Build</Factory></Window><Window><Factory>Breakpoints</Factory></Window></Windows></PreferedWindows></Debug-Log>
+    <Breakpoints><PreferedWindows><Position>3</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows><Window><Factory>Build</Factory></Window><Window><Factory>Debug-Log</Factory></Window></Windows></PreferedWindows></Breakpoints><Find-in-Files><ColumnWidth0>440</ColumnWidth0><ColumnWidth1>62</ColumnWidth1><ColumnWidth2>754</ColumnWidth2></Find-in-Files></Static>
+    <Windows>
+      
+      
+    <Wnd0>
+        <Tabs>
+          <Tab>
+            <Identity>TabID-4640-15142</Identity>
+            <TabName>Workspace</TabName>
+            <Factory>Workspace</Factory>
+            <Session>
+              
+            <NodeDict><ExpandedNode>BDKGnoPLL</ExpandedNode><ExpandedNode>BDKGnoPLL/AnswerCOM.cpp</ExpandedNode><ExpandedNode>BDKGnoPLL/BDKGmain.cpp</ExpandedNode><ExpandedNode>BDKGnoPLL/InterEINT0.cpp</ExpandedNode></NodeDict></Session>
+          </Tab>
+        </Tabs>
+        
+      <SelectedTab>0</SelectedTab></Wnd0><Wnd1><Tabs><Tab><Identity>TabID-23891-11596</Identity><TabName>Build</TabName><Factory>Build</Factory><Session/></Tab><Tab><Identity>TabID-31795-11857</Identity><TabName>Debug Log</TabName><Factory>Debug-Log</Factory><Session/></Tab><Tab><Identity>TabID-1506-12674</Identity><TabName>Breakpoints</TabName><Factory>Breakpoints</Factory><Session/></Tab><Tab><Identity>TabID-30022-24051</Identity><TabName>Find in Files</TabName><Factory>Find-in-Files</Factory><Session/></Tab></Tabs><SelectedTab>0</SelectedTab></Wnd1></Windows>
+    <Editor>
+      
+      
+      
+      
+    <Pane><Tab><Factory>TextEditor</Factory><Filename>C:\Program Files\IAR Systems\Embedded Workbench 4.0 Evaluation\arm\inc\io_macros.h</Filename><XPos>0</XPos><YPos>174</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\ARM_proj\IAR_BDKG_noPLL\my_macros.h</Filename><XPos>0</XPos><YPos>21</YPos><SelStart>1463</SelStart><SelEnd>1472</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\ARM_proj\IAR_BDKG_noPLL\InterUART0.cpp</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>213</SelStart><SelEnd>213</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\ARM_proj\IAR_BDKG_noPLL\InterTMR0.cpp</Filename><XPos>0</XPos><YPos>54</YPos><SelStart>3034</SelStart><SelEnd>3034</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\ARM_proj\IAR_BDKG_noPLL\AnswerCOM.cpp</Filename><XPos>0</XPos><YPos>119</YPos><SelStart>6818</SelStart><SelEnd>6818</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\ARM_proj\IAR_BDKG_noPLL\BDKGmain.cpp</Filename><XPos>0</XPos><YPos>201</YPos><SelStart>6793</SelStart><SelEnd>6793</SelEnd></Tab><ActiveTab>5</ActiveTab><Tab><Factory>TextEditor</Factory><Filename>C:\ARM_proj\IAR_BDKG_noPLL\InterTMR1.cpp</Filename><XPos>0</XPos><YPos>30</YPos><SelStart>1937</SelStart><SelEnd>1937</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\ARM_proj\IAR_BDKG_noPLL\evba7_cstartup.s79</Filename><XPos>0</XPos><YPos>48</YPos><SelStart>2641</SelStart><SelEnd>2641</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\ARM_proj\IAR_BDKG_noPLL\I2CEEPROM.cpp</Filename><XPos>0</XPos><YPos>25</YPos><SelStart>2212</SelStart><SelEnd>2219</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\ARM_proj\IAR_BDKG_noPLL\InterEINT0.cpp</Filename><XPos>0</XPos><YPos>74</YPos><SelStart>3398</SelStart><SelEnd>3398</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\Program Files\IAR Systems\Embedded Workbench 4.0 Evaluation\arm\inc\iolpc2294.h</Filename><XPos>0</XPos><YPos>232</YPos><SelStart>6678</SelStart><SelEnd>6685</SelEnd></Tab></Pane><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
+    <Positions>
+      
+      
+      
+      
+      
+    <Top><Row0><Sizes><Toolbar-008ee998><key>iaridepm1</key></Toolbar-008ee998></Sizes></Row0></Top><Left><Row0><Sizes><Wnd0><Rect><Top>-2</Top><Left>-2</Left><Bottom>653</Bottom><Right>244</Right><x>-2</x><y>-2</y><xscreen>0</xscreen><yscreen>0</yscreen><sizeHorzCX>0</sizeHorzCX><sizeHorzCY>0</sizeHorzCY><sizeVertCX>192188</sizeVertCX><sizeVertCY>690928</sizeVertCY></Rect></Wnd0></Sizes></Row0></Left><Right><Row0><Sizes/></Row0></Right><Bottom><Row0><Sizes><Wnd1><Rect><Top>-2</Top><Left>-2</Left><Bottom>251</Bottom><Right>1282</Right><x>-2</x><y>-2</y><xscreen>1284</xscreen><yscreen>253</yscreen><sizeHorzCX>1003125</sizeHorzCX><sizeHorzCY>266878</sizeHorzCY><sizeVertCX>0</sizeVertCX><sizeVertCY>0</sizeVertCY></Rect></Wnd1></Sizes></Row0></Bottom><Float><Sizes/></Float></Positions>
+  </Desktop>
+</Workspace>
+
+

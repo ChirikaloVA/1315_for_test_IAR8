@@ -1,0 +1,1726 @@
+###############################################################################
+#
+# IAR ANSI C/C++ Compiler V8.20.1.14183/W32 for ARM       12/Jun/2020  11:30:58
+# Copyright 1999-2017 IAR Systems AB.
+#
+#    Cpu mode     =  arm
+#    Endian       =  little
+#    Source file  =  D:\Users\Chirikalo\ARM_proj\AT1315_for_test\I2C_EEPROM.c
+#    Command line =  
+#        -f C:\Users\CHIRIK~1\AppData\Local\Temp\EWC7B7.tmp
+#        (D:\Users\Chirikalo\ARM_proj\AT1315_for_test\I2C_EEPROM.c -lCN
+#        D:\Users\Chirikalo\ARM_proj\AT1315_for_test\Debug\List -o
+#        D:\Users\Chirikalo\ARM_proj\AT1315_for_test\Debug\Obj --no_unroll
+#        --no_inline --no_tbaa --no_scheduling --debug --endian=little
+#        --cpu=ARM7TDMI-S -e --fpu=None --dlib_config "C:\Program Files
+#        (x86)\IAR Systems\Embedded Workbench
+#        8.0\arm\INC\c\DLib_Config_Normal.h" --cpu_mode arm -Om
+#        --use_c++_inline)
+#    Locale       =  C
+#    List file    =  
+#        D:\Users\Chirikalo\ARM_proj\AT1315_for_test\Debug\List\I2C_EEPROM.lst
+#    Object file  =  
+#        D:\Users\Chirikalo\ARM_proj\AT1315_for_test\Debug\Obj\I2C_EEPROM.o
+#
+###############################################################################
+
+D:\Users\Chirikalo\ARM_proj\AT1315_for_test\I2C_EEPROM.c
+      1          
+      2          
+      3          #include <NXP/iolpc2294.h>
+
+   \                                 In section .noinit, at 0xe01fc0c4
+   \   __absolute union <unnamed>#169 volatile _A_PCONP
+   \                     _A_PCONP:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe002c000
+   \   __absolute union <unnamed>#199 volatile _A_PINSEL0
+   \                     _A_PINSEL0:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe001c000
+   \   __absolute union <unnamed>#243 volatile _A_I2CONSET
+   \                     _A_I2CONSET:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe001c004
+   \   __absolute union <unnamed>#244 const volatile _A_I2STAT
+   \                     _A_I2STAT:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe001c008
+   \   __absolute union <unnamed>#245 volatile _A_I2DAT
+   \                     _A_I2DAT:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe001c010
+   \   __absolute union <unnamed>#247 volatile _A_I2SCLH
+   \                     _A_I2SCLH:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe001c014
+   \   __absolute union <unnamed>#248 volatile _A_I2SCLL
+   \                     _A_I2SCLL:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe001c018
+   \   __absolute union <unnamed>#249 volatile _A_I2CONCLR
+   \                     _A_I2CONCLR:
+   \   00000000                      DS8 4
+      4          #include "my_macros.h"
+      5          #include <string.h>
+      6          
+      7          #define  I2C_FLAG_AA    (1<<2)
+      8          #define  I2C_FLAG_SI    (1<<3)
+      9          #define  I2C_FLAG_STO   (1<<4)
+     10          #define  I2C_FLAG_STA   (1<<5)
+     11          #define  I2C_FLAG_I2EN  (1<<6)
+     12          
+     13          #define  I2C_NO_ERR                    0
+     14          #define  I2C_ERR_NO_RESPONSE           1
+     15          #define  I2C_ERR_WRONG_PARAM           2
+     16          #define  I2C_ERR_24XX_WR_TIMEOUT       3
+     17          
+     18          #define  I2C_WR_24XX_TIMEOUT     10000
+     19          #define I2CAddr  0x000000A0      //SLA @@@@@ EEPROM
+     20          #define PAGE_SIZE 128
+     21          
+     22          #define Adr_Koeff_EEPROM 0
+     23          #define Adr_TempKorr_EEPROM 128
+     24          #define Adr_TempInterval_EEPROM 17
+     25          
+     26          //extern unsigned char MasEEPROMKoef[17];
+     27          extern unsigned short CRChi,CRClo;
+     28          extern unsigned  short KODADC;
+     29          extern unsigned  short KODADCEEPROM;
+     30          extern unsigned  short MINPOROG;
+     31          extern unsigned  short MAXPOROG;
+     32          extern __BITFLAG FLAG;   //@@@ @ macros
+     33          extern float TEMPERFLOAT;    //@@@@@@@ @@@@@@@ @@@@@@@@@@@
+     34          extern unsigned char COMMAND[16];
+     35          
+     36          
+     37          extern void CRC16(unsigned char mas[],short usDataLen,char flFF,char flzapCOMMand);
+     38          extern void toCOMMAND2byte(unsigned short nombyte,unsigned short datavalue);
+     39          //extern unsigned char MasInt[6];
+     40          extern float TIMER0_INTERVAL;     //120000.0@@@@@@@@ @ msek // @@@@@@ 2 @@@@@@  - @@@@@@@@@ @@@@@@@@@@@
+     41          
+     42          
+     43          //EEPROM_Meas EEPROM_Meas_;
+     44          //EEPROM_Wind EEPROM_Wind_;
+     45          //EEPROM_ID EEPROM_ID_;
+     46          
+     47          
+     48          void ReadEEPROM_test(char * buf, unsigned short Adr);
+     49          
+     50          char I2C_m24xx_wr( char * buf, unsigned short eeprom_addr, unsigned short num);
+     51          void I2CTABLTempW(void);
+     52          
+
+   \                                 In section .bss, align 4
+     53          unsigned char MasInt[6];
+   \                     MasInt:
+   \   00000000                      DS8 8
+
+   \                                 In section .bss, align 4
+     54          unsigned char MasEEPROMKoef[17];
+     55          unsigned char  TABLTemperCORR[126];
+   \                     TABLTemperCORR:
+   \   00000000                      DS8 128
+   \                     MasEEPROMKoef:
+   \   00000080                      DS8 20
+     56          
+     57          //=====================================================
+     58          // @@@@@@@@@@@@@@ I2C
+     59          //=====================================================
+
+   \                                 In section .text, align 4, keep-with-next
+     60          void i2c_lpc_init(void)
+     61          {
+     62            PCONP =PCONP | 0x80;
+   \                     i2c_lpc_init:
+   \   00000000   0x........         LDR      R0,??DataTable9  ;; 0xe01fc0c4
+   \   00000004   0xE5901000         LDR      R1,[R0, #+0]
+   \   00000008   0xE3811080         ORR      R1,R1,#0x80
+   \   0000000C   0xE5801000         STR      R1,[R0, #+0]
+     63            PINSEL0   = (PINSEL0 & 0xFFFFFF0F) | 0x50;   /* enable I2C bus pins */
+   \   00000010   0xE3A004E0         MOV      R0,#-536870912
+   \   00000014   0xE3800BB0         ORR      R0,R0,#0x2C000
+   \   00000018   0xE5901000         LDR      R1,[R0, #+0]
+   \   0000001C   0xE3C110F0         BIC      R1,R1,#0xF0
+   \   00000020   0xE3811050         ORR      R1,R1,#0x50
+   \   00000024   0xE5801000         STR      R1,[R0, #+0]
+     64          
+     65            I2SCLH    = 22;   //*@@@@@@@@@ @@@@@@@ @ 3 @@@@ /* set I2C bus freq (330Khz)*/
+   \   00000028   0xE2400B40         SUB      R0,R0,#+65536
+   \   0000002C   0xE3A01016         MOV      R1,#+22
+   \   00000030   0xE5801010         STR      R1,[R0, #+16]
+     66            I2SCLL    = 38;    			        /**3 set I2C bus freq (330Khz)*/
+   \   00000034   0xE3A01026         MOV      R1,#+38
+   \   00000038   0xE5801014         STR      R1,[R0, #+20]
+     67            I2CONCLR = 0xFF;           //-- Clear all flags
+   \   0000003C   0xE3A010FF         MOV      R1,#+255
+   \   00000040   0xE5801018         STR      R1,[R0, #+24]
+     68            I2CONSET_bit.I2EN = 1;           //-- Set Master Mode
+   \   00000044   0xE5901000         LDR      R1,[R0, #+0]
+   \   00000048   0xE3811040         ORR      R1,R1,#0x40
+   \   0000004C   0xE5801000         STR      R1,[R0, #+0]
+     69           //  I2CONSET |= I2C_FLAG_I2EN; //--- Enable I2C
+     70          }
+   \   00000050   0xE12FFF1E         BX       LR               ;; return
+   \   00000054                      REQUIRE _A_PCONP
+   \   00000054                      REQUIRE _A_PINSEL0
+   \   00000054                      REQUIRE _A_I2SCLH
+   \   00000054                      REQUIRE _A_I2SCLL
+   \   00000054                      REQUIRE _A_I2CONCLR
+   \   00000054                      REQUIRE _A_I2CONSET
+     71          
+     72          //---------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+     73           void i2c_lpc_wr_byte(int byte)
+     74          {
+     75             I2DAT = byte;
+   \                     i2c_lpc_wr_byte:
+   \   00000000   0xE3A014E0         MOV      R1,#-536870912
+   \   00000004   0xE3811B70         ORR      R1,R1,#0x1C000
+   \   00000008   0xE5810008         STR      R0,[R1, #+8]
+     76             //rI2C_I2CONCLR = I2C_FLAG_SI;                //-- Clear SI
+     77             //while(!(rI2C_I2CONSET & I2C_FLAG_SI));      //-- End wr POINT
+     78             I2CONCLR = I2C_FLAG_SI;                //-- Clear SI
+   \   0000000C   0xE3A00008         MOV      R0,#+8
+   \   00000010   0xE5810018         STR      R0,[R1, #+24]
+     79             while(!(I2CONSET & I2C_FLAG_SI));
+   \                     ??i2c_lpc_wr_byte_0:
+   \   00000014   0xE5910000         LDR      R0,[R1, #+0]
+   \   00000018   0xE3100008         TST      R0,#0x8
+   \   0000001C   0x0AFFFFFC         BEQ      ??i2c_lpc_wr_byte_0
+     80             //while(! I2CONSET_bit.SI );      //-- End wr POINT
+     81          }
+   \   00000020   0xE12FFF1E         BX       LR               ;; return
+   \   00000024                      REQUIRE _A_I2DAT
+   \   00000024                      REQUIRE _A_I2CONCLR
+   \   00000024                      REQUIRE _A_I2CONSET
+     82          
+     83          //---------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+     84           void i2c_lpc_stop()
+     85          {
+     86              //-- Set STOP condition
+     87             //rI2C_I2CONCLR = I2C_FLAG_SI;                  //-- Clear SI
+     88            I2CONCLR = I2C_FLAG_SI;                //-- Clear SI
+   \                     i2c_lpc_stop:
+   \   00000000   0xE3A004E0         MOV      R0,#-536870912
+   \   00000004   0xE3800B70         ORR      R0,R0,#0x1C000
+   \   00000008   0xE3A01008         MOV      R1,#+8
+   \   0000000C   0xE5801018         STR      R1,[R0, #+24]
+     89            //I2CONSET |=  I2C_FLAG_AA | I2C_FLAG_STO; //-- Clear NO ASK
+     90            I2CONSET |=  I2C_FLAG_AA | I2C_FLAG_STO;
+   \   00000010   0xE5901000         LDR      R1,[R0, #+0]
+   \   00000014   0xE3811014         ORR      R1,R1,#0x14
+   \   00000018   0xE5801000         STR      R1,[R0, #+0]
+     91            //I2CONSET_bit.AA = 1;
+     92            //I2CONSET_bit.STO = 1;
+     93          }
+   \   0000001C   0xE12FFF1E         BX       LR               ;; return
+   \   00000020                      REQUIRE _A_I2CONCLR
+   \   00000020                      REQUIRE _A_I2CONSET
+     94          
+     95          //---------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+     96           int i2c_lpc_ctrl(int ctrl)
+     97          {
+   \                     i2c_lpc_ctrl:
+   \   00000000   0xE92D5000         PUSH     {R12,LR}
+     98             int chk;
+     99             //-- Set START
+    100             I2CONCLR = 0xFF; // Clear all bits
+   \   00000004   0xE3A014E0         MOV      R1,#-536870912
+   \   00000008   0xE3811B70         ORR      R1,R1,#0x1C000
+   \   0000000C   0xE3A020FF         MOV      R2,#+255
+   \   00000010   0xE5812018         STR      R2,[R1, #+24]
+    101             //I2CONSET |= I2C_FLAG_I2EN | I2C_FLAG_STA;
+    102             I2CONSET_bit.I2EN = 1;
+   \   00000014   0xE5912000         LDR      R2,[R1, #+0]
+   \   00000018   0xE3822040         ORR      R2,R2,#0x40
+   \   0000001C   0xE5812000         STR      R2,[R1, #+0]
+    103             I2CONSET_bit.STA = 1;
+   \   00000020   0xE5912000         LDR      R2,[R1, #+0]
+   \   00000024   0xE3822020         ORR      R2,R2,#0x20
+   \   00000028   0xE5812000         STR      R2,[R1, #+0]
+    104             //while(!(rI2C_I2CONSET & I2C_FLAG_SI));      //--- End START
+    105             //while(! I2CONSET_bit.SI );
+    106             while(!(I2CONSET & I2C_FLAG_SI));
+   \                     ??i2c_lpc_ctrl_0:
+   \   0000002C   0xE5912000         LDR      R2,[R1, #+0]
+   \   00000030   0xE3120008         TST      R2,#0x8
+   \   00000034   0x0AFFFFFC         BEQ      ??i2c_lpc_ctrl_0
+    107             //-- Set ADDRESS
+    108             I2DAT = ctrl;
+   \   00000038   0xE5810008         STR      R0,[R1, #+8]
+    109             I2CONCLR = I2C_FLAG_STA | I2C_FLAG_SI; //-- Clear START & SI
+   \   0000003C   0xE3A02028         MOV      R2,#+40
+   \   00000040   0xE5812018         STR      R2,[R1, #+24]
+    110             //I2CONCLR |= __i2conclr_bits.STAC;
+    111             //I2CONCLR |= __i2conclr_bits.SIC;
+    112             if(ctrl & 1) //-- RD
+   \   00000044   0xE3100001         TST      R0,#0x1
+   \   00000048   0x0A000009         BEQ      ??i2c_lpc_ctrl_1
+    113                chk = 0x40; //-- 40H - SLA+R has been transmitted; ACK has been received
+   \   0000004C   0xE3A00040         MOV      R0,#+64
+    114             else
+    115                chk = 0x18; //-- 18H - SLA+W has been transmitted; ACK has been received
+    116            // while(!(rI2C_I2CONSET & I2C_FLAG_SI));      //-- End CTRL
+    117             //while(! I2CONSET_bit.SI );
+    118             while(!(I2CONSET & I2C_FLAG_SI));
+   \                     ??i2c_lpc_ctrl_2:
+   \   00000050   0xE5912000         LDR      R2,[R1, #+0]
+   \   00000054   0xE3120008         TST      R2,#0x8
+   \   00000058   0x0AFFFFFC         BEQ      ??i2c_lpc_ctrl_2
+    119             if(I2STAT != chk)
+   \   0000005C   0xE5911004         LDR      R1,[R1, #+4]
+   \   00000060   0xE1510000         CMP      R1,R0
+   \   00000064   0x0A000004         BEQ      ??i2c_lpc_ctrl_3
+    120             {
+    121                i2c_lpc_stop();
+   \   00000068   0x........         BL       i2c_lpc_stop
+    122                return I2C_ERR_NO_RESPONSE;
+   \   0000006C   0xE3A00001         MOV      R0,#+1
+   \   00000070   0xEA000002         B        ??i2c_lpc_ctrl_4
+    123             }
+   \                     ??i2c_lpc_ctrl_1:
+   \   00000074   0xE3A00018         MOV      R0,#+24
+   \   00000078   0xEAFFFFF4         B        ??i2c_lpc_ctrl_2
+    124             return I2C_NO_ERR;
+   \                     ??i2c_lpc_ctrl_3:
+   \   0000007C   0xE3A00000         MOV      R0,#+0
+   \                     ??i2c_lpc_ctrl_4:
+   \   00000080   0xE8BD4002         POP      {R1,LR}
+   \   00000084   0xE12FFF1E         BX       LR               ;; return
+   \   00000088                      REQUIRE _A_I2CONCLR
+   \   00000088                      REQUIRE _A_I2CONSET
+   \   00000088                      REQUIRE _A_I2DAT
+   \   00000088                      REQUIRE _A_I2STAT
+    125          }
+    126          
+    127          //---------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    128           int i2c_lpc_rx_to_buf(char * buf,int num)
+    129          {
+    130             int rc;
+    131          
+    132             if(buf == 0)
+   \                     i2c_lpc_rx_to_buf:
+   \   00000000   0xE3500000         CMP      R0,#+0
+   \   00000004   0x0A000026         BEQ      ??i2c_lpc_rx_to_buf_0
+    133                return I2C_ERR_WRONG_PARAM;
+    134          
+    135             rc = num;
+    136             if(rc > 1)
+   \   00000008   0xE3510001         CMP      R1,#+1
+   \   0000000C   0xDA000018         BLE      ??i2c_lpc_rx_to_buf_1
+    137             {
+    138                I2CONCLR = I2C_FLAG_SI;
+   \   00000010   0xE3A024E0         MOV      R2,#-536870912
+   \   00000014   0xE3822B70         ORR      R2,R2,#0x1C000
+   \   00000018   0xE3A03008         MOV      R3,#+8
+   \   0000001C   0xE5823018         STR      R3,[R2, #+24]
+    139                //I2CONCLR_bit.SIC = 1;
+    140                I2CONSET_bit.AA = 1;
+   \   00000020   0xE592C000         LDR      R12,[R2, #+0]
+   \   00000024   0xE38CC004         ORR      R12,R12,#0x4
+   \   00000028   0xE582C000         STR      R12,[R2, #+0]
+   \   0000002C   0xEA000001         B        ??i2c_lpc_rx_to_buf_2
+    141                for(;;)
+    142                {
+    143                  // while(!(rI2C_I2CONSET & I2C_FLAG_SI));  //-- End Data from slave;
+    144                  //while(! I2CONSET_bit.SI );
+    145                  while(!(I2CONSET & I2C_FLAG_SI));
+    146                   *buf++ = (unsigned char)I2DAT;
+    147                   rc--;
+    148                   if(rc <= 0)
+    149                      break;
+    150                   else if(rc == 1)
+    151                   {
+    152                      //I2CONCLR_bit.AAC = 1;  //-- After next will NO ASK
+    153                      //I2CONCLR_bit.SIC = 1;
+    154                      I2CONCLR = I2C_FLAG_AA | I2C_FLAG_SI;  //-- After next will NO ASK
+   \                     ??i2c_lpc_rx_to_buf_3:
+   \   00000030   0xE3A0C00C         MOV      R12,#+12
+   \   00000034   0xE582C018         STR      R12,[R2, #+24]
+    155                   }
+   \                     ??i2c_lpc_rx_to_buf_2:
+   \   00000038   0xE592C000         LDR      R12,[R2, #+0]
+   \   0000003C   0xE31C0008         TST      R12,#0x8
+   \   00000040   0x0AFFFFFC         BEQ      ??i2c_lpc_rx_to_buf_2
+   \   00000044   0xE592C008         LDR      R12,[R2, #+8]
+   \   00000048   0xE4C0C001         STRB     R12,[R0], #+1
+   \   0000004C   0xE2411001         SUB      R1,R1,#+1
+   \   00000050   0xE3510000         CMP      R1,#+0
+   \   00000054   0xDA000010         BLE      ??i2c_lpc_rx_to_buf_4
+   \   00000058   0xE3510001         CMP      R1,#+1
+   \   0000005C   0x0AFFFFF3         BEQ      ??i2c_lpc_rx_to_buf_3
+    156                   else
+    157                   {
+    158                      I2CONCLR = I2C_FLAG_SI;                //-- Clear SI
+   \   00000060   0xE5823018         STR      R3,[R2, #+24]
+    159                      I2CONSET_bit.AA = 1;
+   \   00000064   0xE592C000         LDR      R12,[R2, #+0]
+   \   00000068   0xE38CC004         ORR      R12,R12,#0x4
+   \   0000006C   0xE582C000         STR      R12,[R2, #+0]
+   \   00000070   0xEAFFFFF0         B        ??i2c_lpc_rx_to_buf_2
+    160                   }
+    161                }
+    162             }
+    163             else if(rc == 1)
+   \                     ??i2c_lpc_rx_to_buf_1:
+   \   00000074   0x1A00000A         BNE      ??i2c_lpc_rx_to_buf_0
+    164             {
+    165                I2CONCLR = I2C_FLAG_AA | I2C_FLAG_SI;  //-- After next will NO ASK
+   \   00000078   0xE3A014E0         MOV      R1,#-536870912
+   \   0000007C   0xE3811B70         ORR      R1,R1,#0x1C000
+   \   00000080   0xE3A0200C         MOV      R2,#+12
+   \   00000084   0xE5812018         STR      R2,[R1, #+24]
+    166                //while(! I2CONSET_bit.SI );  //-- End Data from slave;
+    167                while(!(I2CONSET & I2C_FLAG_SI));
+   \                     ??i2c_lpc_rx_to_buf_5:
+   \   00000088   0xE5912000         LDR      R2,[R1, #+0]
+   \   0000008C   0xE3120008         TST      R2,#0x8
+   \   00000090   0x0AFFFFFC         BEQ      ??i2c_lpc_rx_to_buf_5
+    168                *buf = (unsigned char)I2DAT;
+   \   00000094   0xE5911008         LDR      R1,[R1, #+8]
+   \   00000098   0xE5C01000         STRB     R1,[R0, #+0]
+    169             }
+    170             else //err
+    171                return I2C_ERR_WRONG_PARAM;
+    172          
+    173             return I2C_NO_ERR;
+   \                     ??i2c_lpc_rx_to_buf_4:
+   \   0000009C   0xE3A00000         MOV      R0,#+0
+   \   000000A0   0xE12FFF1E         BX       LR               ;; return
+   \                     ??i2c_lpc_rx_to_buf_0:
+   \   000000A4   0xE3A00002         MOV      R0,#+2
+   \   000000A8   0xE12FFF1E         BX       LR
+   \   000000AC                      REQUIRE _A_I2CONCLR
+   \   000000AC                      REQUIRE _A_I2CONSET
+   \   000000AC                      REQUIRE _A_I2DAT
+    174          }
+    175          //----------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    176           int i2c_lpc_ask_polling_op(int ctrl)  //-- wait until write finished
+    177          {
+    178             int rc;
+    179             int i;
+    180          
+    181             for(i=0;i < I2C_WR_24XX_TIMEOUT; i++) //-- actually wr = ~110 but timeout =10000
+   \                     i2c_lpc_ask_polling_op:
+   \   00000000   0xE3A01000         MOV      R1,#+0
+   \   00000004   0xE3A02010         MOV      R2,#+16
+   \   00000008   0xE3822D9C         ORR      R2,R2,#0x2700
+   \   0000000C   0xEA000000         B        ??i2c_lpc_ask_polling_op_0
+   \                     ??i2c_lpc_ask_polling_op_1:
+   \   00000010   0xE2811001         ADD      R1,R1,#+1
+   \                     ??i2c_lpc_ask_polling_op_0:
+   \   00000014   0xE1510002         CMP      R1,R2
+   \   00000018   0xAA000013         BGE      ??i2c_lpc_ask_polling_op_2
+    182             {
+    183                I2CONSET_bit.STA = 1;
+   \   0000001C   0xE3A034E0         MOV      R3,#-536870912
+   \   00000020   0xE3833B70         ORR      R3,R3,#0x1C000
+   \   00000024   0xE593C000         LDR      R12,[R3, #+0]
+   \   00000028   0xE38CC020         ORR      R12,R12,#0x20
+   \   0000002C   0xE583C000         STR      R12,[R3, #+0]
+    184                I2CONCLR = I2C_FLAG_SI;  //-- Here - clear only SI (not all rI2C_I2CONCLR)
+   \   00000030   0xE3A0C008         MOV      R12,#+8
+   \   00000034   0xE583C018         STR      R12,[R3, #+24]
+    185                //while(! I2CONSET_bit.SI );      //wait the ACK
+    186                while(!(I2CONSET & I2C_FLAG_SI));
+   \                     ??i2c_lpc_ask_polling_op_3:
+   \   00000038   0xE593C000         LDR      R12,[R3, #+0]
+   \   0000003C   0xE31C0008         TST      R12,#0x8
+   \   00000040   0x0AFFFFFC         BEQ      ??i2c_lpc_ask_polling_op_3
+    187          
+    188                I2DAT = ctrl & 0xFE;; // R/WI = 0
+   \   00000044   0xE200C0FE         AND      R12,R0,#0xFE
+   \   00000048   0xE583C008         STR      R12,[R3, #+8]
+    189                I2CONCLR = I2C_FLAG_SI | I2C_FLAG_STA; //-- Clear START & SI
+   \   0000004C   0xE3A0C028         MOV      R12,#+40
+   \   00000050   0xE583C018         STR      R12,[R3, #+24]
+    190                //while(! I2CONSET_bit.SI );//wait the ACK
+    191                while(!(I2CONSET & I2C_FLAG_SI));
+   \                     ??i2c_lpc_ask_polling_op_4:
+   \   00000054   0xE593C000         LDR      R12,[R3, #+0]
+   \   00000058   0xE31C0008         TST      R12,#0x8
+   \   0000005C   0x0AFFFFFC         BEQ      ??i2c_lpc_ask_polling_op_4
+    192                rc = I2STAT;
+   \   00000060   0xE5933004         LDR      R3,[R3, #+4]
+    193                if(rc == 0x18) //-- got ACK after CLA + W
+   \   00000064   0xE3530018         CMP      R3,#+24
+   \   00000068   0x1AFFFFE8         BNE      ??i2c_lpc_ask_polling_op_1
+    194                   break;
+    195                else
+    196                {//@@@@@
+    197          
+    198                }
+    199             }
+    200             if(i == I2C_WR_24XX_TIMEOUT)
+   \                     ??i2c_lpc_ask_polling_op_2:
+   \   0000006C   0xE1510002         CMP      R1,R2
+   \   00000070   0x1A000001         BNE      ??i2c_lpc_ask_polling_op_5
+    201                return I2C_ERR_24XX_WR_TIMEOUT;
+   \   00000074   0xE3A00003         MOV      R0,#+3
+   \   00000078   0xE12FFF1E         BX       LR
+    202             return I2C_NO_ERR;
+   \                     ??i2c_lpc_ask_polling_op_5:
+   \   0000007C   0xE3A00000         MOV      R0,#+0
+   \   00000080   0xE12FFF1E         BX       LR               ;; return
+   \   00000084                      REQUIRE _A_I2CONSET
+   \   00000084                      REQUIRE _A_I2CONCLR
+   \   00000084                      REQUIRE _A_I2DAT
+   \   00000084                      REQUIRE _A_I2STAT
+    203          }
+
+   \                                 In section .text, align 4, keep-with-next
+    204          void ReadEEPROM_test(char * buf, unsigned short Adr)
+    205          {
+   \                     ReadEEPROM_test:
+   \   00000000   0xE92D4013         PUSH     {R0,R1,R4,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+    206            i2c_lpc_ctrl(I2CAddr & 0xFE); //-- Now WR (RD/WI = 0)
+   \   00000008   0xE3A000A0         MOV      R0,#+160
+   \   0000000C   0x........         BL       i2c_lpc_ctrl
+    207          
+    208            i2c_lpc_wr_byte(*((char*)&Adr + 1));
+   \   00000010   0xE5DD0005         LDRB     R0,[SP, #+5]
+   \   00000014   0x........         BL       i2c_lpc_wr_byte
+    209            i2c_lpc_wr_byte(*((char*)&Adr ));
+   \   00000018   0xE5DD0004         LDRB     R0,[SP, #+4]
+   \   0000001C   0x........         BL       i2c_lpc_wr_byte
+    210            i2c_lpc_ctrl(I2CAddr | 0x01); //-- Now RD (RD/WI = 1)
+   \   00000020   0xE3A000A1         MOV      R0,#+161
+   \   00000024   0x........         BL       i2c_lpc_ctrl
+    211            i2c_lpc_rx_to_buf(buf,16);
+   \   00000028   0xE3A01010         MOV      R1,#+16
+   \   0000002C   0xE1A00004         MOV      R0,R4
+   \   00000030   0x........         BL       i2c_lpc_rx_to_buf
+    212            i2c_lpc_stop();     //---- Set STOP ---
+   \   00000034   0xE8BD4013         POP      {R0,R1,R4,LR}
+   \   00000038   0x........         B        i2c_lpc_stop     ;; tailcall
+    213          
+    214          }
+    215          
+    216          //----------------------------------------------------------------------------
+    217          //static int i2c_lpc_m24xx_wr(
+    218          //     int eeprom_type,    //-- EEPROM type
+    219          //     int eeprom_addr,    //-- start eeprom addr ( not included Hardware A2,A1,A0)
+    220          //     int eeprom_cs_val,  //-- Hardware A2,A1,A0 (valid from 24XX32)
+    221          //     char * buf,         //-- Data srs buf
+    222          //     int num )            //-- Bytes to write qty
+
+   \                                 In section .text, align 4, keep-with-next
+    223          char I2C_EEPROM_wr( char * buf, unsigned short Adr, unsigned short num)
+    224          {
+   \                     I2C_EEPROM_wr:
+   \   00000000   0xE92D407C         PUSH     {R2-R6,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+   \   00000008   0xE1A06001         MOV      R6,R1
+   \   0000000C   0xE1A05002         MOV      R5,R2
+    225             int rc;
+    226             ///int ctrl;
+    227             //int addr_hi;
+    228             //int addr_lo;
+    229          
+    230             //--- wr START + CONTROL
+    231             rc = i2c_lpc_ctrl(I2CAddr); //-- Now WR (RD/WI = 0)
+   \   00000010   0xE3A000A0         MOV      R0,#+160
+   \   00000014   0x........         BL       i2c_lpc_ctrl
+    232             if(rc != I2C_NO_ERR)
+   \   00000018   0xE3500000         CMP      R0,#+0
+   \   0000001C   0x0A000001         BEQ      ??I2C_EEPROM_wr_0
+    233                return rc;
+   \   00000020   0xE20000FF         AND      R0,R0,#0xFF
+   \   00000024   0xEA000010         B        ??I2C_EEPROM_wr_1
+   \                     ??I2C_EEPROM_wr_0:
+   \   00000028   0xE1CD60B0         STRH     R6,[SP, #+0]
+    234             //--- wr ADDRESS
+    235             i2c_lpc_wr_byte(*((char*)&Adr + 1));
+   \   0000002C   0xE5DD0001         LDRB     R0,[SP, #+1]
+   \   00000030   0x........         BL       i2c_lpc_wr_byte
+    236             i2c_lpc_wr_byte(*((char*)&Adr));
+   \   00000034   0xE5DD0000         LDRB     R0,[SP, #+0]
+   \   00000038   0x........         BL       i2c_lpc_wr_byte
+   \   0000003C   0xEA000001         B        ??I2C_EEPROM_wr_2
+    237             //---  Write  data
+    238             while(num--)                 //-- transmit data until length>0
+    239             {
+    240                rc = *buf++; //---
+   \                     ??I2C_EEPROM_wr_3:
+   \   00000040   0xE4D40001         LDRB     R0,[R4], #+1
+    241                i2c_lpc_wr_byte(rc);
+   \   00000044   0x........         BL       i2c_lpc_wr_byte
+    242             }
+   \                     ??I2C_EEPROM_wr_2:
+   \   00000048   0xE1A00005         MOV      R0,R5
+   \   0000004C   0xE2405001         SUB      R5,R0,#+1
+   \   00000050   0xE1B00800         LSLS     R0,R0,#+16
+   \   00000054   0x1AFFFFF9         BNE      ??I2C_EEPROM_wr_3
+    243             //-----------------------
+    244             i2c_lpc_stop();
+   \   00000058   0x........         BL       i2c_lpc_stop
+    245          
+    246             rc = i2c_lpc_ask_polling_op(I2CAddr);    //-- wait until write finished
+   \   0000005C   0xE3A000A0         MOV      R0,#+160
+   \   00000060   0x........         BL       i2c_lpc_ask_polling_op
+    247             i2c_lpc_stop();
+   \   00000064   0x........         BL       i2c_lpc_stop
+    248             return I2C_NO_ERR;
+   \   00000068   0xE3A00000         MOV      R0,#+0
+   \                     ??I2C_EEPROM_wr_1:
+   \   0000006C   0xE8BD4076         POP      {R1,R2,R4-R6,LR}
+   \   00000070   0xE12FFF1E         BX       LR               ;; return
+    249          }
+    250          
+    251          
+    252          
+
+   \                                 In section .text, align 4, keep-with-next
+    253          char I2C_m24xx_wr( char * buf, unsigned short eeprom_addr, unsigned short num)
+    254          {
+   \                     I2C_m24xx_wr:
+   \   00000000   0xE92D43F8         PUSH     {R3-R9,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+   \   00000008   0xE1A05001         MOV      R5,R1
+   \   0000000C   0xE1A08002         MOV      R8,R2
+    255             int page_size = 0;
+    256             int rc;
+    257             int b_to_wr;
+    258          
+    259             PINSEL0_bit.P0_2 = 1;
+   \   00000010   0xE3A064E0         MOV      R6,#-536870912
+   \   00000014   0xE3866BB0         ORR      R6,R6,#0x2C000
+   \   00000018   0xE5960000         LDR      R0,[R6, #+0]
+   \   0000001C   0xE3C00030         BIC      R0,R0,#0x30
+   \   00000020   0xE3800010         ORR      R0,R0,#0x10
+   \   00000024   0xE5860000         STR      R0,[R6, #+0]
+    260             PINSEL0_bit.P0_3 = 1;
+   \   00000028   0xE5960000         LDR      R0,[R6, #+0]
+   \   0000002C   0xE3C000C0         BIC      R0,R0,#0xC0
+   \   00000030   0xE3800040         ORR      R0,R0,#0x40
+   \   00000034   0xE5860000         STR      R0,[R6, #+0]
+    261             I2CONSET_bit.I2EN = 1;           //-- Set Master Mode
+   \   00000038   0xE2467B40         SUB      R7,R6,#+65536
+   \   0000003C   0xE5970000         LDR      R0,[R7, #+0]
+   \   00000040   0xE3800040         ORR      R0,R0,#0x40
+   \   00000044   0xE5870000         STR      R0,[R7, #+0]
+    262          
+    263             rc = I2C_NO_ERR;
+    264             for(;;)
+    265             {
+    266               page_size = PAGE_SIZE;
+    267          
+    268                rc = eeprom_addr % page_size;
+   \   00000048   0xE1A00005         MOV      R0,R5
+   \   0000004C   0xE210007F         ANDS     R0,R0,#0x7F
+    269                if(rc != 0) //-- not fit on page alignment
+   \   00000050   0x0A000013         BEQ      ??I2C_m24xx_wr_0
+    270                {
+    271                   b_to_wr = page_size - rc;
+   \   00000054   0xE2609080         RSB      R9,R0,#+128
+    272                   if(num < b_to_wr)
+   \   00000058   0xE1A01008         MOV      R1,R8
+   \   0000005C   0xE1510009         CMP      R1,R9
+   \   00000060   0xAA000000         BGE      ??I2C_m24xx_wr_1
+    273                      b_to_wr = num;
+   \   00000064   0xE1A09001         MOV      R9,R1
+    274                   if(b_to_wr > 0)
+   \                     ??I2C_m24xx_wr_1:
+   \   00000068   0xE3590000         CMP      R9,#+0
+   \   0000006C   0xDA00000C         BLE      ??I2C_m24xx_wr_0
+    275                   {
+    276                       rc = I2C_EEPROM_wr( buf, eeprom_addr, b_to_wr);
+   \   00000070   0xE1A00009         MOV      R0,R9
+   \   00000074   0xE1A02000         MOV      R2,R0
+   \   00000078   0xE1A02802         LSL      R2,R2,#+16
+   \   0000007C   0xE1A02822         LSR      R2,R2,#+16
+   \   00000080   0xE1A01005         MOV      R1,R5
+   \   00000084   0xE1A00004         MOV      R0,R4
+   \   00000088   0x........         BL       I2C_EEPROM_wr
+    277                       if(rc != I2C_NO_ERR)
+   \   0000008C   0xE3500000         CMP      R0,#+0
+   \   00000090   0x1A00001A         BNE      ??I2C_m24xx_wr_2
+    278                          break;
+    279                       num -= b_to_wr;
+   \   00000094   0xE1A01009         MOV      R1,R9
+   \   00000098   0xE0488001         SUB      R8,R8,R1
+    280                       eeprom_addr += b_to_wr;
+   \   0000009C   0xE0815005         ADD      R5,R1,R5
+    281                       buf += b_to_wr;
+   \   000000A0   0xE0844009         ADD      R4,R4,R9
+    282                   }
+    283                }
+    284                 //--- write remainder(by pages,if possible)
+    285                while(num > 0)
+   \                     ??I2C_m24xx_wr_0:
+   \   000000A4   0xE1A01008         MOV      R1,R8
+   \   000000A8   0xE1B01801         LSLS     R1,R1,#+16
+   \   000000AC   0x0A000013         BEQ      ??I2C_m24xx_wr_2
+    286                {
+    287                    if(num < page_size)
+   \   000000B0   0xE1A09008         MOV      R9,R8
+   \   000000B4   0xE1A09809         LSL      R9,R9,#+16
+   \   000000B8   0xE1A09829         LSR      R9,R9,#+16
+   \   000000BC   0xE359007F         CMP      R9,#+127
+   \   000000C0   0xDA000000         BLE      ??I2C_m24xx_wr_3
+   \   000000C4   0xE3A0907F         MOV      R9,#+127
+    288                       b_to_wr = num;
+    289                    else
+    290                       b_to_wr = page_size;
+    291          
+    292                    rc = I2C_EEPROM_wr( buf, eeprom_addr, b_to_wr);
+   \                     ??I2C_m24xx_wr_3:
+   \   000000C8   0xE1A00009         MOV      R0,R9
+   \   000000CC   0xE1A02000         MOV      R2,R0
+   \   000000D0   0xE1A01005         MOV      R1,R5
+   \   000000D4   0xE1A01801         LSL      R1,R1,#+16
+   \   000000D8   0xE1A01821         LSR      R1,R1,#+16
+   \   000000DC   0xE1A00004         MOV      R0,R4
+   \   000000E0   0x........         BL       I2C_EEPROM_wr
+    293                    if(rc != I2C_NO_ERR)
+   \   000000E4   0xE3500000         CMP      R0,#+0
+   \   000000E8   0x1A000004         BNE      ??I2C_m24xx_wr_2
+    294                       break;
+    295                    num -= b_to_wr;
+   \   000000EC   0xE1A01009         MOV      R1,R9
+   \   000000F0   0xE0488001         SUB      R8,R8,R1
+    296                    eeprom_addr += b_to_wr;
+   \   000000F4   0xE0815005         ADD      R5,R1,R5
+    297                    buf += b_to_wr;
+   \   000000F8   0xE0844009         ADD      R4,R4,R9
+   \   000000FC   0xEAFFFFE8         B        ??I2C_m24xx_wr_0
+    298                }
+    299          
+    300                break;
+    301             }
+    302            I2CONCLR = I2C_FLAG_I2EN;
+   \                     ??I2C_m24xx_wr_2:
+   \   00000100   0xE3A01040         MOV      R1,#+64
+   \   00000104   0xE5871018         STR      R1,[R7, #+24]
+    303            PINSEL0_bit.P0_2 = 0;
+   \   00000108   0xE5961000         LDR      R1,[R6, #+0]
+   \   0000010C   0xE3C11030         BIC      R1,R1,#0x30
+   \   00000110   0xE5861000         STR      R1,[R6, #+0]
+    304            PINSEL0_bit.P0_3 = 0;
+   \   00000114   0xE5961000         LDR      R1,[R6, #+0]
+   \   00000118   0xE3C110C0         BIC      R1,R1,#0xC0
+   \   0000011C   0xE5861000         STR      R1,[R6, #+0]
+    305            return rc;
+   \   00000120   0xE8BD43F2         POP      {R1,R4-R9,LR}
+   \   00000124   0xE12FFF1E         BX       LR               ;; return
+   \   00000128                      REQUIRE _A_PINSEL0
+   \   00000128                      REQUIRE _A_I2CONSET
+   \   00000128                      REQUIRE _A_I2CONCLR
+    306          }
+    307          
+    308          //----------------------------------------------------------------------------
+    309          
+
+   \                                 In section .text, align 4, keep-with-next
+    310          char I2C_m24xx_rd( char * buf, unsigned short eeprom_addr, unsigned short num)
+    311          {
+   \                     I2C_m24xx_rd:
+   \   00000000   0xE92D43F8         PUSH     {R3-R9,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+   \   00000008   0xE1A05001         MOV      R5,R1
+   \   0000000C   0xE1A06002         MOV      R6,R2
+    312          
+    313             int rc;
+    314             PINSEL0_bit.P0_2 = 1;
+   \   00000010   0xE3A074E0         MOV      R7,#-536870912
+   \   00000014   0xE3877BB0         ORR      R7,R7,#0x2C000
+   \   00000018   0xE5970000         LDR      R0,[R7, #+0]
+   \   0000001C   0xE3C00030         BIC      R0,R0,#0x30
+   \   00000020   0xE3800010         ORR      R0,R0,#0x10
+   \   00000024   0xE5870000         STR      R0,[R7, #+0]
+    315             PINSEL0_bit.P0_3 = 1;
+   \   00000028   0xE5970000         LDR      R0,[R7, #+0]
+   \   0000002C   0xE3C000C0         BIC      R0,R0,#0xC0
+   \   00000030   0xE3800040         ORR      R0,R0,#0x40
+   \   00000034   0xE5870000         STR      R0,[R7, #+0]
+    316             I2CONSET_bit.I2EN = 1;           //-- Set Master Mode
+   \   00000038   0xE2478B40         SUB      R8,R7,#+65536
+   \   0000003C   0xE5980000         LDR      R0,[R8, #+0]
+   \   00000040   0xE3800040         ORR      R0,R0,#0x40
+   \   00000044   0xE5880000         STR      R0,[R8, #+0]
+    317          
+    318             rc = I2C_NO_ERR;
+    319             for(;;)
+    320             {
+    321          
+    322                 //--- Here - just for addr checking
+    323          
+    324          
+    325          
+    326                 //--- wr START + CONTROL
+    327                rc = i2c_lpc_ctrl(I2CAddr & 0xFE); //-- Now WR (RD/WI = 0)
+   \   00000048   0xE3A000A0         MOV      R0,#+160
+   \   0000004C   0x........         BL       i2c_lpc_ctrl
+   \   00000050   0xE1B09000         MOVS     R9,R0
+    328                if(rc != I2C_NO_ERR)
+   \   00000054   0x1A00000E         BNE      ??I2C_m24xx_rd_0
+   \   00000058   0xE1CD50B0         STRH     R5,[SP, #+0]
+    329                   break;
+    330                 //--- wr ADDRESS
+    331                i2c_lpc_wr_byte(*((char*)&eeprom_addr + 1));
+   \   0000005C   0xE5DD0001         LDRB     R0,[SP, #+1]
+   \   00000060   0x........         BL       i2c_lpc_wr_byte
+    332                i2c_lpc_wr_byte(*((char*)&eeprom_addr ));
+   \   00000064   0xE5DD0000         LDRB     R0,[SP, #+0]
+   \   00000068   0x........         BL       i2c_lpc_wr_byte
+    333          
+    334                 //--- wr START + CONTROL again - for read start
+    335                rc = i2c_lpc_ctrl(I2CAddr | 0x01); //-- Now RD (RD/WI = 1)
+   \   0000006C   0xE3A000A1         MOV      R0,#+161
+   \   00000070   0x........         BL       i2c_lpc_ctrl
+   \   00000074   0xE1B09000         MOVS     R9,R0
+    336                if(rc != I2C_NO_ERR)
+   \   00000078   0x1A000005         BNE      ??I2C_m24xx_rd_0
+    337                   break;
+    338          
+    339                rc = i2c_lpc_rx_to_buf(buf,num);
+   \   0000007C   0xE1A01006         MOV      R1,R6
+   \   00000080   0xE1A00004         MOV      R0,R4
+   \   00000084   0x........         BL       i2c_lpc_rx_to_buf
+   \   00000088   0xE1B09000         MOVS     R9,R0
+    340                if(rc != I2C_NO_ERR)
+   \   0000008C   0x1A000000         BNE      ??I2C_m24xx_rd_0
+    341                   break;
+    342          
+    343                i2c_lpc_stop();     //---- Set STOP ---
+   \   00000090   0x........         BL       i2c_lpc_stop
+    344          
+    345                break;
+    346             }
+    347             I2CONCLR = I2C_FLAG_I2EN;
+   \                     ??I2C_m24xx_rd_0:
+   \   00000094   0xE3A00040         MOV      R0,#+64
+   \   00000098   0xE5880018         STR      R0,[R8, #+24]
+    348             PINSEL0_bit.P0_2 = 0;
+   \   0000009C   0xE5970000         LDR      R0,[R7, #+0]
+   \   000000A0   0xE3C00030         BIC      R0,R0,#0x30
+   \   000000A4   0xE5870000         STR      R0,[R7, #+0]
+    349             PINSEL0_bit.P0_3 = 0;
+   \   000000A8   0xE5970000         LDR      R0,[R7, #+0]
+   \   000000AC   0xE3C000C0         BIC      R0,R0,#0xC0
+   \   000000B0   0xE5870000         STR      R0,[R7, #+0]
+    350             return rc;
+   \   000000B4   0xE1A00009         MOV      R0,R9
+   \   000000B8   0xE20000FF         AND      R0,R0,#0xFF
+   \   000000BC   0xE8BD43F2         POP      {R1,R4-R9,LR}
+   \   000000C0   0xE12FFF1E         BX       LR               ;; return
+   \   000000C4                      REQUIRE _A_PINSEL0
+   \   000000C4                      REQUIRE _A_I2CONSET
+   \   000000C4                      REQUIRE _A_I2CONCLR
+    351          }
+    352          
+    353          /****************************************************************************/
+    354          /*@@@@@@ @@@@@@@ @@@@@@@@@@@@@ @@ EEPROM,@@@@ @@ @@@@@@@@@ CRC @@@@@@ @ EEPROM*/
+    355          /*@@@@ @@@@@@@@ @@ @@@@@@@@@*/
+    356          /****************************************************************************/
+
+   \                                 In section .text, align 4, keep-with-next
+    357          void ReadEEPROMkoef(void)
+    358          {
+   \                     ReadEEPROMkoef:
+   \   00000000   0xE92D40F8         PUSH     {R3-R7,LR}
+    359          
+    360            short idx,flag;
+    361          
+    362            //I2C_m24xx_rd(MasEEPROMKoef,Adr_Koeff_EEPROM,17); /*@@@@@@ @@@@@@@ @@@@@*/
+    363            for(idx = 0; idx < 4; ++idx)
+   \   00000004   0xE3A05000         MOV      R5,#+0
+   \   00000008   0xE1A07005         MOV      R7,R5
+   \   0000000C   0x........         LDR      R4,??DataTable9_1
+   \                     ??ReadEEPROMkoef_0:
+   \   00000010   0xE1A00007         MOV      R0,R7
+   \   00000014   0xE1A00800         LSL      R0,R0,#+16
+   \   00000018   0xE1A00840         ASR      R0,R0,#+16
+   \   0000001C   0xE3500004         CMP      R0,#+4
+   \   00000020   0xAA00001E         BGE      ??ReadEEPROMkoef_1
+    364            {
+    365              flag = 0xffff;
+   \   00000024   0xE1E06005         MVN      R6,R5
+    366              memset(MasEEPROMKoef,0,sizeof(MasEEPROMKoef));
+   \   00000028   0xE1A02005         MOV      R2,R5
+   \   0000002C   0xE3A01011         MOV      R1,#+17
+   \   00000030   0xE2840080         ADD      R0,R4,#+128
+   \   00000034   0x........         BL       __aeabi_memset4
+    367              I2C_m24xx_rd(MasEEPROMKoef,Adr_Koeff_EEPROM,17); /*@@@@@@ @@@@@@@ @@@@@*/
+   \   00000038   0xE3A02011         MOV      R2,#+17
+   \   0000003C   0xE1A01005         MOV      R1,R5
+   \   00000040   0xE2840080         ADD      R0,R4,#+128
+   \   00000044   0x........         BL       I2C_m24xx_rd
+    368              CRC16(MasEEPROMKoef,15,0xFF,0);
+   \   00000048   0xE1A03005         MOV      R3,R5
+   \   0000004C   0xE3A020FF         MOV      R2,#+255
+   \   00000050   0xE3A0100F         MOV      R1,#+15
+   \   00000054   0xE2840080         ADD      R0,R4,#+128
+   \   00000058   0x........         BL       CRC16
+    369              if( (CRClo == MasEEPROMKoef[15]) || (CRChi == MasEEPROMKoef[16]) )
+   \   0000005C   0x........         LDR      R0,??DataTable9_2
+   \   00000060   0xE1D000B0         LDRH     R0,[R0, #+0]
+   \   00000064   0xE5D4108F         LDRB     R1,[R4, #+143]
+   \   00000068   0xE1500001         CMP      R0,R1
+   \   0000006C   0x0A000006         BEQ      ??ReadEEPROMkoef_2
+   \   00000070   0x........         LDR      R0,??DataTable9_3
+   \   00000074   0xE1D000B0         LDRH     R0,[R0, #+0]
+   \   00000078   0xE5D41090         LDRB     R1,[R4, #+144]
+   \   0000007C   0xE1500001         CMP      R0,R1
+   \   00000080   0x0A000001         BEQ      ??ReadEEPROMkoef_2
+   \   00000084   0xE2877001         ADD      R7,R7,#+1
+   \   00000088   0xEAFFFFE0         B        ??ReadEEPROMkoef_0
+    370              {
+    371                flag = 0;
+   \                     ??ReadEEPROMkoef_2:
+   \   0000008C   0xE1A06005         MOV      R6,R5
+    372                FLAG.ErrKoef = 0;
+   \   00000090   0x........         LDR      R0,??DataTable9_4
+   \   00000094   0xE5901000         LDR      R1,[R0, #+0]
+   \   00000098   0xE3C11B40         BIC      R1,R1,#0x10000
+   \   0000009C   0xE5801000         STR      R1,[R0, #+0]
+    373                break;
+    374              }
+    375            }
+    376          
+    377            //I2C_m24xx_rd(MasEEPROMKoef,Adr_Koeff_EEPROM,17); /*@@@@@@ @@@@@@@ @@@@@*/
+    378            //CRC16(MasEEPROMKoef,15,0xFF,0);
+    379            //if( (CRClo != MasEEPROMKoef[15]) || (CRChi != MasEEPROMKoef[16]) )
+    380            if( flag )
+   \                     ??ReadEEPROMkoef_1:
+   \   000000A0   0xE1B06806         LSLS     R6,R6,#+16
+   \   000000A4   0x0A000028         BEQ      ??ReadEEPROMkoef_3
+    381            {
+    382              //@@@@@@@@@@@  @@@@@ @@@@@@@@@@@@@ @@ @@@@@@@@@- @@@@@@@@@@@@@ (@@@@@@@@@@@@@@ @@ @@@@@@@@@]
+    383             /*@@@@@ 1,0 - KODADC   @@@@@@@@@@@ @@@@@@@@ [@@ @@@@@@@@@ 1300]
+    384                     3,2 - MINPOROG @@@@@@ @@@@@ [@@ @@@@@@@@@ 64]
+    385                     5,4 - MAXPOROG @@@@@@@ @@@@@ [@@ @@@@@@@@@ 4060]
+    386                     6   - @@@-@@ @@@@@@@ @@@@ 1,0 1024 =10 (2)
+    387                     7   - @@@ @@@@@@@@ @@@@@@ 115200@@@ = 1
+    388                     9,8 - @@@@@@@@@ @@@@@ [@@ @@@@@@@@@ 1]
+    389                     11,10 - @@@@ @@@@@@@@@@@@ @@@[07] , @@@@@@[01]
+    390                     12  - @@@@@@@@@@@@@@@@@ @@@ = 0
+    391                     13  - @@@@@@@@@@@@ @@@@@ = 1
+    392                     14  - @@@@@ @@@@@@ =1
+    393                     16,15 - CRC
+    394                     20,19,18,17  - @@@@@@@@ @@@@@@@@@ @@@@@@@@@@@ @ @@@@@@@ 4 @@@@@ @@@@ @@@@@
+    395                     22,21 - CRC
+    396                     */
+    397             MasEEPROMKoef[1] = 0x05; //c@ @@@@ @@@@@@@@@@@ @@@@@@@@1300>>8;
+   \   000000A8   0xE3A00005         MOV      R0,#+5
+   \   000000AC   0xE5C40081         STRB     R0,[R4, #+129]
+    398             MasEEPROMKoef[0] = 0x14;    //@@ @@@@ 1300
+   \   000000B0   0xE3A00014         MOV      R0,#+20
+   \   000000B4   0xE5C40080         STRB     R0,[R4, #+128]
+    399          
+    400             MasEEPROMKoef[3] = 0;      //c@ @@@@ @@@@@@ @@@@@
+   \   000000B8   0xE5C45083         STRB     R5,[R4, #+131]
+    401             MasEEPROMKoef[2] = 0x40;    //@@ @@@@=64;
+   \   000000BC   0xE3A00040         MOV      R0,#+64
+   \   000000C0   0xE5C40082         STRB     R0,[R4, #+130]
+    402          
+    403             MasEEPROMKoef[5] = 0x0F; //c@ @@@@ @@@@@@@ @@@@@4060>>8;
+   \   000000C4   0xE3A0000F         MOV      R0,#+15
+   \   000000C8   0xE5C40085         STRB     R0,[R4, #+133]
+    404             MasEEPROMKoef[4] = 0xDC;    //@@ @@@@ 4060;
+   \   000000CC   0xE3A000DC         MOV      R0,#+220
+   \   000000D0   0xE5C40084         STRB     R0,[R4, #+132]
+    405          
+    406             MasEEPROMKoef[6] = 0x02;    //@@@-@@ @@@@@@@ @@@@ 1,0 1024 =10 (2)
+   \   000000D4   0xE3A00002         MOV      R0,#+2
+   \   000000D8   0xE5C40086         STRB     R0,[R4, #+134]
+    407          
+    408             MasEEPROMKoef[7] = 0x01;    //@@@ @@@@@@@@ @@@@@@ 115200@@@
+   \   000000DC   0xE3A01001         MOV      R1,#+1
+   \   000000E0   0xE5C41087         STRB     R1,[R4, #+135]
+    409          
+    410             MasEEPROMKoef[9] = 0x0;    //c@ @@@@ @@@@@@@@@ @@@@@
+    411             MasEEPROMKoef[8] = 0x0;    //@@ @@@@
+   \   000000E4   0xE1C458B8         STRH     R5,[R4, #+136]
+    412          
+    413             MasEEPROMKoef[11] = 0x07;  //c@ @@@@ -@@@
+   \   000000E8   0xE3A02007         MOV      R2,#+7
+   \   000000EC   0xE5C4208B         STRB     R2,[R4, #+139]
+    414             MasEEPROMKoef[10] = 0x01;    //@@ @@@@  -@@@@@@
+   \   000000F0   0xE5C4108A         STRB     R1,[R4, #+138]
+    415          
+    416             MasEEPROMKoef[12] = 0x1;    //@@@@@@@@@@@@@@@@@ @@@
+   \   000000F4   0xE5C4108C         STRB     R1,[R4, #+140]
+    417          
+    418             MasEEPROMKoef[13] = 0x01;   //@@@@@@@@@@@@ @@@@@
+   \   000000F8   0xE5C4108D         STRB     R1,[R4, #+141]
+    419          
+    420             MasEEPROMKoef[14] = 0x02;   //@@@@@ @@@@@@
+   \   000000FC   0xE5C4008E         STRB     R0,[R4, #+142]
+    421             //----- 10.08.2009
+    422             CRC16(MasEEPROMKoef,15,0xFF,0);
+   \   00000100   0xE1A03005         MOV      R3,R5
+   \   00000104   0xE3A020FF         MOV      R2,#+255
+   \   00000108   0xE3A0100F         MOV      R1,#+15
+   \   0000010C   0xE2840080         ADD      R0,R4,#+128
+   \   00000110   0x........         BL       CRC16
+    423          
+    424             MasEEPROMKoef[15] = CRClo;
+   \   00000114   0x........         LDR      R0,??DataTable9_2
+   \   00000118   0xE1D000B0         LDRH     R0,[R0, #+0]
+   \   0000011C   0xE5C4008F         STRB     R0,[R4, #+143]
+    425             MasEEPROMKoef[16] = CRChi;
+   \   00000120   0x........         LDR      R0,??DataTable9_3
+   \   00000124   0xE1D000B0         LDRH     R0,[R0, #+0]
+   \   00000128   0xE5C40090         STRB     R0,[R4, #+144]
+    426          
+    427             //@@@@@@ @@@@@@@@@@@@@ @@ @@@@@@@@@
+    428            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! test
+    429            I2C_m24xx_wr(MasEEPROMKoef,Adr_Koeff_EEPROM,17); /*@@@@@@ @@@@@@@ @@@@@@@@@@@@@*/
+   \   0000012C   0xE3A02011         MOV      R2,#+17
+   \   00000130   0xE1A01005         MOV      R1,R5
+   \   00000134   0xE2840080         ADD      R0,R4,#+128
+   \   00000138   0x........         BL       I2C_m24xx_wr
+    430            FLAG.ErrKoef = 1;
+   \   0000013C   0x........         LDR      R0,??DataTable9_4
+   \   00000140   0xE5901000         LDR      R1,[R0, #+0]
+   \   00000144   0xE3811B40         ORR      R1,R1,#0x10000
+   \   00000148   0xE5801000         STR      R1,[R0, #+0]
+    431            } //end if( (CRClo != MasEEPRO......
+    432            KODADC   = MasEEPROMKoef[1] << 8 | MasEEPROMKoef[0];  //@@@@@@@@@@@ @@@@@@@@ @@@ short
+   \                     ??ReadEEPROMkoef_3:
+   \   0000014C   0xE5D40081         LDRB     R0,[R4, #+129]
+   \   00000150   0xE5D41080         LDRB     R1,[R4, #+128]
+   \   00000154   0xE1810400         ORR      R0,R1,R0, LSL #+8
+   \   00000158   0x........         LDR      R1,??DataTable9_5
+   \   0000015C   0xE1C100B0         STRH     R0,[R1, #+0]
+    433            KODADCEEPROM = KODADC;
+   \   00000160   0x........         LDR      R1,??DataTable9_6
+   \   00000164   0xE1C100B0         STRH     R0,[R1, #+0]
+    434            MINPOROG = MasEEPROMKoef[3] << 8 | MasEEPROMKoef[2];  //@@@@@@ @@@@@ @@@ short
+   \   00000168   0xE5D40083         LDRB     R0,[R4, #+131]
+   \   0000016C   0xE5D41082         LDRB     R1,[R4, #+130]
+   \   00000170   0xE1810400         ORR      R0,R1,R0, LSL #+8
+   \   00000174   0x........         LDR      R1,??DataTable9_7
+   \   00000178   0xE1C100B0         STRH     R0,[R1, #+0]
+    435            MAXPOROG = MasEEPROMKoef[5] << 8 | MasEEPROMKoef[4];  //@@@@@@@ @@@@@ @@@ short
+   \   0000017C   0xE5D40085         LDRB     R0,[R4, #+133]
+   \   00000180   0xE5D41084         LDRB     R1,[R4, #+132]
+   \   00000184   0xE1810400         ORR      R0,R1,R0, LSL #+8
+   \   00000188   0x........         LDR      R1,??DataTable9_8
+   \   0000018C   0xE1C100B0         STRH     R0,[R1, #+0]
+    436           }//end ReadEEPROMkoef
+   \   00000190   0xE8BD40F1         POP      {R0,R4-R7,LR}
+   \   00000194   0xE12FFF1E         BX       LR               ;; return
+    437          
+    438          /**************************************************************/
+    439          /*@@@@@@ @@@@@@@@@@@ @@@@@@@@@@@@@ @ EEPROM, @@@ @@@@@ @@@@@@ */
+    440          /* @ @@@@@@@@@@@@@@@@ I2C*/
+    441          /*************************************************************/
+
+   \                                 In section .text, align 4, keep-with-next
+    442          unsigned  short  I2CKOEFF( int IndMas)
+    443          {
+   \                     I2CKOEFF:
+   \   00000000   0xE92D4038         PUSH     {R3-R5,LR}
+   \   00000004   0xE1B04000         MOVS     R4,R0
+    444          unsigned short NameKoef;
+    445          int irab,i;
+    446          if ((IndMas == 0) && (FLAG.temperCORR))
+   \   00000008   0x1A00001E         BNE      ??I2CKOEFF_0
+   \   0000000C   0x........         LDR      R0,??DataTable9_4
+   \   00000010   0xE5900000         LDR      R0,[R0, #+0]
+   \   00000014   0xE3A01001         MOV      R1,#+1
+   \   00000018   0xE11107A0         TST      R1,R0, LSR #+15
+   \   0000001C   0x0A000019         BEQ      ??I2CKOEFF_0
+    447                {//@@@ @@@@@@ @@@@@@@@@ - @@@@@@@@@ @@@@@ @@@@@@@@ @@ @@@@@@@ @@@@@@ @@@ @@@@@@@@@@@
+    448                i = ((int)(TEMPERFLOAT+0.5)+10)<<1;  //@@@@@@@ @@@@@@ @@@@@ -10 @@@@,@@@@@@@@@@
+   \   00000020   0x........         LDR      R0,??DataTable9_9
+   \   00000024   0xE5900000         LDR      R0,[R0, #+0]
+   \   00000028   0x........         BL       __aeabi_f2d
+   \   0000002C   0xE1A02000         MOV      R2,R0
+   \   00000030   0xE1A03001         MOV      R3,R1
+   \   00000034   0xE3A00000         MOV      R0,#+0
+   \   00000038   0xE3A015C0         MOV      R1,#+805306368
+   \   0000003C   0xE38116FE         ORR      R1,R1,#0xFE00000
+   \   00000040   0x........         BL       __aeabi_dadd
+   \   00000044   0x........         BL       __aeabi_d2iz
+   \   00000048   0xE280000A         ADD      R0,R0,#+10
+   \   0000004C   0xE1A02080         LSL      R2,R0,#+1
+    449                irab = (COMMAND[4]<<8 | COMMAND [5]) - (TABLTemperCORR[i]<< 8 | TABLTemperCORR[i+1]);
+   \   00000050   0x........         LDR      R0,??DataTable9_1
+   \   00000054   0x........         LDR      R1,??DataTable9_10
+   \   00000058   0xE5D13004         LDRB     R3,[R1, #+4]
+   \   0000005C   0xE5D11005         LDRB     R1,[R1, #+5]
+   \   00000060   0xE1811403         ORR      R1,R1,R3, LSL #+8
+   \   00000064   0xE7D03002         LDRB     R3,[R0, +R2]
+   \   00000068   0xE0802002         ADD      R2,R0,R2
+   \   0000006C   0xE5D22001         LDRB     R2,[R2, #+1]
+   \   00000070   0xE1822403         ORR      R2,R2,R3, LSL #+8
+   \   00000074   0xE0411002         SUB      R1,R1,R2
+    450                MasEEPROMKoef[IndMas]   = irab;
+   \   00000078   0xE5C01080         STRB     R1,[R0, #+128]
+    451                MasEEPROMKoef[IndMas+1] = irab >> 8;
+   \   0000007C   0xE1A01441         ASR      R1,R1,#+8
+   \   00000080   0xE5C01081         STRB     R1,[R0, #+129]
+   \   00000084   0xEA000007         B        ??I2CKOEFF_1
+    452                }
+    453          else
+    454          {
+    455          MasEEPROMKoef[IndMas+1] = COMMAND[4];
+   \                     ??I2CKOEFF_0:
+   \   00000088   0x........         LDR      R0,??DataTable9_1
+   \   0000008C   0x........         LDR      R1,??DataTable9_10
+   \   00000090   0xE5D12004         LDRB     R2,[R1, #+4]
+   \   00000094   0xE0803004         ADD      R3,R0,R4
+   \   00000098   0xE5C32081         STRB     R2,[R3, #+129]
+    456          MasEEPROMKoef[IndMas]   = COMMAND[5];
+   \   0000009C   0xE5D11005         LDRB     R1,[R1, #+5]
+   \   000000A0   0xE0800004         ADD      R0,R0,R4
+   \   000000A4   0xE5C01080         STRB     R1,[R0, #+128]
+    457          }
+    458          
+    459          //InitialiseI2C(1,0); //@@@@@@@@@@@@@ @@@ @@@@@@
+    460          //I2CTransferByte(IndMas,2,MasEEPROMKoef+IndMas); //@@@@@@ @@@@@@@
+    461          //****** 10.08.2009
+    462          //I2C_m24xx_wr(MasEEPROMKoef+IndMas,0x200+IndMas,2);
+    463          I2C_m24xx_wr(MasEEPROMKoef+IndMas,Adr_Koeff_EEPROM+IndMas,2);
+   \                     ??I2CKOEFF_1:
+   \   000000A8   0x........         LDR      R5,??DataTable9_1
+   \   000000AC   0xE3A02002         MOV      R2,#+2
+   \   000000B0   0xE1A00004         MOV      R0,R4
+   \   000000B4   0xE1A01000         MOV      R1,R0
+   \   000000B8   0xE1A01801         LSL      R1,R1,#+16
+   \   000000BC   0xE1A01821         LSR      R1,R1,#+16
+   \   000000C0   0xE0850004         ADD      R0,R5,R4
+   \   000000C4   0xE2800080         ADD      R0,R0,#+128
+   \   000000C8   0x........         BL       I2C_m24xx_wr
+    464          
+    465          
+    466          
+    467          CRC16(MasEEPROMKoef,15,0xFF,0);
+   \   000000CC   0xE3A03000         MOV      R3,#+0
+   \   000000D0   0xE3A020FF         MOV      R2,#+255
+   \   000000D4   0xE3A0100F         MOV      R1,#+15
+   \   000000D8   0xE2850080         ADD      R0,R5,#+128
+   \   000000DC   0x........         BL       CRC16
+    468          
+    469          MasEEPROMKoef[15] = CRClo;   //@@ @@@@
+   \   000000E0   0x........         LDR      R0,??DataTable9_2
+   \   000000E4   0xE1D000B0         LDRH     R0,[R0, #+0]
+   \   000000E8   0xE5C5008F         STRB     R0,[R5, #+143]
+    470          MasEEPROMKoef[16] = CRChi;  //c@ @@@@
+   \   000000EC   0x........         LDR      R0,??DataTable9_3
+   \   000000F0   0xE1D000B0         LDRH     R0,[R0, #+0]
+   \   000000F4   0xE5C50090         STRB     R0,[R5, #+144]
+    471          
+    472          
+    473          
+    474          
+    475          //I2CTransferByte(15,2,MasEEPROMKoef+15); //@@@@@@ @@@@@@ CRC
+    476          //I2C_m24xx_wr(MasEEPROMKoef+15,0x200+15,2);//@@@@@@ @@@@@@ CRC
+    477          //****** 10.08.2009
+    478          I2C_m24xx_wr(MasEEPROMKoef+15,Adr_Koeff_EEPROM+15,2);//@@@@@@ @@@@@@ CRC
+   \   000000F8   0xE3A02002         MOV      R2,#+2
+   \   000000FC   0xE3A0100F         MOV      R1,#+15
+   \   00000100   0xE285008F         ADD      R0,R5,#+143
+   \   00000104   0x........         BL       I2C_m24xx_wr
+    479          
+    480          //I2CTransferByte(IndMas,0);  //@@@@@@@@@ @@@@@@ @@@@@@ @@ IndMas
+    481          
+    482          
+    483          //I2CTransferByte(IndMas,2,MasEEPROMKoef+IndMas); //@@@@@@@@@@@ @@@@@@
+    484          
+    485          NameKoef  = MasEEPROMKoef[IndMas+1] << 8 | MasEEPROMKoef[IndMas];  //@@@@@@@@@@@
+   \   00000108   0xE0850004         ADD      R0,R5,R4
+   \   0000010C   0xE5D00081         LDRB     R0,[R0, #+129]
+   \   00000110   0xE0851004         ADD      R1,R5,R4
+   \   00000114   0xE5D11080         LDRB     R1,[R1, #+128]
+   \   00000118   0xE1814400         ORR      R4,R1,R0, LSL #+8
+    486          toCOMMAND2byte(4,NameKoef);     //@@@@@@@@@@@ @@@@@ @ @@@@@@@
+   \   0000011C   0xE1A01004         MOV      R1,R4
+   \   00000120   0xE3A00004         MOV      R0,#+4
+   \   00000124   0x........         BL       toCOMMAND2byte
+    487          return NameKoef;
+   \   00000128   0xE1A00004         MOV      R0,R4
+   \   0000012C   0xE8BD4032         POP      {R1,R4,R5,LR}
+   \   00000130   0xE12FFF1E         BX       LR               ;; return
+    488          }//end I2CKOEFF
+    489          
+    490          //================================================================
+    491          //
+    492          // @@@@@@@@@@ @@@@@@ @ EEPROM C CRC CRC @@@@@@@@@@@ @ @@@@ @@@@@@@@@
+    493          // @@@@@@ @@@@@@@@
+    494          //
+    495          //=================================================================
+    496          
+    497          
+    498          /****************************************************************************/
+    499          /*@@@@@@ @@@@@@@ @@@@@@@@@@@@@ @@@@@@@@@@@@@ @@@@@@@@@  @@ EEPROM,*/
+    500          /*@@@@ @@ @@@@@@@@@ CRC @@@@@@ @ EEPROM c@@@@@@@@@@ @@@@@@@@ =0 */
+    501          /****************************************************************************/
+
+   \                                 In section .text, align 4, keep-with-next
+    502          void ReadTABLtemper(void)
+    503          {
+   \                     ReadTABLtemper:
+   \   00000000   0xE92D4010         PUSH     {R4,LR}
+    504            int i;
+    505            I2C_m24xx_rd(TABLTemperCORR,Adr_TempKorr_EEPROM,126);//@@@@@@ @@@@@ @@@@@@@ + CRC + @@@@
+   \   00000004   0x........         LDR      R4,??DataTable9_1
+   \   00000008   0xE3A0207E         MOV      R2,#+126
+   \   0000000C   0xE3A01080         MOV      R1,#+128
+   \   00000010   0xE1A00004         MOV      R0,R4
+   \   00000014   0x........         BL       I2C_m24xx_rd
+    506            //I2CTABLTempR(); //@@@@@@ @@@@@ @@@@@@@ + CRC + @@@@
+    507            CRC16(TABLTemperCORR,122,0xFF,0);
+   \   00000018   0xE3A03000         MOV      R3,#+0
+   \   0000001C   0xE3A020FF         MOV      R2,#+255
+   \   00000020   0xE3A0107A         MOV      R1,#+122
+   \   00000024   0xE1A00004         MOV      R0,R4
+   \   00000028   0x........         BL       CRC16
+    508            if( (CRClo != TABLTemperCORR[122]) || (CRChi != TABLTemperCORR[123]) )
+   \   0000002C   0x........         LDR      R0,??DataTable9_2
+   \   00000030   0xE1D000B0         LDRH     R0,[R0, #+0]
+   \   00000034   0xE5D4107A         LDRB     R1,[R4, #+122]
+   \   00000038   0xE1500001         CMP      R0,R1
+   \   0000003C   0x1A000004         BNE      ??ReadTABLtemper_0
+   \   00000040   0x........         LDR      R0,??DataTable9_3
+   \   00000044   0xE1D000B0         LDRH     R0,[R0, #+0]
+   \   00000048   0xE5D4107B         LDRB     R1,[R4, #+123]
+   \   0000004C   0xE1500001         CMP      R0,R1
+   \   00000050   0x0A00000C         BEQ      ??ReadTABLtemper_1
+    509            {
+    510              //ClearTABLtemperCORR();  // @@@@@@ @@@ @@@@@@@
+    511              for (i=122; --i >=0;)
+   \                     ??ReadTABLtemper_0:
+   \   00000054   0xE3A0007A         MOV      R0,#+122
+   \   00000058   0xE3A01000         MOV      R1,#+0
+   \   0000005C   0xEA000000         B        ??ReadTABLtemper_2
+    512                        TABLTemperCORR[i] = 0;
+   \                     ??ReadTABLtemper_3:
+   \   00000060   0xE7C41000         STRB     R1,[R4, +R0]
+   \                     ??ReadTABLtemper_2:
+   \   00000064   0xE2500001         SUBS     R0,R0,#+1
+   \   00000068   0x5AFFFFFC         BPL      ??ReadTABLtemper_3
+    513              FLAG.ErrtempTABL = 1; //@@@@ @@@@@@ CRC @@@@ @@@@ @@@@ - @@@ 1-@ @@@@@@@@@@@@@
+   \   0000006C   0x........         LDR      R0,??DataTable9_4
+   \   00000070   0xE5901000         LDR      R1,[R0, #+0]
+   \   00000074   0xE3811004         ORR      R1,R1,#0x4
+   \   00000078   0xE5801000         STR      R1,[R0, #+0]
+    514              TABLTemperCORR[125] = 1; //@@@@ @@@@@@ @@@@@@@@@ - 0- @@@@@@@@@ 1 - @@@@@@@@
+   \   0000007C   0xE3A00001         MOV      R0,#+1
+   \   00000080   0xE5C4007D         STRB     R0,[R4, #+125]
+    515          
+    516              I2CTABLTempW();
+   \   00000084   0x........         BL       I2CTABLTempW
+    517          }
+    518            FLAG.temperCORR = 0;
+   \                     ??ReadTABLtemper_1:
+   \   00000088   0x........         LDR      R0,??DataTable9_4
+   \   0000008C   0xE5901000         LDR      R1,[R0, #+0]
+   \   00000090   0xE3C11C80         BIC      R1,R1,#0x8000
+   \   00000094   0xE5801000         STR      R1,[R0, #+0]
+    519            if (TABLTemperCORR[125])
+   \   00000098   0xE5D4207D         LDRB     R2,[R4, #+125]
+   \   0000009C   0xE3520000         CMP      R2,#+0
+   \   000000A0   0x0A000001         BEQ      ??ReadTABLtemper_4
+    520                    FLAG.temperCORR = 1;  //@@@@ @@@@@@ @@@@@@@@@ - @@@@@@@@@
+   \   000000A4   0xE3811C80         ORR      R1,R1,#0x8000
+   \   000000A8   0xE5801000         STR      R1,[R0, #+0]
+    521          }//end ReadTABLtemper
+   \                     ??ReadTABLtemper_4:
+   \   000000AC   0xE8BD4010         POP      {R4,LR}
+   \   000000B0   0xE12FFF1E         BX       LR               ;; return
+    522          /****************************************************************************/
+    523          
+    524          
+    525          /****************************************************************************/
+    526          /*@@@@@@ @@@@@@@@@ @@@@@@@@@ @@@@@@@@@@@ @@ EEPROM,@@@@ @@ @@@@@@@@@ CRC @@@@@@ @ EEPROM*/
+    527          /*@@@@@@@@ @@ @@@@@@@@@ = 2 @@@@@@@*/
+    528          /****************************************************************************/
+
+   \                                 In section .text, align 4, keep-with-next
+    529          void ReadEEPROMIntervalTemper(void)
+    530          {
+   \                     ReadEEPROMIntervalTemper:
+   \   00000000   0xE92D401C         PUSH     {R2-R4,LR}
+    531            int irab;
+    532            float Inter2min;
+    533          
+    534            //I2CIntevarTemperR(); /*@@@@@@ @@@@@@@@@*/
+    535            I2C_m24xx_rd(MasInt,Adr_TempInterval_EEPROM,6); //@@@@@@ @@@@@@@@@
+   \   00000004   0x........         LDR      R4,??DataTable9_11
+   \   00000008   0xE3A02006         MOV      R2,#+6
+   \   0000000C   0xE3A01011         MOV      R1,#+17
+   \   00000010   0xE1A00004         MOV      R0,R4
+   \   00000014   0x........         BL       I2C_m24xx_rd
+    536            CRC16(MasInt,4,0xFF,0);
+   \   00000018   0xE3A03000         MOV      R3,#+0
+   \   0000001C   0xE3A020FF         MOV      R2,#+255
+   \   00000020   0xE3A01004         MOV      R1,#+4
+   \   00000024   0xE1A00004         MOV      R0,R4
+   \   00000028   0x........         BL       CRC16
+    537            if( (CRClo != MasInt[4]) || (CRChi != MasInt[5]) )
+   \   0000002C   0x........         LDR      R0,??DataTable9_2
+   \   00000030   0xE1D000B0         LDRH     R0,[R0, #+0]
+   \   00000034   0xE5D41004         LDRB     R1,[R4, #+4]
+   \   00000038   0xE1500001         CMP      R0,R1
+   \   0000003C   0x1A000004         BNE      ??ReadEEPROMIntervalTemper_0
+   \   00000040   0x........         LDR      R0,??DataTable9_3
+   \   00000044   0xE1D000B0         LDRH     R0,[R0, #+0]
+   \   00000048   0xE5D41005         LDRB     R1,[R4, #+5]
+   \   0000004C   0xE1500001         CMP      R0,R1
+   \   00000050   0x0A00000C         BEQ      ??ReadEEPROMIntervalTemper_1
+    538            {
+    539             Inter2min = 2.0;
+   \                     ??ReadEEPROMIntervalTemper_0:
+   \   00000054   0xE3A00440         MOV      R0,#+1073741824
+   \   00000058   0xE58D0000         STR      R0,[SP, #+0]
+    540             MasInt[0] =  *(unsigned char*) & Inter2min; //@@ @@@@
+   \   0000005C   0xE3A00000         MOV      R0,#+0
+   \   00000060   0xE5C40000         STRB     R0,[R4, #+0]
+    541             MasInt[1] =  *((unsigned char*) & Inter2min+1);
+   \   00000064   0xE5DD0001         LDRB     R0,[SP, #+1]
+   \   00000068   0xE5C40001         STRB     R0,[R4, #+1]
+    542             MasInt[2] =  *((unsigned char*) & Inter2min+2);
+   \   0000006C   0xE5DD0002         LDRB     R0,[SP, #+2]
+   \   00000070   0xE5C40002         STRB     R0,[R4, #+2]
+    543             MasInt[3] =  *((unsigned char*) & Inter2min+3);
+   \   00000074   0xE5DD0003         LDRB     R0,[SP, #+3]
+   \   00000078   0xE5C40003         STRB     R0,[R4, #+3]
+    544             DELAYTACKT(irab,100006);
+   \   0000007C   0x........         LDR      R0,??DataTable9_12  ;; 0x186a6
+   \                     ??ReadEEPROMIntervalTemper_2:
+   \   00000080   0xE2500001         SUBS     R0,R0,#+1
+   \   00000084   0x5AFFFFFD         BPL      ??ReadEEPROMIntervalTemper_2
+    545             //I2CIntevarTemperW(); /*@@@@@@ @@@@@@@@@ = 2 @@@@@@@ @ CRC*/
+    546             //while (lock == 1); //@@@@ @@ @@@@@@@@ @@@@@@ @@@@@@@ CRC
+    547           }
+    548          * (unsigned char*) & Inter2min   = MasInt[0];
+   \                     ??ReadEEPROMIntervalTemper_1:
+   \   00000088   0xE5D40000         LDRB     R0,[R4, #+0]
+   \   0000008C   0xE5CD0000         STRB     R0,[SP, #+0]
+    549          *((unsigned char*) & Inter2min+1)= MasInt[1];
+   \   00000090   0xE5D40001         LDRB     R0,[R4, #+1]
+   \   00000094   0xE5CD0001         STRB     R0,[SP, #+1]
+    550          *((unsigned char*) & Inter2min+2)= MasInt[2] ;
+   \   00000098   0xE5D40002         LDRB     R0,[R4, #+2]
+   \   0000009C   0xE5CD0002         STRB     R0,[SP, #+2]
+    551          *((unsigned char*) & Inter2min+3)= MasInt[3];
+   \   000000A0   0xE5D40003         LDRB     R0,[R4, #+3]
+   \   000000A4   0xE5CD0003         STRB     R0,[SP, #+3]
+    552          TIMER0_INTERVAL=Inter2min * 60.0 * 1000.0;     //@@@@@@@@ @ msek
+   \   000000A8   0xE59D0000         LDR      R0,[SP, #+0]
+   \   000000AC   0x........         BL       __aeabi_f2d
+   \   000000B0   0xE1A02000         MOV      R2,R0
+   \   000000B4   0xE1A03001         MOV      R3,R1
+   \   000000B8   0xE3A00000         MOV      R0,#+0
+   \   000000BC   0xE3A01440         MOV      R1,#+1073741824
+   \   000000C0   0xE381184E         ORR      R1,R1,#0x4E0000
+   \   000000C4   0x........         BL       __aeabi_dmul
+   \   000000C8   0xE1A02000         MOV      R2,R0
+   \   000000CC   0xE1A03001         MOV      R3,R1
+   \   000000D0   0xE3A00000         MOV      R0,#+0
+   \   000000D4   0x........         LDR      R1,??DataTable9_13  ;; 0x408f4000
+   \   000000D8   0x........         BL       __aeabi_dmul
+   \   000000DC   0x........         BL       __aeabi_d2f
+   \   000000E0   0x........         LDR      R1,??DataTable9_14
+   \   000000E4   0xE5810000         STR      R0,[R1, #+0]
+    553          }
+   \   000000E8   0xE8BD4013         POP      {R0,R1,R4,LR}
+   \   000000EC   0xE12FFF1E         BX       LR               ;; return
+    554          /****************************************************************************/
+    555          
+    556          /**************************************************************/
+    557          /*@@@@@@ @@@@@@@@@@@ @@@@@@@@@ @ EEPROM, @@@ @@@@@ @@@@@@ */
+    558          /* @ @@@@@@@@@@@@@@@@ I2C*/
+    559          /*************************************************************/
+
+   \                                 In section .text, align 4, keep-with-next
+    560          void I2CIntevarTemperW(void)
+    561          {
+   \                     I2CIntevarTemperW:
+   \   00000000   0xE92D4010         PUSH     {R4,LR}
+    562          int irab;
+    563          CRC16(MasInt,4,0xFF,0);
+   \   00000004   0x........         LDR      R4,??DataTable9_11
+   \   00000008   0xE3A03000         MOV      R3,#+0
+   \   0000000C   0xE3A020FF         MOV      R2,#+255
+   \   00000010   0xE3A01004         MOV      R1,#+4
+   \   00000014   0xE1A00004         MOV      R0,R4
+   \   00000018   0x........         BL       CRC16
+    564          MasInt[4] = CRClo;   //@@ @@@@
+   \   0000001C   0x........         LDR      R0,??DataTable9_2
+   \   00000020   0xE1D000B0         LDRH     R0,[R0, #+0]
+   \   00000024   0xE5C40004         STRB     R0,[R4, #+4]
+    565          MasInt[5] = CRChi;  //c@ @@@@
+   \   00000028   0x........         LDR      R0,??DataTable9_3
+   \   0000002C   0xE1D000B0         LDRH     R0,[R0, #+0]
+   \   00000030   0xE5C40005         STRB     R0,[R4, #+5]
+    566          
+    567          //InitialiseI2C(1,0); //@@@@@@@@@@@@@ @@@ @@@@@@
+    568          //I2CTransferByte(17,6,MasInt); //@@@@@@ @@@@@@@
+    569          I2C_m24xx_wr(MasInt,Adr_TempInterval_EEPROM,6);
+   \   00000034   0xE3A02006         MOV      R2,#+6
+   \   00000038   0xE3A01011         MOV      R1,#+17
+   \   0000003C   0xE1A00004         MOV      R0,R4
+   \   00000040   0xE8BD4010         POP      {R4,LR}
+   \   00000044   0x........         B        I2C_m24xx_wr     ;; tailcall
+    570          
+    571          //while (lock == 1); //@@@@ @@ @@@@@@@@ @@@@@@ @@@@@@@ CRC
+    572          
+    573          //DELAYTACKT(irab,100006);
+    574          //I2C_m24xx_rd(MasInt,Adr_TempInterval_EEPROM,6); //@@@@@@ @@@@@@@@@
+    575          //I2CIntevarTemperR();
+    576          //while (lock == 1); //@@@@ @@ @@@@@@@@
+    577          }//end 2CIntevarTemperW
+    578          /*********************************************************/
+    579          /****************************************************************************/
+    580          /*@@@@@@ @@@@@@@ @@@@@@@@@@@@@ + CRC*/
+
+   \                                 In section .text, align 4, keep-with-next
+    581          void I2CMasKoefW (void)
+    582          {
+   \                     I2CMasKoefW:
+   \   00000000   0xE92D4010         PUSH     {R4,LR}
+    583            CRC16(MasEEPROMKoef,15,0xFF,0);
+   \   00000004   0x........         LDR      R4,??DataTable9_1
+   \   00000008   0xE3A03000         MOV      R3,#+0
+   \   0000000C   0xE3A020FF         MOV      R2,#+255
+   \   00000010   0xE3A0100F         MOV      R1,#+15
+   \   00000014   0xE2840080         ADD      R0,R4,#+128
+   \   00000018   0x........         BL       CRC16
+    584            MasEEPROMKoef[15] = CRClo;   //@@ @@@@
+   \   0000001C   0x........         LDR      R0,??DataTable9_2
+   \   00000020   0xE1D000B0         LDRH     R0,[R0, #+0]
+   \   00000024   0xE5C4008F         STRB     R0,[R4, #+143]
+    585            MasEEPROMKoef[16] = CRChi;  //c@ @@@@
+   \   00000028   0x........         LDR      R0,??DataTable9_3
+   \   0000002C   0xE1D000B0         LDRH     R0,[R0, #+0]
+   \   00000030   0xE5C40090         STRB     R0,[R4, #+144]
+    586            //InitialiseI2C(1,0); //@@@@@@@@@@@@@ @@@ @@@@@@
+    587            //I2CTransferByte(0,17,MasEEPROMKoef);
+    588            //while(lock == 1); //@@@@
+    589          
+    590            I2C_m24xx_wr(MasEEPROMKoef,Adr_Koeff_EEPROM,17);
+   \   00000034   0xE3A02011         MOV      R2,#+17
+   \   00000038   0xE3A01000         MOV      R1,#+0
+   \   0000003C   0xE2840080         ADD      R0,R4,#+128
+   \   00000040   0xE8BD4010         POP      {R4,LR}
+   \   00000044   0x........         B        I2C_m24xx_wr     ;; tailcall
+    591          }
+    592          /****************************************************************************/
+    593          /*@@@@@@ @@@@@@@ @@@@@@@@@@@@@ + CRC*/
+
+   \                                 In section .text, align 4, keep-with-next
+    594          void I2CMasKoefR (void)
+    595          {
+    596            //InitialiseI2C(0,0); //@@@@@@@@@@@@@ 1-@ @@@ @@@@@@
+    597            //I2CTransferByte(0,0);  //@@@@@@@@@ @@@@@@ @@@@@@ 0
+    598            //InitialiseI2C(1,1); //@@@@@@@@@@@@@   @@@ @@@@@@
+    599            //I2CTransferByte(0,17,MasEEPROMKoef);
+    600            //while(lock == 1); //@@@@
+    601            I2C_m24xx_rd(MasEEPROMKoef,Adr_Koeff_EEPROM,17); /*@@@@@@ @@@@@@@ @@@@@*/
+   \                     I2CMasKoefR:
+   \   00000000   0xE3A02011         MOV      R2,#+17
+   \   00000004   0xE3A01000         MOV      R1,#+0
+   \   00000008   0x........         LDR      R0,??DataTable9_15
+   \   0000000C   0x........         B        I2C_m24xx_rd     ;; tailcall
+    602          
+    603          }
+    604          
+    605          /****************************************************************************/
+    606          /*@@@@@@ @@@@@@@ @@@@@@@@@@@@@ @@@@@@@@@ + CRC @ @@@@@ @ EEPROM -125 @@@@ */
+    607          /****************************************************************************/
+
+   \                                 In section .text, align 4, keep-with-next
+    608          void I2CTABLTempW(void)
+    609          {
+   \                     I2CTABLTempW:
+   \   00000000   0xE92D4010         PUSH     {R4,LR}
+    610              CRC16(TABLTemperCORR,122,0xFF,0);//CRC @@@@@@@ @@@@@@ @@@ @@@@
+   \   00000004   0x........         LDR      R4,??DataTable9_1
+   \   00000008   0xE3A03000         MOV      R3,#+0
+   \   0000000C   0xE3A020FF         MOV      R2,#+255
+   \   00000010   0xE3A0107A         MOV      R1,#+122
+   \   00000014   0xE1A00004         MOV      R0,R4
+   \   00000018   0x........         BL       CRC16
+    611              TABLTemperCORR[122] = CRClo;
+   \   0000001C   0x........         LDR      R0,??DataTable9_2
+   \   00000020   0xE1D000B0         LDRH     R0,[R0, #+0]
+   \   00000024   0xE5C4007A         STRB     R0,[R4, #+122]
+    612              TABLTemperCORR[123] = CRChi;
+   \   00000028   0x........         LDR      R0,??DataTable9_3
+   \   0000002C   0xE1D000B0         LDRH     R0,[R0, #+0]
+   \   00000030   0xE5C4007B         STRB     R0,[R4, #+123]
+    613              //InitialiseI2C(1,0); //@@@@@@@@@@@@@ @@@ @@@@@@
+    614              //I2CTransferByte(128,126,TABLTemperCORR);
+    615              //while(lock == 1); //@@@@ @@@@@@
+    616              I2C_m24xx_wr(TABLTemperCORR,Adr_TempKorr_EEPROM,126);
+   \   00000034   0xE3A0207E         MOV      R2,#+126
+   \   00000038   0xE3A01080         MOV      R1,#+128
+   \   0000003C   0xE1A00004         MOV      R0,R4
+   \   00000040   0xE8BD4010         POP      {R4,LR}
+   \   00000044   0x........         B        I2C_m24xx_wr     ;; tailcall
+    617          }
+    618          /****************************************************************************/
+    619          /*@@@@@@ @@@@@ @@@@@@@@@@@@@ @@@@@@@@@ @ EEPROM -128+125 @@@@ */
+    620          /* @ @@@@@@@@@@@@@@@@ I2C*/
+    621          /****************************************************************************/
+
+   \                                 In section .text, align 4, keep-with-next
+    622          void I2CTABLTempFlagW(void)
+    623          {
+   \                     I2CTABLTempFlagW:
+   \   00000000   0xE92D4038         PUSH     {R3-R5,LR}
+    624              //InitialiseI2C(1,0); //@@@@@@@@@@@@@ @@@ @@@@@@
+    625          
+    626              TABLTemperCORR[125]=0;
+   \   00000004   0x........         LDR      R5,??DataTable9_1
+   \   00000008   0xE3A00000         MOV      R0,#+0
+   \   0000000C   0xE5C5007D         STRB     R0,[R5, #+125]
+    627              if (FLAG.temperCORR == 1)
+   \   00000010   0x........         LDR      R4,??DataTable9_4
+   \   00000014   0xE5940000         LDR      R0,[R4, #+0]
+   \   00000018   0xE3A01001         MOV      R1,#+1
+   \   0000001C   0xE11107A0         TST      R1,R0, LSR #+15
+   \   00000020   0x0A000001         BEQ      ??I2CTABLTempFlagW_0
+    628                    TABLTemperCORR[125]=1;  //@@@@ @@@@@@ @@@@@@@@@ 1- @@@@@@@@@
+   \   00000024   0xE1A00001         MOV      R0,R1
+   \   00000028   0xE5C5007D         STRB     R0,[R5, #+125]
+    629              I2C_m24xx_wr(TABLTemperCORR + 125,Adr_TempKorr_EEPROM + 125,1);
+   \                     ??I2CTABLTempFlagW_0:
+   \   0000002C   0xE1A02001         MOV      R2,R1
+   \   00000030   0xE3A010FD         MOV      R1,#+253
+   \   00000034   0xE285007D         ADD      R0,R5,#+125
+   \   00000038   0x........         BL       I2C_m24xx_wr
+    630              //I2CTransferByte(128+125,1,TABLTemperCORR+125);
+    631              //while(lock == 1); //@@@@ @@@@@@
+    632          
+    633              //I2CTransferByte(0,0);  //@@@@@@@@@ @@@@@@ @@@@@@ @@ 0 @@@@@ @@@@ @@@@@@ @@@
+    634          
+    635              //I2CTransferByte(128+125,0);  //@@@@@@@@@ @@@@@@ @@@@@@ @@@@@
+    636              //InitialiseI2C(1,1); //@@@@@@@@@@@@@ @@@ @@@@@@
+    637              //I2CTransferByte(128+125,1,TABLTemperCORR+125);
+    638              //DeInitialiseI2C();
+    639              I2C_m24xx_rd(TABLTemperCORR + 125,Adr_TempKorr_EEPROM + 125,1);
+   \   0000003C   0xE3A02001         MOV      R2,#+1
+   \   00000040   0xE3A010FD         MOV      R1,#+253
+   \   00000044   0xE285007D         ADD      R0,R5,#+125
+   \   00000048   0x........         BL       I2C_m24xx_rd
+    640              FLAG.temperCORR = 0;
+   \   0000004C   0xE5940000         LDR      R0,[R4, #+0]
+   \   00000050   0xE3C00C80         BIC      R0,R0,#0x8000
+   \   00000054   0xE5840000         STR      R0,[R4, #+0]
+    641              if (TABLTemperCORR[125])
+   \   00000058   0xE5D5107D         LDRB     R1,[R5, #+125]
+   \   0000005C   0xE3510000         CMP      R1,#+0
+   \   00000060   0x0A000001         BEQ      ??I2CTABLTempFlagW_1
+    642                    FLAG.temperCORR = 1;  //@@@@ @@@@@@ @@@@@@@@@ - @@@@@@@@@
+   \   00000064   0xE3800C80         ORR      R0,R0,#0x8000
+   \   00000068   0xE5840000         STR      R0,[R4, #+0]
+    643          }
+   \                     ??I2CTABLTempFlagW_1:
+   \   0000006C   0xE8BD4031         POP      {R0,R4,R5,LR}
+   \   00000070   0xE12FFF1E         BX       LR               ;; return
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable9:
+   \   00000000   0xE01FC0C4         DC32     0xe01fc0c4
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable9_1:
+   \   00000000   0x........         DC32     TABLTemperCORR
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable9_2:
+   \   00000000   0x........         DC32     CRClo
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable9_3:
+   \   00000000   0x........         DC32     CRChi
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable9_4:
+   \   00000000   0x........         DC32     FLAG
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable9_5:
+   \   00000000   0x........         DC32     KODADC
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable9_6:
+   \   00000000   0x........         DC32     KODADCEEPROM
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable9_7:
+   \   00000000   0x........         DC32     MINPOROG
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable9_8:
+   \   00000000   0x........         DC32     MAXPOROG
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable9_9:
+   \   00000000   0x........         DC32     TEMPERFLOAT
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable9_10:
+   \   00000000   0x........         DC32     COMMAND
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable9_11:
+   \   00000000   0x........         DC32     MasInt
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable9_12:
+   \   00000000   0x000186A6         DC32     0x186a6
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable9_13:
+   \   00000000   0x408F4000         DC32     0x408f4000
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable9_14:
+   \   00000000   0x........         DC32     TIMER0_INTERVAL
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable9_15:
+   \   00000000   0x........         DC32     TABLTemperCORR+0x80
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       8   I2CIntevarTemperW
+         8   -> CRC16
+         0   -> I2C_m24xx_wr
+      16   I2CKOEFF
+        16   -> CRC16
+        16   -> I2C_m24xx_wr
+        16   -> __aeabi_d2iz
+        16   -> __aeabi_dadd
+        16   -> __aeabi_f2d
+        16   -> toCOMMAND2byte
+       0   I2CMasKoefR
+         0   -> I2C_m24xx_rd
+       8   I2CMasKoefW
+         8   -> CRC16
+         0   -> I2C_m24xx_wr
+      16   I2CTABLTempFlagW
+        16   -> I2C_m24xx_rd
+        16   -> I2C_m24xx_wr
+       8   I2CTABLTempW
+         8   -> CRC16
+         0   -> I2C_m24xx_wr
+      24   I2C_EEPROM_wr
+        24   -> i2c_lpc_ask_polling_op
+        24   -> i2c_lpc_ctrl
+        24   -> i2c_lpc_stop
+        24   -> i2c_lpc_wr_byte
+      32   I2C_m24xx_rd
+        32   -> i2c_lpc_ctrl
+        32   -> i2c_lpc_rx_to_buf
+        32   -> i2c_lpc_stop
+        32   -> i2c_lpc_wr_byte
+      32   I2C_m24xx_wr
+        32   -> I2C_EEPROM_wr
+      16   ReadEEPROMIntervalTemper
+        16   -> CRC16
+        16   -> I2C_m24xx_rd
+        16   -> __aeabi_d2f
+        16   -> __aeabi_dmul
+        16   -> __aeabi_f2d
+      16   ReadEEPROM_test
+        16   -> i2c_lpc_ctrl
+        16   -> i2c_lpc_rx_to_buf
+         0   -> i2c_lpc_stop
+        16   -> i2c_lpc_wr_byte
+      24   ReadEEPROMkoef
+        24   -> CRC16
+        24   -> I2C_m24xx_rd
+        24   -> I2C_m24xx_wr
+        24   -> __aeabi_memset4
+       8   ReadTABLtemper
+         8   -> CRC16
+         8   -> I2CTABLTempW
+         8   -> I2C_m24xx_rd
+       0   i2c_lpc_ask_polling_op
+       8   i2c_lpc_ctrl
+         8   -> i2c_lpc_stop
+       0   i2c_lpc_init
+       0   i2c_lpc_rx_to_buf
+       0   i2c_lpc_stop
+       0   i2c_lpc_wr_byte
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  ??DataTable9
+       4  ??DataTable9_1
+       4  ??DataTable9_10
+       4  ??DataTable9_11
+       4  ??DataTable9_12
+       4  ??DataTable9_13
+       4  ??DataTable9_14
+       4  ??DataTable9_15
+       4  ??DataTable9_2
+       4  ??DataTable9_3
+       4  ??DataTable9_4
+       4  ??DataTable9_5
+       4  ??DataTable9_6
+       4  ??DataTable9_7
+       4  ??DataTable9_8
+       4  ??DataTable9_9
+      72  I2CIntevarTemperW
+     308  I2CKOEFF
+      16  I2CMasKoefR
+      72  I2CMasKoefW
+     116  I2CTABLTempFlagW
+      72  I2CTABLTempW
+     116  I2C_EEPROM_wr
+     196  I2C_m24xx_rd
+     296  I2C_m24xx_wr
+       8  MasInt
+     240  ReadEEPROMIntervalTemper
+      60  ReadEEPROM_test
+     408  ReadEEPROMkoef
+     180  ReadTABLtemper
+     148  TABLTemperCORR
+          MasEEPROMKoef
+       4  _A_I2CONCLR
+       4  _A_I2CONSET
+       4  _A_I2DAT
+       4  _A_I2SCLH
+       4  _A_I2SCLL
+       4  _A_I2STAT
+       4  _A_PCONP
+       4  _A_PINSEL0
+     132  i2c_lpc_ask_polling_op
+     136  i2c_lpc_ctrl
+      84  i2c_lpc_init
+     172  i2c_lpc_rx_to_buf
+      32  i2c_lpc_stop
+      36  i2c_lpc_wr_byte
+
+ 
+   156 bytes in section .bss
+    32 bytes in section .noinit  (abs)
+ 2 808 bytes in section .text
+ 
+ 2 808 bytes of CODE memory
+   156 bytes of DATA memory (+ 32 bytes shared)
+
+Errors: none
+Warnings: 13

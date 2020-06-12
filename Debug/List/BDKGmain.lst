@@ -1,0 +1,1656 @@
+###############################################################################
+#
+# IAR ANSI C/C++ Compiler V8.20.1.14183/W32 for ARM       12/Jun/2020  11:37:53
+# Copyright 1999-2017 IAR Systems AB.
+#
+#    Cpu mode     =  arm
+#    Endian       =  little
+#    Source file  =  D:\Users\Chirikalo\ARM_proj\AT1315_for_test\BDKGmain.cpp
+#    Command line =  
+#        -f C:\Users\CHIRIK~1\AppData\Local\Temp\EW1A85.tmp
+#        (D:\Users\Chirikalo\ARM_proj\AT1315_for_test\BDKGmain.cpp -lCN
+#        D:\Users\Chirikalo\ARM_proj\AT1315_for_test\Debug\List -o
+#        D:\Users\Chirikalo\ARM_proj\AT1315_for_test\Debug\Obj --no_unroll
+#        --no_inline --no_tbaa --no_scheduling --debug --endian=little
+#        --cpu=ARM7TDMI-S -e --fpu=None --dlib_config "C:\Program Files
+#        (x86)\IAR Systems\Embedded Workbench
+#        8.0\arm\INC\c\DLib_Config_Normal.h" --cpu_mode arm -Om
+#        --use_c++_inline)
+#    Locale       =  C
+#    List file    =  
+#        D:\Users\Chirikalo\ARM_proj\AT1315_for_test\Debug\List\BDKGmain.lst
+#    Object file  =  
+#        D:\Users\Chirikalo\ARM_proj\AT1315_for_test\Debug\Obj\BDKGmain.o
+#
+###############################################################################
+
+D:\Users\Chirikalo\ARM_proj\AT1315_for_test\BDKGmain.cpp
+      1          
+      2          #include <intrinsics.h>
+      3          #include <NXP/iolpc2294.h>
+
+   \                                 In section .noinit, at 0xffe00008
+   \   __absolute union <unnamed>#158 volatile _A_BCFG2
+   \                     _A_BCFG2:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xffe0000c
+   \   __absolute union <unnamed>#159 volatile _A_BCFG3
+   \                     _A_BCFG3:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe01fc040
+   \   __absolute union <unnamed>#164 volatile _A_MEMMAP
+   \                     _A_MEMMAP:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe01fc0c4
+   \   __absolute union <unnamed>#170 volatile _A_PCONP
+   \                     _A_PCONP:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe01fc000
+   \   __absolute union <unnamed>#171 volatile _A_MAMCR
+   \                     _A_MAMCR:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe01fc004
+   \   __absolute union <unnamed>#172 volatile _A_MAMTIM
+   \                     _A_MAMTIM:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe01fc100
+   \   __absolute union <unnamed>#173 volatile _A_APBDIV
+   \                     _A_APBDIV:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xfffff010
+   \   __absolute union <unnamed>#179 volatile _A_VICIntEnable
+   \                     _A_VICIntEnable:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xfffff014
+   \   __absolute union <unnamed>#180 volatile _A_VICIntEnClear
+   \                     _A_VICIntEnClear:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xfffff030
+   \   __absolute unsigned long volatile VICVectAddr
+   \                     VICVectAddr:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xfffff10c
+   \   __absolute unsigned long volatile VICVectAddr3
+   \                     VICVectAddr3:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xfffff20c
+   \   __absolute union <unnamed>#187 volatile _A_VICVectCntl3
+   \                     _A_VICVectCntl3:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe002c000
+   \   __absolute union <unnamed>#200 volatile _A_PINSEL0
+   \                     _A_PINSEL0:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe002c014
+   \   __absolute unsigned long volatile PINSEL2
+   \                     PINSEL2:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe0028004
+   \   __absolute union <unnamed>#203 volatile _A_IO0SET
+   \                     _A_IO0SET:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe0028008
+   \   __absolute union <unnamed>#204 volatile _A_IO0DIR
+   \                     _A_IO0DIR:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe002800c
+   \   __absolute union <unnamed>#205 volatile _A_IO0CLR
+   \                     _A_IO0CLR:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe0028020
+   \   __absolute union <unnamed>#220 const volatile _A_IO2PIN
+   \                     _A_IO2PIN:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe0028024
+   \   __absolute union <unnamed>#221 volatile _A_IO2SET
+   \                     _A_IO2SET:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe0028028
+   \   __absolute union <unnamed>#222 volatile _A_IO2DIR
+   \                     _A_IO2DIR:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe002802c
+   \   __absolute union <unnamed>#223 volatile _A_IO2CLR
+   \                     _A_IO2CLR:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe0028034
+   \   __absolute union <unnamed>#225 volatile _A_IO3SET
+   \                     _A_IO3SET:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe0028038
+   \   __absolute union <unnamed>#226 volatile _A_IO3DIR
+   \                     _A_IO3DIR:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe0004000
+   \   __absolute union <unnamed>#370 volatile _A_T0IR
+   \                     _A_T0IR:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe0004004
+   \   __absolute union <unnamed>#371 volatile _A_T0TCR
+   \                     _A_T0TCR:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe0004008
+   \   __absolute unsigned long volatile T0TC
+   \                     T0TC:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe0004018
+   \   __absolute unsigned long volatile T0MR0
+   \                     T0MR0:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe0008000
+   \   __absolute union <unnamed>#376 volatile _A_T1IR
+   \                     _A_T1IR:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe0008004
+   \   __absolute union <unnamed>#377 volatile _A_T1TCR
+   \                     _A_T1TCR:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe0008008
+   \   __absolute unsigned long volatile T1TC
+   \                     T1TC:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe0000000
+   \   __absolute union <unnamed>#425 volatile _A_WDMOD
+   \                     _A_WDMOD:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe0000004
+   \   __absolute unsigned long volatile WDTC
+   \                     WDTC:
+   \   00000000                      DS8 4
+
+   \                                 In section .noinit, at 0xe0000008
+   \   __absolute union <unnamed>#426 volatile _A_WDFEED
+   \                     _A_WDFEED:
+   \   00000000                      DS8 4
+      4          //#include <iolpc2294.h>
+      5          #include <string.h>
+      6          #include <setjmp.h>
+      7          #include "my_macros.h"
+      8          /********************************/
+      9          /* @@@ @@@@@@@
+     10          #define TARGET_BOARD_FREQ 18432
+     11          #define VPBDIV01  0x00000001
+     12          #define DELAYTACKT(CJ,CI) for (CJ = (CI-1/3);  --CJ >= 0;);
+     13           typedef struct
+     14          {
+     15            unsigned noEINT0      :1;
+     16            unsigned temperature  :1;
+     17            unsigned ErrtempTABL  :1;
+     18            unsigned testerror    :1;
+     19            unsigned SPECTR       :1;
+     20            unsigned STAB         :1;
+     21            unsigned UART_RS      :1;
+     22            unsigned error        :1;
+     23            unsigned tuning       :1;
+     24            unsigned EEPROMAW     :1;
+     25            unsigned EEPROMDW     :1;
+     26            unsigned EEPROMAR     :1;
+     27            unsigned EEPROMDR     :1;
+     28            unsigned temperWaitHL :1;
+     29            unsigned temperIZM    :1;
+     30            unsigned temperCORR   :1;
+     31            unsigned CRCkoeff     :1;
+     32            unsigned minmaxTemper :1;
+     33            unsigned EEPROMSP     :1;
+     34          } __BITFLAG;*/
+     35          ///////////////////////////////
+     36          
+     37          /*==============================*/
+     38          #define PowerPCONP  0x80E   /*- @@@ TMR0; 0x8E @@@@@@@ - PCONP bit 1-T0,2-T1,3-urt0,7-I2C, 11-EMC*/
+     39          #define INTERENT0   0x4000 /* bit 14h int*/
+     40          #define INTERTMRO   0x10   /* bit 4 int*/
+     41          #define INTERTMR1   0x20   /* bit 5 int*/
+     42          #define TCR_ENABLE  0x1    /* timer TCR bit 0 =1-enable counting */
+     43          #define INTERUART0  0x40   /* bit 6 int*/
+     44          /****************************************/
+     45          void ClearCOMMAND (void);
+     46          /****************************************/
+     47           __BITFLAG FLAG;   //@@@ @ macros
+     48          extern unsigned int DAC;
+     49          //extern unsigned char SPECTR[3075];
+     50          
+     51          extern unsigned char BUFFSPECTR[3075];
+     52          extern unsigned long SPECTR[1025];
+     53          
+     54          extern unsigned short CRChi,CRClo;
+     55          extern int ByteCurrentIzm;
+     56          extern float MasTemper[20];
+     57          extern unsigned char lock;
+     58          extern unsigned char flagTIME2;  //@@@@ @@e@@@ @@@@@@@ @@ 2 @@@@@
+     59          extern unsigned char MasEEPROMKoef[17];
+     60          extern unsigned char TimeByte;    //@@@-@@ @@@@ @ @@@@@@@@@@@@@ @@@@@@@ 4 @@@ 2
+     61          
+     62          
+     63          extern int Temp_i;
+     64          
+     65          /****************************************/
+     66          extern void InitialiseEINT0(void);
+     67          extern void InitialiseEINT2LoHi(void);
+     68          extern void InitialiseTimer0(void);
+     69          extern void InitialiseTimer1(void);
+     70          extern void InitialiseUART0(unsigned char speed);
+     71          extern void COM3(void);
+     72          extern void COM4(void);
+     73          extern void COM5(void);
+     74          extern void COM6(void);
+     75          extern void COM7(void);
+     76          extern void COM8(void);
+     77          extern void COMB(void);
+     78          extern void COM10(void);
+     79          extern void COM11(void);
+     80          extern void COM12(void);
+     81          extern void COM13(void);
+     82          extern void COM15(void);
+     83          extern void COM16(void);
+     84          extern void COM17(void);
+     85          
+     86          extern void COM20(void);
+     87          
+     88          extern void COMerr(char kod);
+     89          extern void CRC16(unsigned char mas[],short usDataLen,char flFF,char flzapCOMMand);
+     90          extern void STOPEINT0(void);
+     91          extern void ZAPFACTOR (unsigned short factor,unsigned char nf);
+     92          
+     93          extern void InitialiseI2C(unsigned char nn,unsigned char Flread);
+     94          extern void ReadEEPROMkoef(void);
+     95          extern void ReadTABLtemper(void);
+     96          extern void TEMPERATURA1(void);
+     97          extern void MIDTEMPER(void);
+     98          extern void TEMPERATURA(void);
+     99          extern void SETKOEFF(void);
+    100          extern void ReadEEPROMIntervalTemper(void);
+    101          
+    102          extern void i2c_lpc_init(void);
+    103          
+    104          
+    105          /****************************************/
+    106          void ClearSPECTR (void);
+    107          void DeInitialiseI2C(void);
+    108          
+    109          unsigned char COMMAND[16];
+    110          unsigned int ByteCOMMAND;
+    111          unsigned int TIMEIZMsek;//@@@@@@@@ @@@@@ @@@@@@@@@
+    112          unsigned  short KODADC;
+    113          unsigned  short KODADCEEPROM;
+    114          unsigned  short MINPOROG;
+    115          unsigned  short MAXPOROG;
+    116          unsigned int PCLK_VPB;
+    117          double dPeriod;
+    118          unsigned short TEST_pause;
+    119          unsigned int SoftTimerCT;
+    120          unsigned int SoftTimerCT_save;
+    121          unsigned int SoftTimerCT_save1;
+    122          unsigned int SoftTimerVal;
+
+   \                                 In section .noinit, align 4
+    123          __no_init unsigned int T1TC_temp;
+   \                     T1TC_temp:
+   \   00000000                      DS8 4
+
+   \                                 In section .bss, align 8
+   \                     KODADC:
+   \   00000000                      DS8 2
+   \                     MINPOROG:
+   \   00000002                      DS8 2
+   \                     MAXPOROG:
+   \   00000004                      DS8 2
+   \   00000006                      DS8 2
+   \                     COMMAND:
+   \   00000008                      DS8 16
+   \                     dPeriod:
+   \   00000018                      DS8 8
+   \                     FLAG:
+   \   00000020                      DS8 4
+   \                     ByteCOMMAND:
+   \   00000024                      DS8 4
+   \                     TIMEIZMsek:
+   \   00000028                      DS8 4
+   \                     PCLK_VPB:
+   \   0000002C                      DS8 4
+   \                     SoftTimerCT:
+   \   00000030                      DS8 4
+   \                     SoftTimerCT_save:
+   \   00000034                      DS8 4
+   \                     SoftTimerCT_save1:
+   \   00000038                      DS8 4
+   \                     SoftTimerVal:
+   \   0000003C                      DS8 4
+    124          int icikl_n; //@@@ @@@ @@@@@@@@
+   \                     icikl_n:
+   \   00000040                      DS8 4
+    125          jmp_buf JmpMain;
+    126          
+    127          unsigned  short KODADC_temp;
+    128          unsigned char FL_test;
+   \                     FL_test:
+   \   00000044                      DS8 1
+    129          
+    130          //======== @@@ @@@@@@@@@@@@ (14.12.2015) ==============
+    131          unsigned char Test_WDT_cnt = 0;
+    132          unsigned char WDMOD_temp;
+   \                     WDMOD_temp:
+   \   00000045                      DS8 1
+
+   \                                 In section .bss, align 2
+   \                     KODADCEEPROM:
+   \   00000000                      DS8 2
+
+   \                                 In section .bss, align 2
+   \                     TEST_pause:
+   \   00000000                      DS8 2
+
+   \                                 In section .bss, align 8
+   \                     JmpMain:
+   \   00000000                      DS8 64
+
+   \                                 In section .bss, align 2
+   \                     KODADC_temp:
+   \   00000000                      DS8 2
+
+   \                                 In section .bss, align 1
+   \                     Test_WDT_cnt:
+   \   00000000                      DS8 1
+    133          //======== @@@ @@@@@@@@@@@@ (14.12.2015) ==============
+    134          
+    135          /************************************************/
+
+   \                                 In section .text, align 4, keep-with-next
+    136          __irq __nested __arm void Pirq (void)
+    137          {
+   \                     Pirq:
+   \   00000000   0xE24EE004         SUB      LR,LR,#+4
+   \   00000004   0xE52DE004         STR      LR,[SP, #-4]!
+   \   00000008   0xE14FE000         MRS      LR,SPSR
+   \   0000000C   0xE92D5001         STMDB    SP!,{R0,R12,LR}
+   \   00000010   0xE10FE000         MRS      LR,CPSR
+   \   00000014   0xE38EE01F         ORR      LR,LR,#0x1F
+   \   00000018   0xE121F00E         MSR      CPSR_c,LR
+   \   0000001C   0xE92D401E         PUSH     {R1-R4,LR}
+   \   00000020   0xE1A0000D         MOV      R0,SP
+   \   00000024   0xE24DD004         SUB      SP,SP,#+4
+   \   00000028   0xE3CDD007         BIC      SP,SP,#0x7
+   \   0000002C   0xE58D0000         STR      R0,[SP, #+0]
+    138            unsigned int vector;
+    139            void (*interrupt_task)();
+    140          
+    141            // Called at 1000 Hz rate.
+    142            vector = VICVectAddr; // Get interrupt vector.
+   \   00000030   0xE3E040CF         MVN      R4,#+207
+   \   00000034   0xE3C44EF0         BIC      R4,R4,#0xF00
+   \   00000038   0xE5940000         LDR      R0,[R4, #+0]
+    143            interrupt_task = (void(*)())vector;
+    144            //(*interrupt_function)(); // Call vectored interrupt function.
+    145          
+    146            //VICVectAddr = 0; // Clear interrupt in VIC.
+    147           __enable_interrupt(); // Allow other IRQ interrupts
+   \   0000003C   0xE10F1000         MRS      R1,CPSR
+   \   00000040   0xE3C110C0         BIC      R1,R1,#0xC0
+   \   00000044   0xE121F001         MSR      CPSR_c,R1
+    148                                  //to be serviced from this
+    149                                  //point.
+    150            (*interrupt_task)();  // Execute the task associated
+   \   00000048   0xE1A0E00F         MOV      LR,PC
+   \   0000004C   0xE12FFF10         BX       R0
+    151                                  //with this interrupt.
+    152            __disable_interrupt();
+   \   00000050   0xE10F0000         MRS      R0,CPSR
+   \   00000054   0xE38000C0         ORR      R0,R0,#0xC0
+   \   00000058   0xE121F000         MSR      CPSR_c,R0
+    153             VICVectAddr = 0; // Clear interrupt in VIC.
+   \   0000005C   0xE3A00000         MOV      R0,#+0
+   \   00000060   0xE5840000         STR      R0,[R4, #+0]
+    154          }
+   \   00000064   0xE59DD000         LDR      SP,[SP, #0]
+   \   00000068   0xE8BD401E         POP      {R1-R4,LR}
+   \   0000006C   0xE10FC000         MRS      R12,CPSR
+   \   00000070   0xE38CC092         ORR      R12,R12,#0x92
+   \   00000074   0xE3CCC00D         BIC      R12,R12,#0xD
+   \   00000078   0xE121F00C         MSR      CPSR_c,R12
+   \   0000007C   0xE8BD5001         LDM      SP!,{R0,R12,LR}
+   \   00000080   0xE16FF00E         MSR      SPSR_cxsf,LR
+   \   00000084   0xE8FD8000         LDM      SP!,{PC}^        ;; return
+   \   00000088                      REQUIRE VICVectAddr
+    155          /*****************************************************/
+
+   \                                 In section .text, align 4, keep-with-next
+    156          void ClearCOMMAND (void)
+    157          {
+    158            ByteCOMMAND = 0;
+   \                     ClearCOMMAND:
+   \   00000000   0x........         LDR      R0,??DataTable5
+   \   00000004   0xE3A01000         MOV      R1,#+0
+   \   00000008   0xE5801024         STR      R1,[R0, #+36]
+    159            FLAG.UART_RS = 0;
+   \   0000000C   0xE5901020         LDR      R1,[R0, #+32]
+   \   00000010   0xE3C11040         BIC      R1,R1,#0x40
+   \   00000014   0xE5801020         STR      R1,[R0, #+32]
+    160          }
+   \   00000018   0xE12FFF1E         BX       LR               ;; return
+    161          /*****************************************************/
+    162          //void ClearSPECTR (void)
+    163          //{
+    164          //  int i;
+    165          //
+    166          //  for (i=3072; --i >=0;)
+    167          //              SPECTR[i] = 0;
+    168          //}
+
+   \                                 In section .text, align 4, keep-with-next
+    169          void ClearSPECTR (void)
+    170          {
+    171            memset(SPECTR,0,sizeof(SPECTR));
+   \                     ClearSPECTR:
+   \   00000000   0xE3A02000         MOV      R2,#+0
+   \   00000004   0xE3A01004         MOV      R1,#+4
+   \   00000008   0xE3811D40         ORR      R1,R1,#0x1000
+   \   0000000C   0x........         LDR      R0,??DataTable5_1
+   \   00000010   0x........         B        __aeabi_memset4  ;; tailcall
+    172          }
+    173          /*****************************************************/
+
+   \                                 In section .text, align 4, keep-with-next
+    174          void InitialiseEMC (void)
+    175          {
+    176          PINSEL2 = 0x00014114; //0x0E6141E4;
+   \                     InitialiseEMC:
+   \   00000000   0xE3A00B50         MOV      R0,#+81920
+   \   00000004   0xE3800F45         ORR      R0,R0,#0x114
+   \   00000008   0x........         LDR      R1,??DataTable5_2  ;; 0xe002c014
+   \   0000000C   0xE5810000         STR      R0,[R1, #+0]
+    177          BCFG3_bit.IDCY = 0;
+   \   00000010   0xE3A0028F         MOV      R0,#-268435448
+   \   00000014   0xE38006FE         ORR      R0,R0,#0xFE00000
+   \   00000018   0xE5901004         LDR      R1,[R0, #+4]
+   \   0000001C   0xE3C1100F         BIC      R1,R1,#0xF
+   \   00000020   0xE5801004         STR      R1,[R0, #+4]
+    178          BCFG3_bit.WST1=0;
+   \   00000024   0xE5901004         LDR      R1,[R0, #+4]
+   \   00000028   0xE3C11FF8         BIC      R1,R1,#0x3E0
+   \   0000002C   0xE5801004         STR      R1,[R0, #+4]
+    179          BCFG3_bit.WST2=0;
+   \   00000030   0xE5901004         LDR      R1,[R0, #+4]
+   \   00000034   0xE3C11CF8         BIC      R1,R1,#0xF800
+   \   00000038   0xE5801004         STR      R1,[R0, #+4]
+    180          BCFG3_bit.RBLE = 1; //@@@ DAC
+   \   0000003C   0xE5901004         LDR      R1,[R0, #+4]
+   \   00000040   0xE3811E40         ORR      R1,R1,#0x400
+   \   00000044   0xE5801004         STR      R1,[R0, #+4]
+    181          BCFG3_bit.MW = 2;
+   \   00000048   0xE5901004         LDR      R1,[R0, #+4]
+   \   0000004C   0xE3C115C0         BIC      R1,R1,#0x30000000
+   \   00000050   0xE3811580         ORR      R1,R1,#0x20000000
+   \   00000054   0xE5801004         STR      R1,[R0, #+4]
+    182          
+    183          BCFG2_bit.IDCY = 0;
+   \   00000058   0xE5901000         LDR      R1,[R0, #+0]
+   \   0000005C   0xE3C1100F         BIC      R1,R1,#0xF
+   \   00000060   0xE5801000         STR      R1,[R0, #+0]
+    184          BCFG2_bit.WST1=0;
+   \   00000064   0xE5901000         LDR      R1,[R0, #+0]
+   \   00000068   0xE3C11FF8         BIC      R1,R1,#0x3E0
+   \   0000006C   0xE5801000         STR      R1,[R0, #+0]
+    185          BCFG2_bit.WST2=0;
+   \   00000070   0xE5901000         LDR      R1,[R0, #+0]
+   \   00000074   0xE3C11CF8         BIC      R1,R1,#0xF800
+   \   00000078   0xE5801000         STR      R1,[R0, #+0]
+    186          BCFG2_bit.RBLE = 1; //@@@ @@@
+   \   0000007C   0xE5901000         LDR      R1,[R0, #+0]
+   \   00000080   0xE3811E40         ORR      R1,R1,#0x400
+   \   00000084   0xE5801000         STR      R1,[R0, #+0]
+    187          BCFG2_bit.MW = 1;
+   \   00000088   0xE5901000         LDR      R1,[R0, #+0]
+   \   0000008C   0xE3C115C0         BIC      R1,R1,#0x30000000
+   \   00000090   0xE3811540         ORR      R1,R1,#0x10000000
+   \   00000094   0xE5801000         STR      R1,[R0, #+0]
+    188          }
+   \   00000098   0xE12FFF1E         BX       LR               ;; return
+   \   0000009C                      REQUIRE PINSEL2
+   \   0000009C                      REQUIRE _A_BCFG3
+   \   0000009C                      REQUIRE _A_BCFG2
+    189          
+    190          //-------------@@@@@@@@@@ @@ WDT ---------------------
+    191          //----------------------------------------------------
+    192          
+
+   \                                 In section .text, align 4, keep-with-next
+    193          void WDT_Interupt(void)
+    194          {
+    195            //WDMOD_bit.WDTOF = 0;
+    196            //WDMOD_bit.WDEN = 1;
+    197            // __disable_interrupt();
+    198            //WDFEED = 0xAA;
+    199            //WDFEED = 0x55;
+    200            //__enable_interrupt();
+    201            //longjmp(JmpMain,1);
+    202            ++icikl_n;
+   \                     WDT_Interupt:
+   \   00000000   0x........         LDR      R0,??DataTable5
+   \   00000004   0xE5901040         LDR      R1,[R0, #+64]
+   \   00000008   0xE2811001         ADD      R1,R1,#+1
+   \   0000000C   0xE5801040         STR      R1,[R0, #+64]
+    203          
+    204          }
+   \   00000010   0xE12FFF1E         BX       LR               ;; return
+    205          /*****************************************************/
+    206          /* @@@@@@@@@@@@@@@ I2C, @@@@@ @@@@@@@ @ @@@@@@@@@@  */
+    207          /****************************************************/
+
+   \                                 In section .text, align 4, keep-with-next
+    208          void DeInitialiseI2C(void)
+    209          {
+    210             //while(lock == 1);	//Wait for interrupt to signal end of I2C activity????????????
+    211             //PINSEL0   = (PINSEL0 & 0xFFFFFF0F);   /* enable GPIO Port0.2,Port0.3 bus pins */
+    212             //PCONP =PowerPCONP; //@@@@@ @@@@@@@ @@@ I2C
+    213             //VICIntEnClear = 0x00000200; /*@@@@@@@@@@ @@@@@@@@@@ @@ I2C*/
+    214          }
+   \                     DeInitialiseI2C:
+   \   00000000   0xE12FFF1E         BX       LR               ;; return
+
+   \                                 In section .text, align 4, keep-with-next
+    215          int main()
+    216          {
+   \                     main:
+   \   00000000   0xE92D4FFE         PUSH     {R1-R11,LR}
+    217            int i,adrcom15;
+    218            void (*AdrCOMMAND)();
+    219          
+    220            __disable_interrupt();
+   \   00000004   0xE10F0000         MRS      R0,CPSR
+   \   00000008   0xE38000C0         ORR      R0,R0,#0xC0
+   \   0000000C   0xE121F000         MSR      CPSR_c,R0
+    221            PINSEL0 = 0;
+   \   00000010   0xE3A04000         MOV      R4,#+0
+   \   00000014   0xE3A004E0         MOV      R0,#-536870912
+   \   00000018   0xE3800BB0         ORR      R0,R0,#0x2C000
+   \   0000001C   0xE5804000         STR      R4,[R0, #+0]
+    222            MEMMAP = 1;  //1-to ROM-flash, 2-to ram-ozy;
+   \   00000020   0xE3800974         ORR      R0,R0,#0x1D0000
+   \   00000024   0xE3A05001         MOV      R5,#+1
+   \   00000028   0xE5805040         STR      R5,[R0, #+64]
+    223            MAMCR = 2;  //@@@@@@@@ @@@@@@ @@@@@@@@@@@@@ MAM
+   \   0000002C   0xE3A01002         MOV      R1,#+2
+   \   00000030   0xE5801000         STR      R1,[R0, #+0]
+    224            MAMTIM = 3; //3 @@@@@ @@@@@@@@ @@@ @@@@@@@ @@ @@@@
+   \   00000034   0xE3A01003         MOV      R1,#+3
+   \   00000038   0xE5801004         STR      R1,[R0, #+4]
+    225          
+    226          // @@@@@@@@@ FLACH @ 3 @@@@
+    227          //  @ 1 @@@ @@ @@@@@@ - @@@@@@@@ @@@@@@@@@ @@@@ @@ @@@@@@@@ @@@@@@@@ @@@@@ @@ @@@@@@@
+    228          /*  PLLCFG =  0x00000022;   //@@@@@@@@@ @ 3 @@@@ @=2+1, @= 2+1
+    229            PLLCON =  0x00000001;
+    230            PLLFEED = 0x000000AA;
+    231            PLLFEED = 0x00000055;
+    232            while (!(PLLSTAT & 0x00000400));
+    233            PLLCON =  0x00000003;
+    234            PLLFEED = 0x000000AA;
+    235            PLLFEED = 0x00000055;*/
+    236          
+    237          //  VPBDIV   = VPBDIV01;    //VPB - Pclk=Cclk - 01
+    238            APBDIV_bit.APBDIV   = 0;    //VPB - Pclk=Cclk - 01
+   \   0000003C   0xE5901100         LDR      R1,[R0, #+256]
+   \   00000040   0xE3C11003         BIC      R1,R1,#0x3
+   \   00000044   0xE5801100         STR      R1,[R0, #+256]
+    239            APBDIV_bit.XCLKDIV = 1;
+   \   00000048   0xE5901100         LDR      R1,[R0, #+256]
+   \   0000004C   0xE3C11030         BIC      R1,R1,#0x30
+   \   00000050   0xE3811010         ORR      R1,R1,#0x10
+   \   00000054   0xE5801100         STR      R1,[R0, #+256]
+    240            //POWER
+    241            PCONP    = PowerPCONP;
+   \   00000058   0xE3A0100E         MOV      R1,#+14
+   \   0000005C   0xE3811E80         ORR      R1,R1,#0x800
+   \   00000060   0xE58010C4         STR      R1,[R0, #+196]
+    242            PCLK_VPB = TARGET_BOARD_FREQ;
+   \   00000064   0x........         LDR      R6,??DataTable5
+   \   00000068   0xE3A00C48         MOV      R0,#+18432
+   \   0000006C   0xE586002C         STR      R0,[R6, #+44]
+    243            // Remap interrupt vectors to R0M...
+    244            VICIntEnClear = 0xFFFFFFFF;  //@@@@@ @@@@@@@@@
+   \   00000070   0xE3E070EF         MVN      R7,#+239
+   \   00000074   0xE3C77EF0         BIC      R7,R7,#0xF00
+   \   00000078   0xE1E08004         MVN      R8,R4
+   \   0000007C   0xE5878004         STR      R8,[R7, #+4]
+    245            VICIntEnable  = 0x00000000;
+   \   00000080   0xE5874000         STR      R4,[R7, #+0]
+    246          
+    247          
+    248          //@@@@@@@@@@@@@ @@@@@ @@@@@@@@@@""""""""""""""""""""""""""""""
+    249          
+    250            *(int*)&FLAG = 0; //@@@@@@ @@@ @@@@@@//////////////////////////////////////////////////////
+   \   00000084   0xE5864020         STR      R4,[R6, #+32]
+    251            DAC = 0;
+   \   00000088   0x........         LDR      R0,??DataTable5_3
+   \   0000008C   0xE5804000         STR      R4,[R0, #+0]
+    252            ByteCurrentIzm = 0;
+   \   00000090   0x........         LDR      R0,??DataTable5_4
+   \   00000094   0xE5804000         STR      R4,[R0, #+0]
+    253            flagTIME2 = 0;  //@@@@ @@@@@@ @@@@@@@ @@ 2 @@@@@
+   \   00000098   0x........         LDR      R0,??DataTable5_5
+   \   0000009C   0xE5C04000         STRB     R4,[R0, #+0]
+    254            TimeByte = 4; // @@@@@@@ @@@ @@ 4-@ @@@@@@@ @@@@@
+   \   000000A0   0x........         LDR      R9,??DataTable5_6
+   \   000000A4   0xE3A00004         MOV      R0,#+4
+   \   000000A8   0xE5C90000         STRB     R0,[R9, #+0]
+    255          
+    256            Temp_i=0;     //10.07.2008
+   \   000000AC   0x........         LDR      R0,??DataTable5_7
+   \   000000B0   0xE5804000         STR      R4,[R0, #+0]
+    257          
+    258            ClearCOMMAND();
+   \   000000B4   0x........         BL       ClearCOMMAND
+    259          
+    260            TIMEIZMsek = 0x418937;  //=4294967 @@@@@@ - @@@@@@@@@@@@ @@@@@ @@@@@@@@@ @ @@@@ ~ 49,7@@@@
+   \   000000B8   0x........         LDR      R0,??DataTable5_8  ;; 0x418937
+   \   000000BC   0xE5860028         STR      R0,[R6, #+40]
+    261          // @@@@@@@@ @@@@@@@ @@@ @@@@@@@@~~~~~~~~~~~~~~~~~~~~~~~~~~
+    262             dPeriod = 1000000.0 / (float)PCLK_VPB; // 54,253...nsek @ @@@ Pclk = Cclk
+   \   000000C0   0xE28F0FA3         ADR      R0,??main_1
+   \   000000C4   0xE8900003         LDM      R0,{R0,R1}
+   \   000000C8   0xE5860018         STR      R0,[R6, #+24]
+   \   000000CC   0xE586101C         STR      R1,[R6, #+28]
+    263          
+    264          
+    265             //******* @@@@ ***************
+    266             //PINSEL0_bit.P0_3 = 0;
+    267             //PINSEL0_bit.P0_2 = 0;
+    268             //IO0DIR_bit.P0_3 = 1;
+    269             //IO0DIR_bit.P0_2 = 1;
+    270             //IO0DIR_bit.P0_0 = 1;
+    271             //while(1)
+    272             //{
+    273             //  IO0SET_bit.P0_0 = 1;
+    274             //  IO0SET_bit.P0_3 = 1;
+    275             //  IO0SET_bit.P0_2 = 1;
+    276             //  IO0CLR_bit.P0_3 = 1;
+    277             //  IO0CLR_bit.P0_2 = 1;
+    278             //  IO0CLR_bit.P0_0 = 1;
+    279             //}
+    280          
+    281             //***************************
+    282          //======== @@@ @@@@@@@@@@@@ (1.12.2015) ==============
+    283            IO2DIR_bit.P2_16 = 0;
+   \   000000D0   0xE3A0A24E         MOV      R10,#-536870908
+   \   000000D4   0xE38AABA0         ORR      R10,R10,#0x28000
+   \   000000D8   0xE59A0024         LDR      R0,[R10, #+36]
+   \   000000DC   0xE3C00B40         BIC      R0,R0,#0x10000
+   \   000000E0   0xE58A0024         STR      R0,[R10, #+36]
+    284            IO2DIR_bit.P2_17 = 0;
+   \   000000E4   0xE59A0024         LDR      R0,[R10, #+36]
+   \   000000E8   0xE3C00B80         BIC      R0,R0,#0x20000
+   \   000000EC   0xE58A0024         STR      R0,[R10, #+36]
+    285            IO2DIR_bit.P2_18 = 0;
+   \   000000F0   0xE59A0024         LDR      R0,[R10, #+36]
+   \   000000F4   0xE3C00A40         BIC      R0,R0,#0x40000
+   \   000000F8   0xE58A0024         STR      R0,[R10, #+36]
+    286            IO2DIR_bit.P2_19 = 0;
+   \   000000FC   0xE59A0024         LDR      R0,[R10, #+36]
+   \   00000100   0xE3C00A80         BIC      R0,R0,#0x80000
+   \   00000104   0xE58A0024         STR      R0,[R10, #+36]
+    287            WDMOD_temp = WDMOD;
+   \   00000108   0xE3A0B4E0         MOV      R11,#-536870912
+   \   0000010C   0xE59B0000         LDR      R0,[R11, #+0]
+   \   00000110   0xE5C60045         STRB     R0,[R6, #+69]
+    288          //======== @@@ @@@@@@@@@@@@ (1.12.2015) ==============
+    289          //@@@@@@ @@@ @@@@@@@@@@@@@ EEPROM""""""""""""""""""""""""
+    290           // __enable_interrupt();
+    291            //==== @@@@@@@@@@@@ @@@@@ @@@@@@ @@@@@@ @ @@@@@@ (21.04.2009) ===
+    292           // i2c_lpc_init();
+    293           // ReadEEPROMkoef();
+    294           // ReadTABLtemper();
+    295           // ReadEEPROMIntervalTemper();
+    296            //==================================================
+    297            //ReadEEPROMkoef();
+    298            //ReadTABLtemper();
+    299            //ReadEEPROMIntervalTemper();
+    300            //DeInitialiseI2C();
+    301          // @@@@@""""""""""""""""""""""""""""""""""""""""
+    302          //@@@@@@@  IO0DIR = 0x018000F4;  // 1-@@ @@@@@ - @@@@@@@@@@(@@@@@@@ P0.4..P0.7@@@@@@) P0.23,P0.24-@@@@@_RB0,RB1,P0.16-RA0-@@@@
+    303            IO0DIR = 0x01800024; // @@@@@ - 2,5,23,24 P0.3-@@@@ @@@ @@@@@ @ @@@@@@@@@@@ @@@ @@@@@@
+   \   00000114   0xE3A00024         MOV      R0,#+36
+   \   00000118   0xE3800760         ORR      R0,R0,#0x1800000
+   \   0000011C   0xE58A0004         STR      R0,[R10, #+4]
+    304           // IO0SET = 0xFFFFFFFF; // @@ @@@@ @@@@@@@ 1
+    305            IO0DIR_bit.P0_3=1;
+   \   00000120   0xE59A0004         LDR      R0,[R10, #+4]
+   \   00000124   0xE3800008         ORR      R0,R0,#0x8
+   \   00000128   0xE58A0004         STR      R0,[R10, #+4]
+    306            IO0SET = 0xFFFFFFF9; // @@ @@@@ @@@@@@@ 1
+   \   0000012C   0xE3C80006         BIC      R0,R8,#0x6
+   \   00000130   0xE58A0000         STR      R0,[R10, #+0]
+    307            IO0CLR = 0x6; // @@ @@@@ @@@@@@@ 0
+   \   00000134   0xE3A00006         MOV      R0,#+6
+   \   00000138   0xE58A0008         STR      R0,[R10, #+8]
+    308            IO2DIR = 0xCFFF0000; // @@@@@ - 24:27,30,31,16:23
+   \   0000013C   0xE3A004CF         MOV      R0,#-822083584
+   \   00000140   0xE38008FF         ORR      R0,R0,#0xFF0000
+   \   00000144   0xE58A0024         STR      R0,[R10, #+36]
+    309            IO2SET = 0xFFFFFFFF; // @@ @@@@ @@@@@@@ 1
+   \   00000148   0xE58A8020         STR      R8,[R10, #+32]
+    310          
+    311            //IO2CLR_bit.P2_26 = 1;
+    312          
+    313          
+    314            IO3DIR = 0x0B000000; // @@@@@ - 24,25,27
+   \   0000014C   0xE3A006B0         MOV      R0,#+184549376
+   \   00000150   0xE58A0034         STR      R0,[R10, #+52]
+    315            IO3SET = 0xFFFFFFFF; // @@ @@@@ @@@@@@@ 1
+   \   00000154   0xE58A8030         STR      R8,[R10, #+48]
+    316          
+    317            //======== @@@ @@@@@@@@@@@@ (30.09.2011) ==============
+    318            IO0DIR_bit.P0_14 = 0;
+   \   00000158   0xE59A0004         LDR      R0,[R10, #+4]
+   \   0000015C   0xE3C00C40         BIC      R0,R0,#0x4000
+   \   00000160   0xE58A0004         STR      R0,[R10, #+4]
+    319            //=====================================================
+    320           // IO0SET_bit.P0_23 = 1;         //@@@@@ @@@@@@@@@@@@@@
+    321           // IO0SET_bit.P0_5  = 1;         //@@@@@ @@@@@@@@@
+    322           // IO0SET_bit.P0_24 = 1;        //@@@@@@@ @@@@
+    323          //==== @@@@@ @@@@@@@@@ @@ @@@@ @@@@@@@@@ @@@@ (29.04.2009) ===
+    324            ZAPFACTOR(1200,2); //@@@@@ @@@@@@@ KODADC-@@@@@@@@@@ @@@@@@ @@@@@ @@@ @@@@@@@  LDA
+   \   00000164   0xE3A01002         MOV      R1,#+2
+   \   00000168   0xE3A00E4B         MOV      R0,#+1200
+   \   0000016C   0x........         BL       ZAPFACTOR
+    325            ZAPFACTOR(2000,2); //@@@@@ @@@@@@@ KODADC-@@@@@@@@@@ @@@@@@ @@@@@ @@@ @@@@@@@  LDA
+   \   00000170   0xE3A01002         MOV      R1,#+2
+   \   00000174   0xE3A00E7D         MOV      R0,#+2000
+   \   00000178   0x........         BL       ZAPFACTOR
+    326            i2c_lpc_init();
+   \   0000017C   0x........         BL       i2c_lpc_init
+    327            ReadEEPROMkoef();
+   \   00000180   0x........         BL       ReadEEPROMkoef
+    328            ReadTABLtemper();
+   \   00000184   0x........         BL       ReadTABLtemper
+    329            ReadEEPROMIntervalTemper();
+   \   00000188   0x........         BL       ReadEEPROMIntervalTemper
+    330          
+    331          // Enable the interrupt""""""""""""""""""""""""""""""""""""""""
+    332            InitialiseTimer0();
+   \   0000018C   0x........         BL       InitialiseTimer0
+    333            InitialiseTimer1();
+   \   00000190   0x........         BL       InitialiseTimer1
+    334            InitialiseUART0(MasEEPROMKoef[7]);
+   \   00000194   0x........         LDR      R0,??DataTable5_9
+   \   00000198   0xE5D00007         LDRB     R0,[R0, #+7]
+   \   0000019C   0x........         BL       InitialiseUART0
+    335            InitialiseEINT0();
+   \   000001A0   0x........         BL       InitialiseEINT0
+    336            InitialiseEMC();
+   \   000001A4   0x........         BL       InitialiseEMC
+    337          
+    338          // Clear the interrupt bit within the IR register...
+    339            T0IR = 0xFF;
+   \   000001A8   0xE38B8C40         ORR      R8,R11,#0x4000
+   \   000001AC   0xE3A010FF         MOV      R1,#+255
+   \   000001B0   0xE5881000         STR      R1,[R8, #+0]
+    340            T1IR = 0xFF;
+   \   000001B4   0xE2880C40         ADD      R0,R8,#+16384
+   \   000001B8   0xE5801000         STR      R1,[R0, #+0]
+    341            T1TC =0;  //@@@@@ @@@@@@@@ TMR1
+   \   000001BC   0xE5804008         STR      R4,[R0, #+8]
+    342            T1TCR = TCR_ENABLE; //@@@@@@@@@@ @@ @@@@ @@R1
+   \   000001C0   0xE5805004         STR      R5,[R0, #+4]
+    343            T0TC =0;  //@@@@@ @@@@@@@@ TMR0
+   \   000001C4   0xE5884008         STR      R4,[R8, #+8]
+    344            T0TCR = TCR_ENABLE; //@@@@@@@@@@ @@ @@@@ @@R0
+   \   000001C8   0xE5885004         STR      R5,[R8, #+4]
+    345          
+    346            //if( WDMOD_bit.WDTOF )
+    347            if( WDMOD && 0x04 )
+   \   000001CC   0x........         LDR      R1,??DataTable5_10
+   \   000001D0   0xE59B2000         LDR      R2,[R11, #+0]
+   \   000001D4   0xE3520000         CMP      R2,#+0
+   \   000001D8   0x0A000005         BEQ      ??main_2
+    348            {
+    349              //IO2SET_bit.P2_19 = 1;
+    350              WDMOD_bit.WDTOF = 0;
+   \   000001DC   0xE59B2000         LDR      R2,[R11, #+0]
+   \   000001E0   0xE3C22004         BIC      R2,R2,#0x4
+   \   000001E4   0xE58B2000         STR      R2,[R11, #+0]
+    351              T1TC = T1TC_temp;
+   \   000001E8   0xE5911000         LDR      R1,[R1, #+0]
+   \   000001EC   0xE5801008         STR      R1,[R0, #+8]
+   \   000001F0   0xEA00000B         B        ??main_3
+    352              //IO2CLR_bit.P2_19 = 1;
+    353            }
+    354            else
+    355            {
+    356              icikl_n = 0;
+   \                     ??main_2:
+   \   000001F4   0xE5864040         STR      R4,[R6, #+64]
+    357              T1TC_temp = 0;
+   \   000001F8   0xE5814000         STR      R4,[R1, #+0]
+    358              ClearSPECTR();
+   \   000001FC   0x........         BL       ClearSPECTR
+    359              ZAPFACTOR(MAXPOROG,1);
+   \   00000200   0xE1A01005         MOV      R1,R5
+   \   00000204   0xE1D600B4         LDRH     R0,[R6, #+4]
+   \   00000208   0x........         BL       ZAPFACTOR
+    360              ZAPFACTOR(MINPOROG,0);
+   \   0000020C   0xE1A01004         MOV      R1,R4
+   \   00000210   0xE1D600B2         LDRH     R0,[R6, #+2]
+   \   00000214   0x........         BL       ZAPFACTOR
+    361              ZAPFACTOR(KODADC,2); //@@@@@ @@@@@@@ KODADC-@@@@@@@@@@ @@@@@@ @@@@@ @@@ @@@@@@@  LDA
+   \   00000218   0xE3A01002         MOV      R1,#+2
+   \   0000021C   0xE1D600B0         LDRH     R0,[R6, #+0]
+   \   00000220   0x........         BL       ZAPFACTOR
+    362            }
+    363          
+    364             /* @@@@@@@@@@@@"""""""""""""""""""""""""""""""""*/
+    365          
+    366          
+    367          
+    368            VICIntEnable =VICIntEnable | INTERENT0 | INTERTMRO | INTERUART0 | INTERTMR1;  //@@@@@@@@@@ EINT0 @ TMR0, UART0
+   \                     ??main_3:
+   \   00000224   0xE5970000         LDR      R0,[R7, #+0]
+   \   00000228   0xE3A01070         MOV      R1,#+112
+   \   0000022C   0xE3811C40         ORR      R1,R1,#0x4000
+   \   00000230   0xE1810000         ORR      R0,R1,R0
+   \   00000234   0xE5870000         STR      R0,[R7, #+0]
+    369            __enable_interrupt();
+   \   00000238   0xE10F0000         MRS      R0,CPSR
+   \   0000023C   0xE3C000C0         BIC      R0,R0,#0xC0
+   \   00000240   0xE121F000         MSR      CPSR_c,R0
+    370          
+    371            //**********===================******************
+    372            //TEST_pause=0;
+    373          
+    374            //for(TEST_pause=0;TEST_pause < 2000; ++TEST_pause)
+    375            //{
+    376            //  DELAYTACKT(icikl_n,10000); //@@@@@@@@ @@ 100 @@@@@@-54uSek
+    377            //}
+    378            //IO0DIR_bit.P0_3=0;
+    379            //IO0SET = 0xFFFFFFFF; // @@ @@@@ @@@@@@@ 1
+    380            //IO2SET_bit.P2_26 = 1;
+    381            /* @@@@@@@@@@@@"""""""""""""""""""""""""""""""""*/
+    382           //ZAPFACTOR(MAXPOROG,1);
+    383           //ZAPFACTOR(MINPOROG,0);
+    384           //ZAPFACTOR(KODADC,2); //@@@@@ @@@@@@@ KODADC-@@@@@@@@@@ @@@@@@ @@@@@ @@@ @@@@@@@  LDA
+    385          
+    386          /* @@@@@@ @@@@@@@@@@"""""""""""""""""""""""""""""""""*/
+    387          
+    388          /*@@@@@@@@@@@"""""""""""""""""""""""""""""""""""*/
+    389            TEMPERATURA1();
+   \   00000244   0x........         BL       TEMPERATURA1
+    390            //setjmp(JmpMain);
+    391            //=========== WDT ===================
+    392          
+    393            VICVectCntl3_bit.NUMBER = VIC_WDT;
+   \   00000248   0xE59701FC         LDR      R0,[R7, #+508]
+   \   0000024C   0xE3C0001F         BIC      R0,R0,#0x1F
+   \   00000250   0xE58701FC         STR      R0,[R7, #+508]
+    394            VICVectCntl3_bit.ENABLED = 1;
+   \   00000254   0xE59701FC         LDR      R0,[R7, #+508]
+   \   00000258   0xE3800020         ORR      R0,R0,#0x20
+   \   0000025C   0xE58701FC         STR      R0,[R7, #+508]
+    395            VICVectAddr3 = (int) WDT_Interupt;
+   \   00000260   0x........         ADR      R0,WDT_Interupt
+   \   00000264   0xE58700FC         STR      R0,[R7, #+252]
+    396            WDTC = WDT_value;
+   \   00000268   0x........         LDR      R0,??DataTable5_11  ;; 0x5451f0
+   \   0000026C   0xE58B0004         STR      R0,[R11, #+4]
+    397            WDMOD_bit.WDEN = 1; //@@@ @@@@@@@@@@ @@ WDT @@@ @@@@@@
+   \   00000270   0xE59B0000         LDR      R0,[R11, #+0]
+   \   00000274   0xE3800001         ORR      R0,R0,#0x1
+   \   00000278   0xE58B0000         STR      R0,[R11, #+0]
+    398            WDMOD_bit.WDRESET = 1;
+   \   0000027C   0xE59B0000         LDR      R0,[R11, #+0]
+   \   00000280   0xE3800002         ORR      R0,R0,#0x2
+   \   00000284   0xE58B0000         STR      R0,[R11, #+0]
+    399            VICIntEnable_bit.INT0 = 1;
+   \   00000288   0xE5970000         LDR      R0,[R7, #+0]
+   \   0000028C   0xE3800001         ORR      R0,R0,#0x1
+   \   00000290   0xE5870000         STR      R0,[R7, #+0]
+    400            __disable_interrupt();
+   \   00000294   0xE10F0000         MRS      R0,CPSR
+   \   00000298   0xE38000C0         ORR      R0,R0,#0xC0
+   \   0000029C   0xE121F000         MSR      CPSR_c,R0
+    401            WDFEED = 0xAA;
+   \   000002A0   0xE3A000AA         MOV      R0,#+170
+   \   000002A4   0xE58B0008         STR      R0,[R11, #+8]
+    402            WDFEED = 0x55;
+   \   000002A8   0xE3A00055         MOV      R0,#+85
+   \   000002AC   0xE58B0008         STR      R0,[R11, #+8]
+    403            __enable_interrupt();
+   \   000002B0   0xE10F0000         MRS      R0,CPSR
+   \   000002B4   0xE3C000C0         BIC      R0,R0,#0xC0
+   \   000002B8   0xE121F000         MSR      CPSR_c,R0
+    404          
+    405            //------------------3.10.2011-----------------------
+    406          
+    407            ZAPFACTOR(KODADC,2);
+   \   000002BC   0xE3A01002         MOV      R1,#+2
+   \   000002C0   0xE1D600B0         LDRH     R0,[R6, #+0]
+   \   000002C4   0x........         BL       ZAPFACTOR
+   \   000002C8   0xE59D5004         LDR      R5,[SP, #+4]
+   \   000002CC   0xEA000016         B        ??main_4
+    408          
+    409            //--------------------------------------------------
+    410          
+    411          
+    412            //@@@@ @@@@@@@@ @@@@@@
+    413            while(1)
+    414            {
+    415              //============ @@@@ (1.12.2015)========
+    416          
+    417                if( IO2PIN_bit.P2_16 )
+    418                {
+    419                  FL_test = 1;
+    420                  IO2CLR_bit.P2_16 = 1;
+    421                }
+    422                else
+    423                {
+    424                  FL_test = 0;
+    425                  IO2SET_bit.P2_16 = 1;
+    426                //IO0CLR_bit.P0_14 = 1;
+    427                }
+    428                //=======================================
+    429          
+    430              SoftTimerCT_save = T0TC;
+    431              if( SoftTimerCT_save > SoftTimerCT_save1 )
+    432                SoftTimerCT = (SoftTimerCT_save - SoftTimerCT_save1) + SoftTimerCT;
+    433              else
+    434                SoftTimerCT = (T0MR0 - SoftTimerCT_save1 + SoftTimerCT_save) + SoftTimerCT;
+    435              SoftTimerCT_save1 = SoftTimerCT_save;
+    436              if( SoftTimerCT >= 1843200) //~100ms (12.08.2009)
+    437              {
+    438          
+    439                __disable_interrupt();
+    440                WDFEED = 0xAA;
+    441                WDFEED = 0x55;
+    442                __enable_interrupt();
+    443                ++SoftTimerVal;
+    444                SoftTimerCT = 0;
+    445                if( SoftTimerVal > 5 )
+    446                {
+    447                  if( ByteCOMMAND )
+    448                  {
+    449                    ByteCOMMAND = 0;
+    450                    FLAG.UART_RS = 0;
+    451                  }
+    452                  SoftTimerVal = 0;
+    453                }
+    454                //============ @@@@ (11.10.2011)========
+    455                //IO0SET_bit.P0_14 = 1;
+    456                //ZAPFACTOR(KODADC,2);
+    457                //IO0CLR_bit.P0_14 = 1;
+    458                //=======================================
+    459              }
+    460          
+    461              if (FLAG.temperIZM)
+    462              {//@@@@@@@@@ @@@ @ 2 @@@
+    463                STOPEINT0();            //@@@@@@@@@@@@@@ @@@@@@@ @@@ @ 2 @@@ 14.11.07
+    464                //ZAPFACTOR(MAXPOROG,1);
+    465                //ZAPFACTOR(MINPOROG,0);
+    466                FLAG.temperIZM = 0;
+    467                TEMPERATURA();
+    468                MIDTEMPER();  //@@@ @@@@@@@ @@@@@@
+    469                SETKOEFF(); //@@@@ @@@ @@@@@ @@@@@ FLAG.temperCORR
+    470                //--12.01.2010 @@@@ @@@@@@@ @@@@@@@@
+    471               /*
+    472                if ( FL_test > 10 )
+    473                {
+    474                  FL_test = 0;
+    475                  KODADC_temp = 0;
+    476                }
+    477                else
+    478                {
+    479                  ++FL_test;
+    480                  KODADC_temp = KODADC;
+    481          
+    482                }
+    483                ZAPFACTOR(KODADC,2);
+    484                */
+    485                //----------------------------
+    486              } //9.07.2008 @@@ @@@@@@@@ @@@@
+    487              if ((FLAG.UART_RS) && (ByteCOMMAND >= 4))
+    488              {// @@@@@@@@ @@@@@@@   - minimum 4 byte
+    489                i= 0x08;
+    490                if (COMMAND[1] > 0x08)
+    491                                 i=0x09;
+    492          
+    493                // @@@@@@@@@@ @@ @@@@@@@@@ @@@@@@
+    494                switch (COMMAND[1]){
+    495                  case 0x03:  AdrCOMMAND = *COM3; break;
+    496                  case 0x04:  AdrCOMMAND = *COM4; break;
+    497                  case 0x05:  AdrCOMMAND = *COM5; break;
+    498                  case 0x06:  /*if ((COMMAND[2]==0) && (COMMAND[3]==0))
+    499                                    i=10;*/
+    500                              AdrCOMMAND = *COM6; break;
+    501                  case 0x07:  AdrCOMMAND = *COM7;
+    502                              i=4; break;
+    503                  case 0x08:  AdrCOMMAND = *COM8; break;
+    504          
+    505                  case 0x0B:  AdrCOMMAND = *COMB; break;
+    506                  case 0x10:  AdrCOMMAND = *COM10;
+    507                               i=COMMAND[2]+5; break;
+    508                  case 0x11:  AdrCOMMAND = *COM11;
+    509                               i=4; break;
+    510                  case 0x12:  AdrCOMMAND = *COM12; break;
+    511                  case 0x13:  AdrCOMMAND = *COM13; /* @@@@@@@@ @@@@@@@ @@@ @@@@@@@@@*/
+    512                              i= 7; ;break;
+    513                  case 0x15:  AdrCOMMAND = *COM15;
+    514                              if (ByteCurrentIzm == 0)
+    515                                        i = TimeByte + 9;// @@@@@@ @@@@@@ @ @@@@@@@@
+    516                              break;/*@@@ @@@@@@ @ @@@@@@@@@@@@ @@@@@@*/
+    517                  case 0x16:  AdrCOMMAND = *COM16;
+    518                              i=4; break;
+    519                  case 0x17:  AdrCOMMAND = *COM17;
+    520                              i=4; break;
+    521                  //------------ 27.11.2015  @@@ @@@@@@@@@@@@ WDT---------------------
+    522                  case 0x20:  AdrCOMMAND = *COM20;
+    523                              i=4; break;
+    524                   //------------ 27.11.2015  @@@ @@@@@@@@@@@@ WDT---------------------
+    525                  default:   i=0;
+    526                              COMerr(0x01);
+    527                              break;    //@@@ i == 0 -@@@@@@ -@@@@@@@@@@@@ @@@@@@@
+    528          
+    529                  }//switch
+    530                  if ( (i!=0) && (ByteCOMMAND >= i))
+    531                  {
+    532                  if ((COMMAND[1]!=0x13) && (COMMAND[1] !=0x15) && (COMMAND[1] !=0x016))
+    533                        {// @@@@@@@@@ CRC, @@@@ @@ @@@@@@@@@ @@ @@@@@@@@
+    534                        CRC16(COMMAND,i-2,0xFF,0);
+   \                     ??main_5:
+   \   000002D0   0xE1A03004         MOV      R3,R4
+   \   000002D4   0xE3A020FF         MOV      R2,#+255
+   \   000002D8   0xE1A00007         MOV      R0,R7
+   \   000002DC   0xE2401002         SUB      R1,R0,#+2
+   \   000002E0   0xE1A01801         LSL      R1,R1,#+16
+   \   000002E4   0xE1A01841         ASR      R1,R1,#+16
+   \   000002E8   0xE2860008         ADD      R0,R6,#+8
+   \   000002EC   0x........         BL       CRC16
+    535                        if( (CRClo == COMMAND[i-2]) && (CRChi == COMMAND[i-1]) )
+   \   000002F0   0x........         LDR      R0,??DataTable5_12
+   \   000002F4   0xE1D000B0         LDRH     R0,[R0, #+0]
+   \   000002F8   0xE0861007         ADD      R1,R6,R7
+   \   000002FC   0xE5D11006         LDRB     R1,[R1, #+6]
+   \   00000300   0xE1500001         CMP      R0,R1
+   \   00000304   0x1A000007         BNE      ??main_6
+   \   00000308   0x........         LDR      R0,??DataTable5_13
+   \   0000030C   0xE1D000B0         LDRH     R0,[R0, #+0]
+   \   00000310   0xE0861007         ADD      R1,R6,R7
+   \   00000314   0xE5D11007         LDRB     R1,[R1, #+7]
+   \   00000318   0xE1500001         CMP      R0,R1
+   \   0000031C   0x1A000001         BNE      ??main_6
+    536                              (*AdrCOMMAND)(); //@@@@@ @@ @@@@@@ @@ @@@@@@@
+   \   00000320   0xE1A0E00F         MOV      LR,PC
+   \   00000324   0xE12FFF15         BX       R5
+    537                        ClearCOMMAND ();  //@@@@@@@@ @@@@@@ @@@@@@@
+   \                     ??main_6:
+   \   00000328   0x........         BL       ClearCOMMAND
+    538                        }//(COMANND[1]!=0x13) && (COMMAND[1] !=0x15)
+   \                     ??main_4:
+   \   0000032C   0xE59A001C         LDR      R0,[R10, #+28]
+   \   00000330   0xE3A01001         MOV      R1,#+1
+   \   00000334   0xE1110820         TST      R1,R0, LSR #+16
+   \   00000338   0x0A000007         BEQ      ??main_7
+   \   0000033C   0xE1A00001         MOV      R0,R1
+   \   00000340   0xE5C60044         STRB     R0,[R6, #+68]
+   \   00000344   0xE59A0028         LDR      R0,[R10, #+40]
+   \   00000348   0xE3800B40         ORR      R0,R0,#0x10000
+   \   0000034C   0xE58A0028         STR      R0,[R10, #+40]
+   \   00000350   0xEA000005         B        ??main_8
+   \                     ??main_1:
+   \   00000354   0xC71C71C7         DC32     0xC71C71C7,0x404B2071
+   \              0x404B2071   
+   \                     ??main_7:
+   \   0000035C   0xE5C64044         STRB     R4,[R6, #+68]
+   \   00000360   0xE59A0020         LDR      R0,[R10, #+32]
+   \   00000364   0xE3800B40         ORR      R0,R0,#0x10000
+   \   00000368   0xE58A0020         STR      R0,[R10, #+32]
+   \                     ??main_8:
+   \   0000036C   0xE5980008         LDR      R0,[R8, #+8]
+   \   00000370   0xE5860034         STR      R0,[R6, #+52]
+   \   00000374   0xE5961030         LDR      R1,[R6, #+48]
+   \   00000378   0xE5962038         LDR      R2,[R6, #+56]
+   \   0000037C   0xE1520000         CMP      R2,R0
+   \   00000380   0x2A000003         BCS      ??main_9
+   \   00000384   0xE0402002         SUB      R2,R0,R2
+   \   00000388   0xE0821001         ADD      R1,R2,R1
+   \   0000038C   0xE5861030         STR      R1,[R6, #+48]
+   \   00000390   0xEA000004         B        ??main_10
+   \                     ??main_9:
+   \   00000394   0xE5983018         LDR      R3,[R8, #+24]
+   \   00000398   0xE0432002         SUB      R2,R3,R2
+   \   0000039C   0xE0802002         ADD      R2,R0,R2
+   \   000003A0   0xE0821001         ADD      R1,R2,R1
+   \   000003A4   0xE5861030         STR      R1,[R6, #+48]
+   \                     ??main_10:
+   \   000003A8   0xE5860038         STR      R0,[R6, #+56]
+   \   000003AC   0xE5960030         LDR      R0,[R6, #+48]
+   \   000003B0   0xE3A01940         MOV      R1,#+1048576
+   \   000003B4   0xE3811AC2         ORR      R1,R1,#0xC2000
+   \   000003B8   0xE1500001         CMP      R0,R1
+   \   000003BC   0x3A000017         BCC      ??main_11
+   \   000003C0   0xE10F0000         MRS      R0,CPSR
+   \   000003C4   0xE38000C0         ORR      R0,R0,#0xC0
+   \   000003C8   0xE121F000         MSR      CPSR_c,R0
+   \   000003CC   0xE3A000AA         MOV      R0,#+170
+   \   000003D0   0xE58B0008         STR      R0,[R11, #+8]
+   \   000003D4   0xE3A00055         MOV      R0,#+85
+   \   000003D8   0xE58B0008         STR      R0,[R11, #+8]
+   \   000003DC   0xE10F0000         MRS      R0,CPSR
+   \   000003E0   0xE3C000C0         BIC      R0,R0,#0xC0
+   \   000003E4   0xE121F000         MSR      CPSR_c,R0
+   \   000003E8   0xE596003C         LDR      R0,[R6, #+60]
+   \   000003EC   0xE2800001         ADD      R0,R0,#+1
+   \   000003F0   0xE586003C         STR      R0,[R6, #+60]
+   \   000003F4   0xE5864030         STR      R4,[R6, #+48]
+   \   000003F8   0xE3500006         CMP      R0,#+6
+   \   000003FC   0x3A000007         BCC      ??main_11
+   \   00000400   0xE5960024         LDR      R0,[R6, #+36]
+   \   00000404   0xE3500000         CMP      R0,#+0
+   \   00000408   0x0A000003         BEQ      ??main_12
+   \   0000040C   0xE5864024         STR      R4,[R6, #+36]
+   \   00000410   0xE5960020         LDR      R0,[R6, #+32]
+   \   00000414   0xE3C00040         BIC      R0,R0,#0x40
+   \   00000418   0xE5860020         STR      R0,[R6, #+32]
+   \                     ??main_12:
+   \   0000041C   0xE586403C         STR      R4,[R6, #+60]
+   \                     ??main_11:
+   \   00000420   0xE5960020         LDR      R0,[R6, #+32]
+   \   00000424   0xE3A01001         MOV      R1,#+1
+   \   00000428   0xE1110720         TST      R1,R0, LSR #+14
+   \   0000042C   0x0A000006         BEQ      ??main_13
+   \   00000430   0x........         BL       STOPEINT0
+   \   00000434   0xE5960020         LDR      R0,[R6, #+32]
+   \   00000438   0xE3C00C40         BIC      R0,R0,#0x4000
+   \   0000043C   0xE5860020         STR      R0,[R6, #+32]
+   \   00000440   0x........         BL       TEMPERATURA
+   \   00000444   0x........         BL       MIDTEMPER
+   \   00000448   0x........         BL       SETKOEFF
+   \                     ??main_13:
+   \   0000044C   0xE5960020         LDR      R0,[R6, #+32]
+   \   00000450   0xE3A01001         MOV      R1,#+1
+   \   00000454   0xE1110320         TST      R1,R0, LSR #+6
+   \   00000458   0x0AFFFFB3         BEQ      ??main_4
+   \   0000045C   0xE5960024         LDR      R0,[R6, #+36]
+   \   00000460   0xE3500004         CMP      R0,#+4
+   \   00000464   0x3AFFFFB0         BCC      ??main_4
+   \   00000468   0xE3A07008         MOV      R7,#+8
+   \   0000046C   0xE5D60009         LDRB     R0,[R6, #+9]
+   \   00000470   0xE1A01000         MOV      R1,R0
+   \   00000474   0xE3510009         CMP      R1,#+9
+   \   00000478   0xBA000000         BLT      ??main_14
+   \   0000047C   0xE3A07009         MOV      R7,#+9
+   \                     ??main_14:
+   \   00000480   0xE2400003         SUB      R0,R0,#+3
+   \   00000484   0xE350001D         CMP      R0,#+29
+   \   00000488   0x8A000035         BHI      ??main_15
+   \   0000048C   0xE7DF1000         LDRB     R1,[PC, R0]
+   \   00000490   0xE08FF101         ADD      PC,PC,R1, LSL #+2
+   \                     ??main_0:
+   \   00000494   0x07 0x09          DC8      0x7,0x9,0xB,0xD
+   \              0x0B 0x0D    
+   \   00000498   0x0F 0x12          DC8      0xF,0x12,0x33,0x33
+   \              0x33 0x33    
+   \   0000049C   0x14 0x33          DC8      0x14,0x33,0x33,0x33
+   \              0x33 0x33    
+   \   000004A0   0x33 0x16          DC8      0x33,0x16,0x1A,0x1D
+   \              0x1A 0x1D    
+   \   000004A4   0x1F 0x33          DC8      0x1F,0x33,0x22,0x2A
+   \              0x22 0x2A    
+   \   000004A8   0x2D 0x33          DC8      0x2D,0x33,0x33,0x33
+   \              0x33 0x33    
+   \   000004AC   0x33 0x33          DC8      0x33,0x33,0x33,0x33
+   \              0x33 0x33    
+   \   000004B0   0x33 0x30          DC8      0x33,0x30,0x0,0x0
+   \              0x00 0x00    
+   \                     ??main_16:
+   \   000004B4   0x........         LDR      R5,??DataTable5_14
+   \   000004B8   0xEA00002C         B        ??main_17
+   \                     ??main_18:
+   \   000004BC   0x........         LDR      R5,??DataTable5_15
+   \   000004C0   0xEA00002A         B        ??main_17
+   \                     ??main_19:
+   \   000004C4   0x........         LDR      R5,??DataTable5_16
+   \   000004C8   0xEA000028         B        ??main_17
+   \                     ??main_20:
+   \   000004CC   0x........         LDR      R5,??DataTable5_17
+   \   000004D0   0xEA000026         B        ??main_17
+   \                     ??main_21:
+   \   000004D4   0x........         LDR      R5,??DataTable5_18
+   \   000004D8   0xE3A07004         MOV      R7,#+4
+   \   000004DC   0xEA000023         B        ??main_17
+   \                     ??main_22:
+   \   000004E0   0x........         LDR      R5,??DataTable5_19
+   \   000004E4   0xEA000021         B        ??main_17
+   \                     ??main_23:
+   \   000004E8   0x........         LDR      R5,??DataTable5_20
+   \   000004EC   0xEA00001F         B        ??main_17
+   \                     ??main_24:
+   \   000004F0   0x........         LDR      R5,??DataTable5_21
+   \   000004F4   0xE5D6000A         LDRB     R0,[R6, #+10]
+   \   000004F8   0xE2807005         ADD      R7,R0,#+5
+   \   000004FC   0xEA00001B         B        ??main_17
+   \                     ??main_25:
+   \   00000500   0x........         LDR      R5,??DataTable5_22
+   \   00000504   0xE3A07004         MOV      R7,#+4
+   \   00000508   0xEA000018         B        ??main_17
+   \                     ??main_26:
+   \   0000050C   0x........         LDR      R5,??DataTable5_23
+   \   00000510   0xEA000016         B        ??main_17
+   \                     ??main_27:
+   \   00000514   0x........         LDR      R5,??DataTable5_24
+   \   00000518   0xE3A07007         MOV      R7,#+7
+   \   0000051C   0xEA000013         B        ??main_17
+   \                     ??main_28:
+   \   00000520   0x........         LDR      R5,??DataTable5_25
+   \   00000524   0x........         LDR      R0,??DataTable5_4
+   \   00000528   0xE5900000         LDR      R0,[R0, #+0]
+   \   0000052C   0xE3500000         CMP      R0,#+0
+   \   00000530   0x1A00000E         BNE      ??main_17
+   \   00000534   0xE5D90000         LDRB     R0,[R9, #+0]
+   \   00000538   0xE2807009         ADD      R7,R0,#+9
+   \   0000053C   0xEA00000B         B        ??main_17
+   \                     ??main_29:
+   \   00000540   0x........         LDR      R5,??DataTable5_26
+   \   00000544   0xE3A07004         MOV      R7,#+4
+   \   00000548   0xEA000008         B        ??main_17
+   \                     ??main_30:
+   \   0000054C   0x........         LDR      R5,??DataTable5_27
+   \   00000550   0xE3A07004         MOV      R7,#+4
+   \   00000554   0xEA000005         B        ??main_17
+   \                     ??main_31:
+   \   00000558   0x........         LDR      R5,??DataTable5_28
+   \   0000055C   0xE3A07004         MOV      R7,#+4
+   \   00000560   0xEA000002         B        ??main_17
+   \                     ??main_15:
+   \   00000564   0xE1A07004         MOV      R7,R4
+   \   00000568   0xE3A00001         MOV      R0,#+1
+   \   0000056C   0x........         BL       COMerr
+   \                     ??main_17:
+   \   00000570   0xE3570000         CMP      R7,#+0
+   \   00000574   0x0AFFFF6C         BEQ      ??main_4
+   \   00000578   0xE5960024         LDR      R0,[R6, #+36]
+   \   0000057C   0xE1500007         CMP      R0,R7
+   \   00000580   0x3AFFFF69         BCC      ??main_4
+   \   00000584   0xE5D60009         LDRB     R0,[R6, #+9]
+   \   00000588   0xE3500013         CMP      R0,#+19
+   \   0000058C   0x0A000003         BEQ      ??main_32
+   \   00000590   0xE3500015         CMP      R0,#+21
+   \   00000594   0x0A000001         BEQ      ??main_32
+   \   00000598   0xE3500016         CMP      R0,#+22
+   \   0000059C   0x1AFFFF4B         BNE      ??main_5
+    539                    else  //(COMANND[1]=0x13) @@@ (COMMAND[1] =0x15 (COMMAND[1] !=0x016))
+    540                    {
+    541                      if (COMMAND[1] == 0x15)
+   \                     ??main_32:
+   \   000005A0   0xE5D6100E         LDRB     R1,[R6, #+14]
+   \   000005A4   0x........         LDR      R2,??DataTable5_4
+   \   000005A8   0xE5922000         LDR      R2,[R2, #+0]
+   \   000005AC   0xE3500015         CMP      R0,#+21
+   \   000005B0   0x1A000007         BNE      ??main_33
+    542                        if (((COMMAND[5] << 8) | COMMAND[6]) == 0)
+   \   000005B4   0xE5D6300D         LDRB     R3,[R6, #+13]
+   \   000005B8   0xE1913403         ORRS     R3,R1,R3, LSL #+8
+   \   000005BC   0x1A000003         BNE      ??main_34
+    543                          adrcom15 = ByteCurrentIzm+TimeByte; /*@@@ @@@@@@@@ @@@-@@ @@@@ @@@@@@@*/
+   \   000005C0   0xE5D9C000         LDRB     R12,[R9, #+0]
+   \   000005C4   0xE08CC002         ADD      R12,R12,R2
+   \   000005C8   0xE58DC000         STR      R12,[SP, #+0]
+   \   000005CC   0xEA000000         B        ??main_33
+    544                        else
+    545                          adrcom15 = ByteCurrentIzm;
+   \                     ??main_34:
+   \   000005D0   0xE58D2000         STR      R2,[SP, #+0]
+    546          
+    547                      if ( (( ByteCurrentIzm >= COMMAND[6]+2) && (COMMAND[1]==0x13)) || //@@@@@@@@@ @@@@@@
+    548                           (( adrcom15 == COMMAND[8]+2)       && (COMMAND[1]==0x15)) || //@@@@@@ @@@ @@@@@@@
+    549                           (( ByteCurrentIzm >= COMMAND[2]+2) && (COMMAND[1]==0x16))  ) //@@@@ @@@@@@ @@@@@@@@@
+   \                     ??main_33:
+   \   000005D4   0xE2811002         ADD      R1,R1,#+2
+   \   000005D8   0xE1520001         CMP      R2,R1
+   \   000005DC   0xBA000001         BLT      ??main_35
+   \   000005E0   0xE3500013         CMP      R0,#+19
+   \   000005E4   0x0A00000C         BEQ      ??main_36
+   \                     ??main_35:
+   \   000005E8   0xE59D1000         LDR      R1,[SP, #+0]
+   \   000005EC   0xE5D63010         LDRB     R3,[R6, #+16]
+   \   000005F0   0xE2833002         ADD      R3,R3,#+2
+   \   000005F4   0xE1510003         CMP      R1,R3
+   \   000005F8   0x1A000001         BNE      ??main_37
+   \   000005FC   0xE3500015         CMP      R0,#+21
+   \   00000600   0x0A000005         BEQ      ??main_36
+   \                     ??main_37:
+   \   00000604   0xE5D6100A         LDRB     R1,[R6, #+10]
+   \   00000608   0xE2811002         ADD      R1,R1,#+2
+   \   0000060C   0xE1520001         CMP      R2,R1
+   \   00000610   0xBAFFFF45         BLT      ??main_4
+   \   00000614   0xE3500016         CMP      R0,#+22
+   \   00000618   0x1AFFFF43         BNE      ??main_4
+    550                      {
+    551                        (*AdrCOMMAND)(); //@@@@@ @@ @@@@@@ @@ @@@@@@@ @@@@@ @@@@@@@@@ @@@ @@@@@@
+   \                     ??main_36:
+   \   0000061C   0xE1A0E00F         MOV      LR,PC
+   \   00000620   0xE12FFF15         BX       R5
+    552                        ClearCOMMAND ();  //@@@@@@@@ @@@@@@ @@@@@@@
+   \   00000624   0x........         BL       ClearCOMMAND
+   \   00000628   0xEAFFFF3F         B        ??main_4
+   \   0000062C                      REQUIRE _A_PINSEL0
+   \   0000062C                      REQUIRE _A_MEMMAP
+   \   0000062C                      REQUIRE _A_MAMCR
+   \   0000062C                      REQUIRE _A_MAMTIM
+   \   0000062C                      REQUIRE _A_APBDIV
+   \   0000062C                      REQUIRE _A_PCONP
+   \   0000062C                      REQUIRE _A_VICIntEnClear
+   \   0000062C                      REQUIRE _A_VICIntEnable
+   \   0000062C                      REQUIRE _A_IO2DIR
+   \   0000062C                      REQUIRE _A_WDMOD
+   \   0000062C                      REQUIRE _A_IO0DIR
+   \   0000062C                      REQUIRE _A_IO0SET
+   \   0000062C                      REQUIRE _A_IO0CLR
+   \   0000062C                      REQUIRE _A_IO2SET
+   \   0000062C                      REQUIRE _A_IO3DIR
+   \   0000062C                      REQUIRE _A_IO3SET
+   \   0000062C                      REQUIRE _A_T0IR
+   \   0000062C                      REQUIRE _A_T1IR
+   \   0000062C                      REQUIRE T1TC
+   \   0000062C                      REQUIRE _A_T1TCR
+   \   0000062C                      REQUIRE T0TC
+   \   0000062C                      REQUIRE _A_T0TCR
+   \   0000062C                      REQUIRE _A_VICVectCntl3
+   \   0000062C                      REQUIRE VICVectAddr3
+   \   0000062C                      REQUIRE WDTC
+   \   0000062C                      REQUIRE _A_WDFEED
+   \   0000062C                      REQUIRE _A_IO2PIN
+   \   0000062C                      REQUIRE _A_IO2CLR
+   \   0000062C                      REQUIRE T0MR0
+    553                        }
+    554                    }
+    555                  }//if i!=0...
+    556              }//if FLAG..., Byte...
+    557            }//while(1)
+    558          
+    559           // return 0;
+    560          }
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5:
+   \   00000000   0x........         DC32     KODADC
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_1:
+   \   00000000   0x........         DC32     SPECTR
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_2:
+   \   00000000   0xE002C014         DC32     0xe002c014
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_3:
+   \   00000000   0x........         DC32     DAC
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_4:
+   \   00000000   0x........         DC32     ByteCurrentIzm
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_5:
+   \   00000000   0x........         DC32     flagTIME2
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_6:
+   \   00000000   0x........         DC32     TimeByte
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_7:
+   \   00000000   0x........         DC32     Temp_i
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_8:
+   \   00000000   0x00418937         DC32     0x418937
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_9:
+   \   00000000   0x........         DC32     MasEEPROMKoef
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_10:
+   \   00000000   0x........         DC32     T1TC_temp
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_11:
+   \   00000000   0x005451F0         DC32     0x5451f0
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_12:
+   \   00000000   0x........         DC32     CRClo
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_13:
+   \   00000000   0x........         DC32     CRChi
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_14:
+   \   00000000   0x........         DC32     COM3
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_15:
+   \   00000000   0x........         DC32     COM4
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_16:
+   \   00000000   0x........         DC32     COM5
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_17:
+   \   00000000   0x........         DC32     COM6
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_18:
+   \   00000000   0x........         DC32     COM7
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_19:
+   \   00000000   0x........         DC32     COM8
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_20:
+   \   00000000   0x........         DC32     COMB
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_21:
+   \   00000000   0x........         DC32     COM10
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_22:
+   \   00000000   0x........         DC32     COM11
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_23:
+   \   00000000   0x........         DC32     COM12
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_24:
+   \   00000000   0x........         DC32     COM13
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_25:
+   \   00000000   0x........         DC32     COM15
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_26:
+   \   00000000   0x........         DC32     COM16
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_27:
+   \   00000000   0x........         DC32     COM17
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_28:
+   \   00000000   0x........         DC32     COM20
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       0   ClearCOMMAND
+       0   ClearSPECTR
+         0   -> __aeabi_memset4
+       0   DeInitialiseI2C
+       0   InitialiseEMC
+      24   Pirq
+        24   -- Indirect call
+       0   WDT_Interupt
+      48   main
+        48   -- Indirect call
+        48   -> COMerr
+        48   -> CRC16
+        48   -> ClearCOMMAND
+        48   -> ClearSPECTR
+        48   -> InitialiseEINT0
+        48   -> InitialiseEMC
+        48   -> InitialiseTimer0
+        48   -> InitialiseTimer1
+        48   -> InitialiseUART0
+        48   -> MIDTEMPER
+        48   -> ReadEEPROMIntervalTemper
+        48   -> ReadEEPROMkoef
+        48   -> ReadTABLtemper
+        48   -> SETKOEFF
+        48   -> STOPEINT0
+        48   -> TEMPERATURA
+        48   -> TEMPERATURA1
+        48   -> ZAPFACTOR
+        48   -> i2c_lpc_init
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  ??DataTable5
+       4  ??DataTable5_1
+       4  ??DataTable5_10
+       4  ??DataTable5_11
+       4  ??DataTable5_12
+       4  ??DataTable5_13
+       4  ??DataTable5_14
+       4  ??DataTable5_15
+       4  ??DataTable5_16
+       4  ??DataTable5_17
+       4  ??DataTable5_18
+       4  ??DataTable5_19
+       4  ??DataTable5_2
+       4  ??DataTable5_20
+       4  ??DataTable5_21
+       4  ??DataTable5_22
+       4  ??DataTable5_23
+       4  ??DataTable5_24
+       4  ??DataTable5_25
+       4  ??DataTable5_26
+       4  ??DataTable5_27
+       4  ??DataTable5_28
+       4  ??DataTable5_3
+       4  ??DataTable5_4
+       4  ??DataTable5_5
+       4  ??DataTable5_6
+       4  ??DataTable5_7
+       4  ??DataTable5_8
+       4  ??DataTable5_9
+      28  ClearCOMMAND
+      20  ClearSPECTR
+       4  DeInitialiseI2C
+     156  InitialiseEMC
+      64  JmpMain
+      70  KODADC
+          MINPOROG
+          MAXPOROG
+          COMMAND
+          dPeriod
+          FLAG
+          ByteCOMMAND
+          TIMEIZMsek
+          PCLK_VPB
+          SoftTimerCT
+          SoftTimerCT_save
+          SoftTimerCT_save1
+          SoftTimerVal
+          icikl_n
+          FL_test
+          WDMOD_temp
+       2  KODADCEEPROM
+       2  KODADC_temp
+       4  PINSEL2
+     136  Pirq
+       4  T0MR0
+       4  T0TC
+       4  T1TC
+       4  T1TC_temp
+       2  TEST_pause
+       1  Test_WDT_cnt
+       4  VICVectAddr
+       4  VICVectAddr3
+       4  WDTC
+      20  WDT_Interupt
+       4  _A_APBDIV
+       4  _A_BCFG2
+       4  _A_BCFG3
+       4  _A_IO0CLR
+       4  _A_IO0DIR
+       4  _A_IO0SET
+       4  _A_IO2CLR
+       4  _A_IO2DIR
+       4  _A_IO2PIN
+       4  _A_IO2SET
+       4  _A_IO3DIR
+       4  _A_IO3SET
+       4  _A_MAMCR
+       4  _A_MAMTIM
+       4  _A_MEMMAP
+       4  _A_PCONP
+       4  _A_PINSEL0
+       4  _A_T0IR
+       4  _A_T0TCR
+       4  _A_T1IR
+       4  _A_T1TCR
+       4  _A_VICIntEnClear
+       4  _A_VICIntEnable
+       4  _A_VICVectCntl3
+       4  _A_WDFEED
+       4  _A_WDMOD
+    1580  main
+
+ 
+   141 bytes in section .bss
+     4 bytes in section .noinit
+   132 bytes in section .noinit  (abs)
+ 2 060 bytes in section .text
+ 
+ 2 060 bytes of CODE memory
+   145 bytes of DATA memory (+ 132 bytes shared)
+
+Errors: none
+Warnings: none

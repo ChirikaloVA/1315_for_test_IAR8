@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<Project>
+  <Desktop>
+    <Static>
+      <Workspace>
+        <ColumnWidths>
+          
+          
+          
+          
+        <Column0>178</Column0><Column1>34</Column1><Column2>12</Column2><Column3>40</Column3></ColumnWidths>
+      </Workspace>
+      <Disassembly>
+        
+        
+        
+      <MixedMode>1</MixedMode><CodeCovEnabled>0</CodeCovEnabled><CodeCovShow>0</CodeCovShow></Disassembly>
+      <Debug-Log><PreferedWindows><Position>3</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows><Window><Factory>Build</Factory></Window><Window><Factory>Breakpoints</Factory></Window></Windows></PreferedWindows></Debug-Log>
+      <Build>
+        
+        
+        
+        
+      <ColumnWidth0>20</ColumnWidth0><ColumnWidth1>724</ColumnWidth1><ColumnWidth2>193</ColumnWidth2><ColumnWidth3>48</ColumnWidth3><PreferedWindows><Position>3</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows><Window><Factory>Debug-Log</Factory></Window><Window><Factory>Breakpoints</Factory></Window></Windows></PreferedWindows></Build>
+      <Register><PreferedWindows><Position>2</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows><Window><Factory>Watch</Factory></Window><Window><Factory>Watch</Factory></Window></Windows></PreferedWindows></Register>
+      <Watch>
+        <Format>
+          <struct_types><Fmt><Key>__BITFLAG-UART_RS</Key><Value>4</Value></Fmt><Fmt><Key>__BITFLAG-noEINT0</Key><Value>4</Value></Fmt><Fmt><Key>__BITFLAG-temperature</Key><Value>4</Value></Fmt><Fmt><Key>__gpio0_bits-P0_7</Key><Value>4</Value></Fmt></struct_types>
+          <watch_formats><Fmt><Key>{W}Watch-0:((IO0PIN_bit.P0_7 == zP07.pin07) &amp;&amp; (FLAG.temperature == 0))</Key><Value>4</Value></Fmt><Fmt><Key>{W}Watch-0:DAC</Key><Value>4</Value></Fmt><Fmt><Key>{W}Watch-0:Inter2min</Key><Value>4</Value></Fmt><Fmt><Key>{W}Watch-0:MasInt</Key><Value>4</Value></Fmt><Fmt><Key>{W}Watch-0:factor</Key><Value>4</Value></Fmt><Fmt><Key>{W}Watch-0:nf</Key><Value>3</Value></Fmt><Fmt><Key>{W}Watch-0:tmp</Key><Value>4</Value></Fmt><Fmt><Key>{W}Watch-2:CRChi</Key><Value>4</Value></Fmt><Fmt><Key>{W}Watch-2:CRClo</Key><Value>4</Value></Fmt><Fmt><Key>{W}Watch-2:KODADC</Key><Value>3</Value></Fmt><Fmt><Key>{W}Watch-2:factor</Key><Value>4</Value></Fmt><Fmt><Key>{W}Watch-2:ulGlobalMaxTimer0Value</Key><Value>3</Value></Fmt></watch_formats>
+        </Format>
+        
+        
+        
+        
+      <PreferedWindows><Position>2</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows><Window><Factory>Watch</Factory></Window><Window><Factory>Register</Factory></Window></Windows></PreferedWindows><Column0>190</Column0><Column1>100</Column1><Column2>100</Column2><Column3>100</Column3></Watch>
+    <Auto><PreferedWindows><Position>2</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows/></PreferedWindows><Column0>100</Column0><Column1>100</Column1><Column2>100</Column2><Column3>100</Column3></Auto><Breakpoints><PreferedWindows><Position>3</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows/></PreferedWindows></Breakpoints><StaticWatch><PreferedWindows><Position>2</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows><Window><Factory>Watch</Factory></Window><Window><Factory>Register</Factory></Window></Windows></PreferedWindows><Column0>100</Column0><Column1>100</Column1><Column2>100</Column2><Column3>100</Column3></StaticWatch><Find-in-Files><ColumnWidth0>441</ColumnWidth0><ColumnWidth1>63</ColumnWidth1><ColumnWidth2>757</ColumnWidth2></Find-in-Files></Static>
+    <Windows>
+      
+      
+      
+      
+    <Wnd4>
+        <Tabs>
+          <Tab>
+            <Identity>TabID-3553-16595</Identity>
+            <TabName>Workspace</TabName>
+            <Factory>Workspace</Factory>
+            <Session>
+              
+            <NodeDict><ExpandedNode>BDKGnoPLL</ExpandedNode></NodeDict></Session>
+          </Tab>
+        </Tabs>
+        
+      <SelectedTab>0</SelectedTab></Wnd4><Wnd5>
+        <Tabs>
+          <Tab>
+            <Identity>TabID-14301-16598</Identity>
+            <TabName>Disassembly</TabName>
+            <Factory>Disassembly</Factory>
+            <Session/>
+          </Tab>
+        </Tabs>
+        
+      <SelectedTab>0</SelectedTab></Wnd5><Wnd6><Tabs><Tab><Identity>TabID-5031-3786</Identity><TabName>Breakpoints</TabName><Factory>Breakpoints</Factory><Session/></Tab><Tab><Identity>TabID-27645-3241</Identity><TabName>Debug Log</TabName><Factory>Debug-Log</Factory><Session/></Tab><Tab><Identity>TabID-27271-16772</Identity><TabName>Find in Files</TabName><Factory>Find-in-Files</Factory><Session/></Tab></Tabs><SelectedTab>1</SelectedTab></Wnd6><Wnd7><Tabs><Tab><Identity>TabID-5083-11646</Identity><TabName>Watch</TabName><Factory>Watch</Factory><Session><Expressions><Expression><Expression>TEST_pause</Expression></Expression><Expression><Expression>MasEEPROMKoef</Expression></Expression><Expression><Expression>CRChi</Expression></Expression><Expression><Expression>CRClo</Expression></Expression><Expression><Expression>TABLTemperCORR</Expression></Expression><Expression><Expression>KODADC</Expression></Expression><Expression><Expression>MINPOROG</Expression></Expression><Expression><Expression>MAXPOROG</Expression></Expression><Expression><Expression>COMMAND</Expression></Expression><Expression><Expression>COMMAND[i]</Expression></Expression><Expression><Expression>ulGlobalMaxTimer0Value</Expression></Expression><Expression><Expression>TIMER0_INTERVAL</Expression></Expression><Expression><Expression>factor</Expression></Expression><Expression><Expression>FLAG</Expression></Expression><Expression><Expression>TEMPERFLOAT</Expression></Expression><Expression><Expression>TEMPERATURE</Expression></Expression><Expression><Expression>KODADCEEPROM</Expression></Expression><Expression><Expression>irab</Expression></Expression><Expression><Expression>IndMas</Expression></Expression></Expressions><TabId>2</TabId><Column0>190</Column0><Column1>100</Column1><Column2>100</Column2><Column3>100</Column3></Session></Tab><Tab><Identity>TabID-1048-24982</Identity><TabName>Register</TabName><Factory>Register</Factory><Session><REG1>0</REG1><REG2>0</REG2><Group>6</Group><States>1</States><State0>IO0CLR</State0></Session></Tab><Tab><Identity>TabID-4298-17695</Identity><TabName>Register</TabName><Factory>Register</Factory><Session><REG1>0</REG1><REG2>0</REG2><Group>11</Group><States>1</States><State0>WDMOD</State0></Session></Tab></Tabs><SelectedTab>0</SelectedTab></Wnd7></Windows>
+    <Editor>
+      
+      
+      
+      
+    <Pane><Tab><Factory>TextEditor</Factory><Filename>C:\Program Files\IAR Systems\Embedded Workbench 4.0 Evaluation\arm\inc\iolpc2294.h</Filename><XPos>0</XPos><YPos>1190</YPos><SelStart>30118</SelStart><SelEnd>30125</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\ARM_proj\AT1315\my_macros.h</Filename><XPos>0</XPos><YPos>30</YPos><SelStart>732</SelStart><SelEnd>732</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\ARM_proj\AT1315\InterTMR1.cpp</Filename><XPos>0</XPos><YPos>28</YPos><SelStart>2284</SelStart><SelEnd>2293</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\ARM_proj\AT1315\InterEINT0.cpp</Filename><XPos>0</XPos><YPos>29</YPos><SelStart>1629</SelStart><SelEnd>1634</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\ARM_proj\AT1315\AnswerCOM.cpp</Filename><XPos>0</XPos><YPos>35</YPos><SelStart>1939</SelStart><SelEnd>1939</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\ARM_proj\AT1315\InterTMR0.cpp</Filename><XPos>0</XPos><YPos>166</YPos><SelStart>6072</SelStart><SelEnd>6072</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\ARM_proj\AT1315\evba7_cstartup.s79</Filename><XPos>0</XPos><YPos>60</YPos><SelStart>2625</SelStart><SelEnd>2629</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\ARM_proj\AT1315\InterUART0.cpp</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>609</SelStart><SelEnd>609</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\ARM_proj\AT1315\I2C_EEPROM.c</Filename><XPos>0</XPos><YPos>40</YPos><SelStart>3338</SelStart><SelEnd>3338</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\Program Files\IAR Systems\Embedded Workbench 4.0 Evaluation\arm\inc\iolpc2214.h</Filename><XPos>0</XPos><YPos>1160</YPos><SelStart>30337</SelStart><SelEnd>30337</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\ARM_proj\AT1315\BDKGmain.cpp</Filename><XPos>0</XPos><YPos>287</YPos><SelStart>9165</SelStart><SelEnd>9165</SelEnd></Tab><ActiveTab>10</ActiveTab></Pane><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
+    <Positions>
+      
+      
+      
+      
+      
+    <Top><Row0><Sizes><Toolbar-003bfa18><key>iaridepm1</key></Toolbar-003bfa18></Sizes></Row0><Row1><Sizes><Toolbar-014f6cb0><key>debuggergui1</key></Toolbar-014f6cb0></Sizes></Row1></Top><Left><Row0><Sizes><Wnd4><Rect><Top>-2</Top><Left>-2</Left><Bottom>716</Bottom><Right>284</Right><x>-2</x><y>-2</y><xscreen>0</xscreen><yscreen>0</yscreen><sizeHorzCX>0</sizeHorzCX><sizeHorzCY>0</sizeHorzCY><sizeVertCX>223438</sizeVertCX><sizeVertCY>757384</sizeVertCY></Rect></Wnd4></Sizes></Row0></Left><Right><Row0><Sizes><Wnd5><Rect><Top>-2</Top><Left>-2</Left><Bottom>716</Bottom><Right>247</Right><x>-2</x><y>-2</y><xscreen>0</xscreen><yscreen>0</yscreen><sizeHorzCX>0</sizeHorzCX><sizeHorzCY>0</sizeHorzCY><sizeVertCX>194531</sizeVertCX><sizeVertCY>757384</sizeVertCY></Rect></Wnd5></Sizes></Row0><Row1><Sizes><Wnd7><Rect><Top>-2</Top><Left>245</Left><Bottom>716</Bottom><Right>568</Right><x>245</x><y>-2</y><xscreen>119</xscreen><yscreen>100</yscreen><sizeHorzCX>92969</sizeHorzCX><sizeHorzCY>105485</sizeHorzCY><sizeVertCX>252344</sizeVertCX><sizeVertCY>757384</sizeVertCY></Rect></Wnd7></Sizes></Row1></Right><Bottom><Row0><Sizes><Wnd6><Rect><Top>-2</Top><Left>-2</Left><Bottom>164</Bottom><Right>1282</Right><x>-2</x><y>-2</y><xscreen>1284</xscreen><yscreen>166</yscreen><sizeHorzCX>1003125</sizeHorzCX><sizeHorzCY>175105</sizeHorzCY><sizeVertCX>0</sizeVertCX><sizeVertCY>0</sizeVertCY></Rect></Wnd6></Sizes></Row0></Bottom><Float><Sizes/></Float></Positions>
+  </Desktop>
+</Project>
+
+
